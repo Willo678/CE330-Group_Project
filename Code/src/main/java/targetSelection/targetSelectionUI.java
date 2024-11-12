@@ -6,8 +6,13 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.io.File;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
+
+
+import static utils.directoryContainsJava.directoryContainsJava;
+import static utils.getFileSubtree.getFileSubtree;
 
 public class targetSelectionUI extends JFrame {
     private final int sizeX = 350;
@@ -79,7 +84,6 @@ public class targetSelectionUI extends JFrame {
             if (!path.isEmpty()){
                 try {
                     Paths.get(path);
-
                     System.out.println("Success, pass on to other modules: "+path);
                     //Pass on path to be analysed
 
@@ -95,5 +99,7 @@ public class targetSelectionUI extends JFrame {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
+
+
 
 }
