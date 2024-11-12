@@ -1,4 +1,4 @@
-package targetSelection;
+package userInterface;
 
 import utils.hintTextField;
 
@@ -12,7 +12,6 @@ import java.nio.file.Paths;
 
 
 import static utils.directoryContainsJava.directoryContainsJava;
-import static utils.getFileSubtree.getFileSubtree;
 
 public class targetSelectionUI extends JFrame {
     private final int sizeX = 350;
@@ -84,7 +83,9 @@ public class targetSelectionUI extends JFrame {
             if (!path.isEmpty()){
                 try {
                     Paths.get(path);
+                    if (!directoryContainsJava(new File(path))){throw new InvalidPathException(path, "Given path does not contain a java file");}
                     System.out.println("Success, pass on to other modules: "+path);
+
                     //Pass on path to be analysed
 
                 } catch (InvalidPathException | NullPointerException e) {
