@@ -5,6 +5,7 @@ import utils.hintTextField;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.JTabbedPane;
 import java.awt.*;
 import java.io.File;
 import java.nio.file.InvalidPathException;
@@ -14,7 +15,7 @@ import java.nio.file.Paths;
 import static utils.directoryContainsJava.directoryContainsJava;
 
 public class targetSelectionUI extends JFrame {
-    private final int sizeX = 350;
+    private final int sizeX = 500;
     private final int sizeY = 650;
     private final String title = "Project Selection";
 
@@ -27,28 +28,32 @@ public class targetSelectionUI extends JFrame {
 
         this.setTitle(title);
         this.setSize(sizeX, sizeY);
-        this.setLayout(new GridBagLayout());
+        //this.setLayout(new GridBagLayout()); UNCOMMENT TO SHOW BEFORE/AFTER
 
+        JTabbedPane tabPanel = new JTabbedPane();
+        tabPanel.setSize(sizeX, sizeY);
+
+        JPanel targetSelectionPanel = new JPanel();
+        targetSelectionPanel.setLayout(new GridBagLayout());
 
         JFileChooser folderSelect = new JFileChooser();
         folderSelect.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-
-        GridBagConstraints gbc = new GridBagConstraints();
+        GridBagConstraints mygbc = new GridBagConstraints();
 
         //Holds components
         JPanel selectionPanel = new JPanel(new GridBagLayout());
         selectionPanel.setBorder(new EmptyBorder(0, 30, 0, 30));
         if (height<=0 || width<=0) {
-            gbc.weightx=1; gbc.fill = GridBagConstraints.HORIZONTAL;
-            this.add(selectionPanel, gbc);
+            mygbc.weightx=1; mygbc.fill = GridBagConstraints.HORIZONTAL;
+            targetSelectionPanel.add(selectionPanel, mygbc);
         } else {
             selectionPanel.setSize(width, height);
-            this.add(selectionPanel);
+            targetSelectionPanel.add(selectionPanel, mygbc);
         }
 
 
-        gbc = new GridBagConstraints();
+        GridBagConstraints gbc = new GridBagConstraints();
 
         //Text field, user can manually enter a path, or select one using the dialogue
         gbc.gridx = 0; gbc.gridy = 0; gbc.fill = GridBagConstraints.BOTH; gbc.weightx = 1;
@@ -64,7 +69,7 @@ public class targetSelectionUI extends JFrame {
         gbc.gridx = 1; gbc.gridy = 0; gbc.fill = GridBagConstraints.NONE; gbc.weightx = 0;
         JButton selectButton = new JButton("SELECT"); selectionPanel.add(selectButton, gbc);
         selectButton.grabFocus();
-        selectButton.addActionListener(_ -> {
+        selectButton.addActionListener((x) -> {
             int returnVal = folderSelect.showOpenDialog(selectionPanel);
             if (returnVal==JFileChooser.APPROVE_OPTION) {
                 filePath.setText(folderSelect.getSelectedFile().getAbsolutePath());
@@ -77,7 +82,7 @@ public class targetSelectionUI extends JFrame {
         //Button to confirm selection and pass on the path to other areas of the project
         gbc.gridx = 0; gbc.gridy = 1; gbc.fill = GridBagConstraints.HORIZONTAL; gbc.gridwidth = 2;
         JButton confirmButton = new JButton("CONFIRM"); selectionPanel.add(confirmButton, gbc);
-        confirmButton.addActionListener(_ -> {
+        confirmButton.addActionListener((x) -> {
             String path = filePath.getText();
             System.out.println(path);
             if (!path.isEmpty()){
@@ -97,8 +102,21 @@ public class targetSelectionUI extends JFrame {
 
 
 
+
+        JPanel testPanel1 = new JPanel();
+        testPanel1.add(new JLabel("This page will display the metrics we calculate as well as our dial widget"));
+
+        JPanel testPanel2 = new JPanel();
+        testPanel2.add(new JLabel("This page will display the source code post-evaluation with syntax highlighting and color coding based on XP adherence"));
+
+        tabPanel.addTab(title, targetSelectionPanel);
+        tabPanel.addTab("Metric Calc and XP Indicator", testPanel1);
+        tabPanel.addTab("Code Visualisation", testPanel2);
+
+        this.add(tabPanel);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
+        this.setResizable(false);
     }
 
 
