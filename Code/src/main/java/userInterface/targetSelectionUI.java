@@ -36,6 +36,12 @@ public class targetSelectionUI extends JFrame {
         JPanel targetSelectionPanel = new JPanel();
         targetSelectionPanel.setLayout(new GridBagLayout());
 
+        JPanel testPanel1 = new JPanel();
+        testPanel1.add(new JLabel("This page will display the metrics we calculate as well as our dial widget"));
+
+        JPanel testPanel2 = new JPanel();
+        testPanel2.add(new JLabel("This page will display the source code post-evaluation with syntax highlighting and color coding based on XP adherence"));
+
         JFileChooser folderSelect = new JFileChooser();
         folderSelect.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
@@ -69,7 +75,7 @@ public class targetSelectionUI extends JFrame {
         gbc.gridx = 1; gbc.gridy = 0; gbc.fill = GridBagConstraints.NONE; gbc.weightx = 0;
         JButton selectButton = new JButton("SELECT"); selectionPanel.add(selectButton, gbc);
         selectButton.grabFocus();
-        selectButton.addActionListener((x) -> {
+        selectButton.addActionListener((x) -> { //had to add "(x) or the lambda wouldnt work"
             int returnVal = folderSelect.showOpenDialog(selectionPanel);
             if (returnVal==JFileChooser.APPROVE_OPTION) {
                 filePath.setText(folderSelect.getSelectedFile().getAbsolutePath());
@@ -82,7 +88,7 @@ public class targetSelectionUI extends JFrame {
         //Button to confirm selection and pass on the path to other areas of the project
         gbc.gridx = 0; gbc.gridy = 1; gbc.fill = GridBagConstraints.HORIZONTAL; gbc.gridwidth = 2;
         JButton confirmButton = new JButton("CONFIRM"); selectionPanel.add(confirmButton, gbc);
-        confirmButton.addActionListener((x) -> {
+        confirmButton.addActionListener((x) -> { //had to add "(x) or the lambda wouldnt work"
             String path = filePath.getText();
             System.out.println(path);
             if (!path.isEmpty()){
@@ -90,6 +96,8 @@ public class targetSelectionUI extends JFrame {
                     Paths.get(path);
                     if (!directoryContainsJava(new File(path))){throw new InvalidPathException(path, "Given path does not contain a java file");}
                     System.out.println("Success, pass on to other modules: "+path);
+                    testPanel1.removeAll(); testPanel1.add(new JLabel("SELECTED DIRECTORY IS: "+filePath.getText()));
+                    testPanel2.removeAll(); testPanel2.add(new JLabel("SELECTED DIRECTORY IS: "+filePath.getText()));
 
                     //Pass on path to be analysed
 
@@ -100,14 +108,6 @@ public class targetSelectionUI extends JFrame {
             }
         });
 
-
-
-
-        JPanel testPanel1 = new JPanel();
-        testPanel1.add(new JLabel("This page will display the metrics we calculate as well as our dial widget"));
-
-        JPanel testPanel2 = new JPanel();
-        testPanel2.add(new JLabel("This page will display the source code post-evaluation with syntax highlighting and color coding based on XP adherence"));
 
         tabPanel.addTab(title, targetSelectionPanel);
         tabPanel.addTab("Metric Calc and XP Indicator", testPanel1);
