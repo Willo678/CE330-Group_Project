@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 
 
 import static utils.directoryContainsJava.directoryContainsJava;
+import static utils.getJavaSubdirectories.getJavaSubdirectories;
 
 public class targetSelectionUI extends JFrame {
     private final int sizeX = 350;
@@ -87,6 +88,12 @@ public class targetSelectionUI extends JFrame {
                     System.out.println("Success, pass on to other modules: "+path);
 
                     //Pass on path to be analysed
+                    for (String p : getJavaSubdirectories(new File(path))){
+                        System.out.println(p);
+                        XP_Metrics.indentationChecker.checkIndentation(p);
+                        System.out.println();
+                    }
+
 
                 } catch (InvalidPathException | NullPointerException e) {
                     System.out.println("Invalid path");
