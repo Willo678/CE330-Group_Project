@@ -3,10 +3,7 @@ package XP_Metrics;
 import javax.lang.model.SourceVersion;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Optional;
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.*;
 
 public class getBracePairs {
 
@@ -16,23 +13,36 @@ public class getBracePairs {
         public int end;
         public String type;
         public String name;
-        int indentation;
+        int nestedness;
 
 
+        public BracePair(int End){
+            end = End;
+        }
 
-        public BracePair(int Start, String Type, String Name, int Indentation){
+        public BracePair(int Start, String Type, String Name, int Nestedness){
             start = Start;
             type = Type;
             name = Name;
-            this.indentation = Indentation;
+            this.nestedness = Nestedness;
         }
 
         @Override
         public String toString(){
-            return "["+start+","+end+","+type+","+name+","+indentation+"]";
+            return "["+start+","+end+","+type+","+name+","+ nestedness +"]";
         }
 
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof BracePair bracePair)) return false;
+            return end > bracePair.end;
+        }
 
+        @Override
+        public int hashCode() {
+            return Objects.hash(start, end, type);
+        }
     }
 
 
@@ -50,11 +60,12 @@ public class getBracePairs {
 
 
         int lineNum = 0;
+        int nestLevel = 0;
         String latestKeyword = null;
         String latestIdentity = null;
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
-            int indentationLevel = (line.length() - line.replaceAll("^(\t| {4})+", "").length())/4;
+
             line = line.replaceAll("([\"']).*(\\1)+|[^a-zA-Z0-9{}\"']+", " ");
             lineNum++;
 
@@ -68,13 +79,14 @@ public class getBracePairs {
                     latestIdentity = Optional.ofNullable(isIdentityStatement(word)).orElse(latestIdentity);
 
                     if (word.contains("{")) {
-                        bracePairStack.push(new BracePair(lineNum, latestKeyword, latestIdentity, indentationLevel));
-                        latestKeyword=null; latestIdentity=null;
+                        bracePairStack.push(new BracePair(lineNum, latestKeyword, latestIdentity, nestLevel));
+                        latestKeyword=null; latestIdentity=null; nestLevel++;
                     }
 
                     if (word.contains("}")) {
                         bracePairStack.peek().end = lineNum;
                         bracePairArrayList.add(bracePairStack.pop());
+                        nestLevel--;
                     }
 
 
@@ -118,8 +130,9 @@ public class getBracePairs {
                      "LONG",
                      "SHORT",
                      "BYTE",
-                     "CHAR"
-                        -> "CLASS";
+                     "CHAR",
+                     "BREAK"
+                        -> null;
             };
         }
 
