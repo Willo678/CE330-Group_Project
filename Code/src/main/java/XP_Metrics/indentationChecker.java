@@ -9,5 +9,6 @@ public class indentationChecker {
         ArrayList<getBracePairs.BracePair> bracePairs = getBracePairs.getBracePairs(path);
 
         System.out.println(bracePairs);
+
     }
 }
