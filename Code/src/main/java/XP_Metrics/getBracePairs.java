@@ -119,7 +119,7 @@ public class getBracePairs {
                      "SHORT",
                      "BYTE",
                      "CHAR"
-                        -> "CLASS";
+                        -> null;
             };
         }
 
