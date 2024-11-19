@@ -19,29 +19,31 @@ public class indentationChecker {
         int lastMethodNestedness = 0;
         int lastEnd = 0;
 
-        for (BracePair p : bracePairs){
+        for (BracePair p : bracePairs) {
 
 
-            if (p.type=="METHOD") {
+            if (p.type == "METHOD") {
                 lastEnd = p.end;
                 lastMethodNestedness = p.nestedness;
-                if (p.type=="METHOD" && ((p.end-p.start)>idealMethodLength)){
-                    int difference = p.end-p.start;
-                    scores.add(new Score(difference/5, "Method at line "+p.start+" is too big ("+difference+" lines)"));
+                if (p.type == "METHOD" && ((p.end - p.start) > idealMethodLength)) {
+                    int difference = p.end - p.start;
+                    scores.add(new Score(difference / 5, "Method at line " + p.start + " is too big (" + difference + " lines)"));
                     //Handle method too big
                     //"Sorry your method is too big"
                 }
             } else {
-                if (p.start>lastEnd){continue;}
-                if ((p.nestedness -lastMethodNestedness)> idealNestedness){
+                if (p.start > lastEnd) {
+                    continue;
+                }
+                if ((p.nestedness - lastMethodNestedness) > idealNestedness) {
                     int difference = p.nestedness - lastMethodNestedness;
-                    scores.add(new Score(difference*5, "Method too nested, at line "+p.start));
+                    scores.add(new Score(difference * 5, "Method too nested, at line " + p.start));
                     //Handle method too nested
                     //Tell the programmer to go **** themselves
                 }
-                if (isControlStatement(p.type) && (((p.end-p.start)>idealControlStatementLength))){
+                if (isControlStatement(p.type) && (((p.end - p.start) > idealControlStatementLength))) {
                     int difference = p.end - p.start;
-                    scores.add(new Score(difference/5, "Control statement at line "+p.start+" is too big ("+difference+" lines)"));
+                    scores.add(new Score(difference / 5, "Control statement at line " + p.start + " is too big (" + difference + " lines)"));
                     //Handle control statement too big
                     //"Why don't you create a method to handle this statement?"
                 }
@@ -54,20 +56,16 @@ public class indentationChecker {
         return scores;
     }
 
-    private static boolean isControlStatement(String s){
-        return switch (s){
+    private static boolean isControlStatement(String s) {
+        return switch (s) {
             default -> false;
             case "FOR",
                  "WHILE",
                  "IF",
                  "ELSE",
-                 "SWITCH"
-                        -> true;
+                 "SWITCH" -> true;
         };
     }
-
-
-
 
 
 //    private static void checkMethod(ArrayList<BracePair> bracePairs, int index){

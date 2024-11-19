@@ -15,7 +15,7 @@ public class CodeAnalysis {
         String[] codeLines = codeConversion("src/CodeAnalysis.java");
         // for each line in file
         // test
-        for(String line : codeLines){
+        for (String line : codeLines) {
             System.out.println(line);
         }
 
@@ -25,23 +25,23 @@ public class CodeAnalysis {
 
     }
 
-    public String[] codeConversion(String fileName){
+    public String[] codeConversion(String fileName) {
         ArrayList<String> lines = new ArrayList<>();
-        try{
+        try {
             File codeFile = new File(fileName);
             Scanner codeScan = new Scanner(codeFile);
             String line;
-            while((codeScan.hasNextLine())){
+            while ((codeScan.hasNextLine())) {
                 line = codeScan.nextLine();
                 lines.add(line);
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             System.out.println(e);
         }
         return lines.toArray(new String[0]);
     }
 
-    public void codeLineTypeAnalysis(String[] code){
+    public void codeLineTypeAnalysis(String[] code) {
         System.out.println("This should check each line and give it a type" +
                 "\ne.g. class, comment, method, whitespace");
         String[] lineType = new String[]{"class", "comment", "method", "code", "whitespace"};
@@ -49,16 +49,18 @@ public class CodeAnalysis {
         // key = line number
         // object: string from lineType
     }
-    public void methodNameAnalysis(String[] code){
-        for(String line : code){
-            if(line.contains("public") || line.contains("private")){
+
+    public void methodNameAnalysis(String[] code) {
+        for (String line : code) {
+            if (line.contains("public") || line.contains("private")) {
                 System.out.println("Found something: " + line);
             }
         }
     }
-    public void methodCommentAnalysis(String[] code){
-        for(String line : code){
-            if(line.contains("//")){
+
+    public void methodCommentAnalysis(String[] code) {
+        for (String line : code) {
+            if (line.contains("//")) {
                 System.out.println("Found something: " + line);
             }
         }

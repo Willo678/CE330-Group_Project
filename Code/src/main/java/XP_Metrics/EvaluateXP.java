@@ -1,6 +1,7 @@
 package XP_Metrics;
 
 import java.util.ArrayList;
+
 import XP_Metrics.getBracePairs.*;
 
 public class EvaluateXP {
@@ -20,11 +21,11 @@ public class EvaluateXP {
 
     public int normalisedScore() {
         return sumScoreArray(scoreIndentation)
-                +scoreClassStructure+scoreMethodStructure;
+                + scoreClassStructure + scoreMethodStructure;
     }
 
     private static int sumScoreArray(ArrayList<Score> scoreArray) {
-        return scoreArray.stream().mapToInt(a -> ((Score)a).score).sum();
+        return scoreArray.stream().mapToInt(a -> ((Score) a).score).sum();
     }
 
 }

@@ -18,11 +18,11 @@ public class getBracePairs {
         int indentationLevel;
 
 
-        public BracePair(int End){
+        public BracePair(int End) {
             end = End;
         }
 
-        public BracePair(int Start, String Type, String Name, int Nestedness, int Indentation){
+        public BracePair(int Start, String Type, String Name, int Nestedness, int Indentation) {
             start = Start;
             type = Type;
             name = Name;
@@ -31,8 +31,8 @@ public class getBracePairs {
         }
 
         @Override
-        public String toString(){
-            return "["+start+","+end+","+type+","+name+","+nestedness+","+indentationLevel+"]";
+        public String toString() {
+            return "[" + start + "," + end + "," + type + "," + name + "," + nestedness + "," + indentationLevel + "]";
         }
 
         @Override
@@ -50,7 +50,7 @@ public class getBracePairs {
 
 
     //Returns an arraylist of Bracepairs for a given class
-    public static ArrayList<BracePair> getBracePairs(String path){
+    public static ArrayList<BracePair> getBracePairs(String path) {
         Scanner scanner;
         try {
             scanner = new Scanner(new File(path));
@@ -70,7 +70,7 @@ public class getBracePairs {
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
 
-            int indentLevel = (line.length()-line.replaceAll("^(\\t| {4})+", "").length())/4;
+            int indentLevel = (line.length() - line.replaceAll("^(\\t| {4})+", "").length()) / 4;
             lineNum++;
 
             //Removes all non word or brace characters
@@ -79,7 +79,9 @@ public class getBracePairs {
 
             //Breaks up each line into statements in the case that a line contains multiple statements
             for (String statement : line.split(";")) {
-                if (statement.contains("//")) {break;}
+                if (statement.contains("//")) {
+                    break;
+                }
                 Scanner s = new Scanner(statement);
 
                 //Iterates through statement word by word, rather than using .contains("{") to prevent errors if multiple curly brackets occur
@@ -93,7 +95,9 @@ public class getBracePairs {
                     //If "{" detected, adds new bracepair to the stack
                     if (word.contains("{")) {
                         bracePairStack.push(new BracePair(lineNum, latestKeyword, latestIdentity, nestLevel, indentLevel));
-                        latestKeyword=null; latestIdentity=null; nestLevel++;
+                        latestKeyword = null;
+                        latestIdentity = null;
+                        nestLevel++;
                     }
 
                     //If "}" detected, updates the end value of the top item of the stack, and moves it from the stack to arraylist
@@ -108,7 +112,7 @@ public class getBracePairs {
         }
 
         //Sorts arraylist so that pairs that start earlier are first in the array
-        bracePairArrayList.sort((a, b)-> ((a.start>b.start) ? 1 : -1));
+        bracePairArrayList.sort((a, b) -> ((a.start > b.start) ? 1 : -1));
 
 
         System.out.println(bracePairArrayList);
@@ -117,28 +121,33 @@ public class getBracePairs {
     }
 
     //Returns whether a given string is a Java keyword, an identifier, or a name
-    private static String identify(String s){
+    private static String identify(String s) {
         s = s.replaceAll("\\W", "");
-        if (SourceVersion.isKeyword(s)) { return "KEYWORD";}
-        if (SourceVersion.isIdentifier(s)) { return "IDENTIFIER";}
-        if (SourceVersion.isName(s)) { return "NAME";}
+        if (SourceVersion.isKeyword(s)) {
+            return "KEYWORD";
+        }
+        if (SourceVersion.isIdentifier(s)) {
+            return "IDENTIFIER";
+        }
+        if (SourceVersion.isName(s)) {
+            return "NAME";
+        }
 
         return "UNIDENTIFIED";
     }
 
     //Detects if given string is a reserved Java keyword
-    private static String isControlStatement(String s){
+    private static String isControlStatement(String s) {
         s = s.replaceAll("(([\"']).*(\\2)+|\\W)+", "");
         if (SourceVersion.isKeyword(s)) {
             s = s.toUpperCase();
-            return switch (s){
+            return switch (s) {
                 default -> s;
                 case "PUBLIC", //If any of these words are detected, identifies as method declaration
                      "PRIVATE",
                      "PROTECTED",
                      "STATIC",
-                     "VOID"
-                        -> "METHOD";
+                     "VOID" -> "METHOD";
                 case "NULL", //Java primitives are also identified as keywords; prevents being identified as such
                      "INT",
                      "DOUBLE",
@@ -147,8 +156,7 @@ public class getBracePairs {
                      "SHORT",
                      "BYTE",
                      "CHAR",
-                     "BREAK"
-                        -> null;
+                     "BREAK" -> null;
             };
         }
 
@@ -156,7 +164,7 @@ public class getBracePairs {
     }
 
     //Detects if given string is a valid variable name
-    private static String isIdentityStatement(String s){
+    private static String isIdentityStatement(String s) {
         s = s.replaceAll("(([\"']).*(\\2)+|\\W)+", "");
         if (SourceVersion.isIdentifier(s)) {
             return s.toUpperCase();
