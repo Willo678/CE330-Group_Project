@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import static XP_Metrics.getBracePairs.*;
 
 public class ScoringMetric {
-    int score = 0;
 
-    String path = "D:\\Year 3\\Visualising Algorithims\\Project - Vis. DS\\24-25_CE301_flatman_oska/Graphs.java";
-    int indentationThreshold = 3;
 
-    public void analyzeBracePairs() {
+    static String path = "D:\\Year 3\\Visualising Algorithims\\Project - Vis. DS\\24-25_CE301_flatman_oska/Graphs.java";
+
+
+    public static int analyzeBracePairsIndentation(String path, int indentationThreshold) {
+        int score = 0;
 
         ArrayList<BracePair> bracePairs = getBracePairs(path);
 
@@ -19,16 +20,20 @@ public class ScoringMetric {
                 System.out.println("BracePair with indentation > " + indentationThreshold + ": " + bracePair);
                 score -= 2;
 
-            }else
-                score +=1;
-            }
-        System.out.println ("score for class indentation: " +score);
+            } else
+                score += 1;
         }
-
-
-
-    public static void main(String[] args) {
-        ScoringMetric scoringMetric = new ScoringMetric();
-        scoringMetric.analyzeBracePairs();
+        System.out.println("score for class indentation: " + score);
+        return score;
     }
 }
+
+/*
+    public static void main(String[] args) {
+        ScoringMetric scoringMetric = new ScoringMetric();
+        scoringMetric.analyzeBracePairsIndentation(path,3);
+    }
+}
+
+
+ */
