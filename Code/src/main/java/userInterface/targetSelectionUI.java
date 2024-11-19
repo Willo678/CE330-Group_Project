@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 
 import static utils.directoryContainsJava.directoryContainsJava;
 
-public class targetSelectionUI extends JFrame {
+public class targetSelectionUI extends JPanel {
     private final int sizeX = 500;
     private final int sizeY = 650;
     private final String title = "Project Selection";
@@ -24,41 +24,27 @@ public class targetSelectionUI extends JFrame {
 
     public targetSelectionUI(int width, int height){
 
-
-        this.setTitle(title);
         this.setSize(sizeX, sizeY);
         //this.setLayout(new GridBagLayout()); UNCOMMENT TO SHOW BEFORE/AFTER
-
-        JTabbedPane tabPanel = new JTabbedPane();
-        tabPanel.setSize(sizeX, sizeY);
-
-        JPanel targetSelectionPanel = new JPanel();
-        targetSelectionPanel.setLayout(new GridBagLayout());
-
-        JPanel testPanel1 = new JPanel();
-        testPanel1.add(new JLabel("This page will display the metrics we calculate as well as our dial widget"));
-
-        JPanel testPanel2 = new JPanel();
-        testPanel2.add(new JLabel("This page will display the source code post-evaluation with syntax highlighting and color coding based on XP adherence"));
 
         JFileChooser folderSelect = new JFileChooser();
         folderSelect.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-        GridBagConstraints mygbc = new GridBagConstraints();
+        GridBagConstraints gbc = new GridBagConstraints();
 
         //Holds components
         JPanel selectionPanel = new JPanel(new GridBagLayout());
         selectionPanel.setBorder(new EmptyBorder(0, 30, 0, 30));
         if (height<=0 || width<=0) {
-            mygbc.weightx=1; mygbc.fill = GridBagConstraints.HORIZONTAL;
-            targetSelectionPanel.add(selectionPanel, mygbc);
+            gbc.weightx=1; gbc.fill = GridBagConstraints.HORIZONTAL;
+            this.add(selectionPanel, gbc);
         } else {
             selectionPanel.setSize(width, height);
-            targetSelectionPanel.add(selectionPanel, mygbc);
+            this.add(selectionPanel, gbc);
         }
 
 
-        GridBagConstraints gbc = new GridBagConstraints();
+        gbc = new GridBagConstraints();
 
         //Text field, user can manually enter a path, or select one using the dialogue
         gbc.gridx = 0; gbc.gridy = 0; gbc.fill = GridBagConstraints.BOTH; gbc.weightx = 1;
@@ -95,8 +81,6 @@ public class targetSelectionUI extends JFrame {
                     Paths.get(path);
                     if (!directoryContainsJava(new File(path))){throw new InvalidPathException(path, "Given path does not contain a java file");}
                     System.out.println("Success, pass on to other modules: "+path);
-                    testPanel1.removeAll(); testPanel1.add(new JLabel("SELECTED DIRECTORY IS: "+filePath.getText()));
-                    testPanel2.removeAll(); testPanel2.add(new JLabel("SELECTED DIRECTORY IS: "+filePath.getText()));
 
                     //Pass on path to be analysed
 
@@ -108,12 +92,8 @@ public class targetSelectionUI extends JFrame {
         });
 
 
-        tabPanel.addTab(title, targetSelectionPanel);
-        tabPanel.addTab("Metric Calc and XP Indicator", testPanel1);
-        tabPanel.addTab("Code Visualisation", testPanel2);
 
-        this.add(tabPanel);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
         this.setVisible(true);
         //this.setResizable(false);
     }
