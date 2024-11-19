@@ -1,4 +1,10 @@
 package userInterface;
 
-public class codeMetricsUI {
+import javax.swing.*;
+
+public class codeMetricsUI extends JPanel {
+    public codeMetricsUI() {
+        super();
+        this.add(new JLabel("Code Metrics"));
+    }
 }
