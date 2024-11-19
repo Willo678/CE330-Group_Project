@@ -15,8 +15,8 @@ import static utils.directoryContainsJava.directoryContainsJava;
 import static utils.getJavaSubdirectories.getJavaSubdirectories;
 
 public class targetSelectionUI extends JFrame {
-    private final int sizeX = 350;
-    private final int sizeY = 650;
+    private final int sizeX = 400;
+    private final int sizeY = 200;
     private final String title = "Project Selection";
 
     public targetSelectionUI(){
@@ -93,6 +93,8 @@ public class targetSelectionUI extends JFrame {
                         XP_Metrics.indentationChecker.checkIndentation(p);
                         System.out.println();
                     }
+                    this.setVisible(false);
+                    new fileViewerUI(); //UI
 
 
                 } catch (InvalidPathException | NullPointerException e) {
@@ -102,7 +104,6 @@ public class targetSelectionUI extends JFrame {
             }
         });
 
-        this.setSize(400, 200);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
