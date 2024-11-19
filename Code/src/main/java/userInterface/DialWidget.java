@@ -113,7 +113,7 @@ public class DialWidget extends JPanel {
                 if (!path.isEmpty()) {
                     int xpValue = 50;
                     dial.updateXPdiness(xpValue);
-                    System.out.println("XP符合度: " + xpValue);
+                    System.out.println("XP Conformance: " + xpValue);
                 }
             }
         });
