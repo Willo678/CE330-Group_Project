@@ -1,4 +1,5 @@
-package XP_Metrics;// written by sj22795
+package XP_Metrics;
+// written by sj22795
 // code cleanliness check first draft
 
 import java.io.File;
