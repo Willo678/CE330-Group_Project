@@ -1,5 +1,6 @@
 package userInterface;
 
+import XP_Metrics.EvaluateXP;
 import utils.hintTextField;
 
 import javax.swing.*;
@@ -91,7 +92,9 @@ public class targetSelectionUI extends JFrame {
                     //Pass on path to be analysed
                     for (String p : getJavaSubdirectories(new File(path))){
                         System.out.println(p);
-                        checkIndentation(p);
+                        EvaluateXP evaluator = new EvaluateXP(p);
+                        System.out.println(evaluator.scoreIndentation);
+                        System.out.println(evaluator.normalisedScore());
                         System.out.println();
                     }
 

@@ -111,7 +111,7 @@ public class getBracePairs {
         bracePairArrayList.sort((a, b)-> ((a.start>b.start) ? 1 : -1));
 
 
-        //System.out.println(bracePairArrayList);
+        System.out.println(bracePairArrayList);
 
         return bracePairArrayList;
     }
