@@ -5,7 +5,6 @@ import utils.hintTextField;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.JTabbedPane;
 import java.awt.*;
 import java.io.File;
 import java.nio.file.InvalidPathException;
@@ -116,7 +115,7 @@ public class targetSelectionUI extends JFrame {
         this.add(tabPanel);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
-        this.setResizable(false);
+        //this.setResizable(false);
     }
 
 
