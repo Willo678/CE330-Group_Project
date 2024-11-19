@@ -65,7 +65,7 @@ public class targetSelectionUI extends JFrame {
         gbc.gridx = 1; gbc.gridy = 0; gbc.fill = GridBagConstraints.NONE; gbc.weightx = 0;
         JButton selectButton = new JButton("SELECT"); selectionPanel.add(selectButton, gbc);
         selectButton.grabFocus();
-        selectButton.addActionListener(_ -> {
+        selectButton.addActionListener(A -> {
             int returnVal = folderSelect.showOpenDialog(selectionPanel);
             if (returnVal==JFileChooser.APPROVE_OPTION) {
                 filePath.setText(folderSelect.getSelectedFile().getAbsolutePath());
@@ -78,7 +78,7 @@ public class targetSelectionUI extends JFrame {
         //Button to confirm selection and pass on the path to other areas of the project
         gbc.gridx = 0; gbc.gridy = 1; gbc.fill = GridBagConstraints.HORIZONTAL; gbc.gridwidth = 2;
         JButton confirmButton = new JButton("CONFIRM"); selectionPanel.add(confirmButton, gbc);
-        confirmButton.addActionListener(_ -> {
+        confirmButton.addActionListener(A -> {
             String path = filePath.getText();
             System.out.println(path);
             if (!path.isEmpty()){
