@@ -1,5 +1,6 @@
 package userInterface;
 
+import XP_Metrics.EvaluateXP;
 import utils.hintTextField;
 
 import javax.swing.*;
@@ -11,12 +12,13 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 
 
+import static XP_Metrics.indentationChecker.checkIndentation;
 import static utils.directoryContainsJava.directoryContainsJava;
 import static utils.getJavaSubdirectories.getJavaSubdirectories;
 
 public class targetSelectionUI extends JFrame {
-    private final int sizeX = 400;
-    private final int sizeY = 200;
+    private final int sizeX = 350;
+    private final int sizeY = 650;
     private final String title = "Project Selection";
 
     public targetSelectionUI(){
@@ -65,7 +67,7 @@ public class targetSelectionUI extends JFrame {
         gbc.gridx = 1; gbc.gridy = 0; gbc.fill = GridBagConstraints.NONE; gbc.weightx = 0;
         JButton selectButton = new JButton("SELECT"); selectionPanel.add(selectButton, gbc);
         selectButton.grabFocus();
-        selectButton.addActionListener(A -> {
+        selectButton.addActionListener(a -> {
             int returnVal = folderSelect.showOpenDialog(selectionPanel);
             if (returnVal==JFileChooser.APPROVE_OPTION) {
                 filePath.setText(folderSelect.getSelectedFile().getAbsolutePath());
@@ -78,7 +80,7 @@ public class targetSelectionUI extends JFrame {
         //Button to confirm selection and pass on the path to other areas of the project
         gbc.gridx = 0; gbc.gridy = 1; gbc.fill = GridBagConstraints.HORIZONTAL; gbc.gridwidth = 2;
         JButton confirmButton = new JButton("CONFIRM"); selectionPanel.add(confirmButton, gbc);
-        confirmButton.addActionListener(A -> {
+        confirmButton.addActionListener(a -> {
             String path = filePath.getText();
             System.out.println(path);
             if (!path.isEmpty()){
@@ -90,11 +92,11 @@ public class targetSelectionUI extends JFrame {
                     //Pass on path to be analysed
                     for (String p : getJavaSubdirectories(new File(path))){
                         System.out.println(p);
-                        XP_Metrics.indentationChecker.checkIndentation(p);
+                        EvaluateXP evaluator = new EvaluateXP(p);
+                        System.out.println(evaluator.scoreIndentation);
+                        System.out.println(evaluator.normalisedScore());
                         System.out.println();
                     }
-                    this.setVisible(false);
-                    new fileViewerUI(); //UI
 
 
                 } catch (InvalidPathException | NullPointerException e) {
@@ -104,9 +106,9 @@ public class targetSelectionUI extends JFrame {
             }
         });
 
-        this.setResizable(false);
-        this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 
