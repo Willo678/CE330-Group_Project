@@ -1,5 +1,6 @@
 package userInterface;
 
+import XP_Metrics.EvaluateXP;
 import utils.hintTextField;
 
 import javax.swing.*;
@@ -11,7 +12,9 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 
 
+import static XP_Metrics.indentationChecker.checkIndentation;
 import static utils.directoryContainsJava.directoryContainsJava;
+import static utils.getJavaSubdirectories.getJavaSubdirectories;
 
 public class targetSelectionUI extends JPanel {
 
@@ -77,6 +80,14 @@ public class targetSelectionUI extends JPanel {
                     System.out.println("Success, pass on to other modules: "+path);
 
                     //Pass on path to be analysed
+                    for (String p : getJavaSubdirectories(new File(path))){
+                        System.out.println(p);
+                        //EvaluateXP evaluator = new EvaluateXP(p);
+                        //System.out.println(evaluator.scoreIndentation);
+                       // System.out.println(evaluator.normalisedScore());
+                        //System.out.println();
+                    }
+
 
                 } catch (InvalidPathException | NullPointerException e) {
                     System.out.println("Invalid path");
@@ -86,10 +97,7 @@ public class targetSelectionUI extends JPanel {
         });
 
 
-
-
         this.setVisible(true);
-        //this.setResizable(false);
     }
 
 
