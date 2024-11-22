@@ -1,6 +1,7 @@
 package XP_Metrics;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import XP_Metrics.getBracePairs.*;
 
@@ -20,12 +21,26 @@ public class EvaluateXP {
     }
 
     public int normalisedScore() {
-        return sumScoreArray(scoreIndentation)
-                + scoreClassStructure + scoreMethodStructure;
+        //Indentation, class structure, method structure (add as necessary)
+        int[] weights = new int[]{25,25,25};
+        int[] percentages = new int[]{getScorePercentage(scoreIndentation), scoreClassStructure, scoreMethodStructure};
+
+
+        int weightTotal = Arrays.stream(weights).sum();
+        int result = 0;
+        for (int i=0; i<weights.length; i++){
+            result += percentages[i]*(weights[i]/weightTotal);
+        }
+        return result;
+
     }
 
     private static int sumScoreArray(ArrayList<Score> scoreArray) {
-        return scoreArray.stream().mapToInt(a -> ((Score) a).score).sum();
+        return scoreArray.stream().mapToInt(a -> a.score).sum();
+    }
+
+    private static int getScorePercentage(ArrayList<Score> scoreArray) {
+        return Math.max((100-sumScoreArray(scoreArray)), 0);
     }
 
 }
