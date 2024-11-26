@@ -70,9 +70,9 @@ public class indentationChecker {
     }
 
 
-        tokenArrayList.sort((a, b)-> ((a.start>b.start) ? 1 : -1));
-        return tokenArrayList;
-    }
+//        tokenArrayList.sort((a, b)-> ((a.start>b.start) ? 1 : -1));
+//        return tokenArrayList;
+//    }
 
 
 

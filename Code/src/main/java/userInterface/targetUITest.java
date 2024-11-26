@@ -11,7 +11,6 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.io.File;
 import java.nio.file.InvalidPathException;
-
 import java.util.ArrayList;
 
 import static utils.directoryContainsJava.directoryContainsJava;
@@ -20,12 +19,11 @@ import static utils.getJavaSubdirectories.getJavaSubdirectories;
 public class targetUITest extends JFrame {
     private final int sizeX = 350;
     private final int sizeY = 650;
-    private final String title = "Project Selection";
+    private final String title = "XPdiness Analysis and Dashboard";
 
     private String analyzeJavaFile(File javaFile) {
         StringBuilder result = new StringBuilder();
         try {
-
             TokeniserTest tokeniser = new TokeniserTest();
             ArrayList<TokeniserTest.Token> tokens = tokeniser.preprocess(javaFile.getAbsolutePath());
 
@@ -39,12 +37,45 @@ public class targetUITest extends JFrame {
             result.append("  Function Structure Score   : ").append(functionScore).append("\n");
             result.append("  Indentation Structure Score: ").append(indentationScore).append("\n");
             result.append("  Overall XPdiness Score     : ").append(XPdiness).append("\n\n");
+
+            displayDials(classScore, functionScore, indentationScore, XPdiness);
+
         } catch (Exception e) {
             result.append("Error analyzing file: ").append(javaFile.getName()).append("\n");
             result.append(e.getMessage()).append("\n\n");
         }
         return result.toString();
     }
+
+    private void displayDials(double classScore, double functionScore, double indentationScore, double totalScore) {
+        JFrame dashboardFrame = new JFrame("XPdiness Dashboard");
+        dashboardFrame.setSize(600, 600);
+        dashboardFrame.setLayout(new GridLayout(4, 1));
+
+        DialPanel classDial = new DialPanel("Class Structure Score");
+        DialPanel functionDial = new DialPanel("Function Structure Score");
+        DialPanel indentationDial = new DialPanel("Indentation Structure Score");
+
+        dashboardFrame.add(classDial);
+        dashboardFrame.add(functionDial);
+        dashboardFrame.add(indentationDial);
+
+        JPanel totalPanel = new JPanel();
+        JLabel totalScoreLabel = new JLabel("Overall XPdiness Score: " + totalScore);
+        totalPanel.add(totalScoreLabel);
+        dashboardFrame.add(totalPanel);
+
+        dashboardFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        dashboardFrame.setVisible(true);
+
+        classDial.setScore(classScore / 100.0);
+        functionDial.setScore(functionScore / 100.0);
+        indentationDial.setScore(indentationScore / 100.0);
+
+        dashboardFrame.revalidate();
+        dashboardFrame.repaint();
+    }
+
     public static ArrayList<File> getAllJavaFile(File directory) {
         ArrayList<File> javaFiles = new ArrayList<>();
         if (directory.isDirectory()) {
@@ -76,7 +107,6 @@ public class targetUITest extends JFrame {
 
         GridBagConstraints gbc = new GridBagConstraints();
 
-        // Holds components
         JPanel selectionPanel = new JPanel(new GridBagLayout());
         selectionPanel.setBorder(new EmptyBorder(0, 30, 0, 30));
         if (height <= 0 || width <= 0) {
@@ -90,41 +120,38 @@ public class targetUITest extends JFrame {
 
         gbc = new GridBagConstraints();
 
-        // Text field, user can manually enter a path, or select one using the dialogue
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 1;
         JTextField filePath = new JTextField("Select a project directory:");
         selectionPanel.add(filePath, gbc);
-        filePath.setBackground(new Color(0xD1D1D1));
-        filePath.setForeground(new Color(0x5C5C5C));
+        filePath.setBackground(Color.WHITE);
+        filePath.setForeground(Color.BLACK);
         filePath.setBorder(new LineBorder(new Color(0), 1));
-        filePath.setFont(filePath.getFont().deriveFont(Font.ITALIC, 10));
+        filePath.setFont(filePath.getFont().deriveFont(Font.PLAIN, 12));
         filePath.setMargin(new Insets(3, 10, 3, 0));
 
-        // Button to trigger the file select dialogue
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.weightx = 0;
         JButton selectButton = new JButton("SELECT");
         selectionPanel.add(selectButton, gbc);
-        selectButton.addActionListener(_ -> {
+        selectButton.addActionListener(A -> {
             int returnVal = folderSelect.showOpenDialog(selectionPanel);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 filePath.setText(folderSelect.getSelectedFile().getAbsolutePath());
             }
         });
 
-        // Button to confirm selection and pass on the path to other areas of the project
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridwidth = 2;
         JButton confirmButton = new JButton("CONFIRM");
         selectionPanel.add(confirmButton, gbc);
-        confirmButton.addActionListener(_ -> {
+        confirmButton.addActionListener(A -> {
             String path = filePath.getText();
             if (!path.isEmpty()) {
                 try {
@@ -136,7 +163,6 @@ public class targetUITest extends JFrame {
                     StringBuilder result = new StringBuilder("=== XPdiness Analysis Results ===\n");
 
                     if (projectFile.isDirectory()) {
-                        // If it is a directory, check whether it contains Java files
                         if (!directoryContainsJava(projectFile)) {
                             throw new InvalidPathException(path, "The directory does not contain any Java files.");
                         }
