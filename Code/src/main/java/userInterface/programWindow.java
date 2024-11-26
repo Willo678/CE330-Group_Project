@@ -5,12 +5,19 @@ import javax.swing.*;
 public class programWindow extends JFrame {
 
     JTabbedPane tabbedPane = new JTabbedPane();
+    targetSelectionUI targetSelectionUI = new targetSelectionUI();
+    sourceCodeDisplayUI sourceCodeDisplayUI = new sourceCodeDisplayUI();
+    codeMetricsUI codeMetricsUI = new codeMetricsUI();
+
+    public userInterface.targetSelectionUI getTargetSelectionUI() {
+        return targetSelectionUI;
+    }
 
     public programWindow() {
 
-        tabbedPane.addTab("Target Selection", new targetSelectionUI());
-        tabbedPane.addTab("Source Code Display", new sourceCodeDisplayUI());
-        tabbedPane.addTab("Code Metrics", new codeMetricsUI());
+        tabbedPane.addTab("Target Selection", targetSelectionUI);
+        tabbedPane.addTab("Source Code Display",sourceCodeDisplayUI);
+        tabbedPane.addTab("Code Metrics", codeMetricsUI);
 
         this.add(tabbedPane);
 

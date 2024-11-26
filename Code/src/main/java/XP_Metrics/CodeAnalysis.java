@@ -5,65 +5,49 @@ package XP_Metrics;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import XP_Metrics.getTokens.Token;
 // import a spellcheck library
 
 public class CodeAnalysis {
 
-    public CodeAnalysis() {
+    public CodeAnalysis(ArrayList<Token> tokenList) {
         // temporary file
-        String[] codeLines = codeConversion("src/CodeAnalysis.java");
         // for each line in file
         // test
-        for (String line : codeLines) {
-            System.out.println(line);
-        }
 
-        methodNameAnalysis(codeLines);
-        methodCommentAnalysis(codeLines);
-        codeLineTypeAnalysis(codeLines);
+
+        methodNameAnalysis(tokenList.stream().filter(getTokens.BracePair.class::isInstance).map(getTokens.BracePair.class::cast).toList());
+//        methodCommentAnalysis(tokenList);
+//        codeLineTypeAnalysis(tokenList);
 
     }
 
-    public String[] codeConversion(String fileName) {
-        ArrayList<String> lines = new ArrayList<>();
-        try {
-            File codeFile = new File(fileName);
-            Scanner codeScan = new Scanner(codeFile);
-            String line;
-            while ((codeScan.hasNextLine())) {
-                line = codeScan.nextLine();
-                lines.add(line);
-            }
-        } catch (IOException e) {
-            System.out.println(e);
-        }
-        return lines.toArray(new String[0]);
-    }
 
-    public void codeLineTypeAnalysis(String[] code) {
+    public void codeLineTypeAnalysis(List<Token> tokens) {
         System.out.println("This should check each line and give it a type" +
                 "\ne.g. class, comment, method, whitespace");
         String[] lineType = new String[]{"class", "comment", "method", "code", "whitespace"};
+
         // return hashmap?
         // key = line number
         // object: string from lineType
     }
 
-    public void methodNameAnalysis(String[] code) {
-        for (String line : code) {
-            if (line.contains("public") || line.contains("private")) {
-                System.out.println("Found something: " + line);
+    public void methodNameAnalysis(List<getTokens.BracePair> bracePairs) {
+        for (getTokens.BracePair bracePair : bracePairs) {
+            if (bracePair.type == "METHOD") {
+                String methodName = bracePair.name;
+                System.out.println(methodName);
             }
+
+
         }
     }
 
-    public void methodCommentAnalysis(String[] code) {
-        for (String line : code) {
-            if (line.contains("//")) {
-                System.out.println("Found something: " + line);
-            }
-        }
+    public void methodCommentAnalysis(List<Token> tokens) {
+
     }
 
 }
