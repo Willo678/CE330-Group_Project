@@ -21,10 +21,9 @@ public class getTokens {
             this.name = name;
             this.indentationLevel = indentationLevel;
         }
-
         @Override
         public String toString() {
-            return "[" + start + "," + type + "," + name + "," + indentationLevel + "]";
+            return "[" + start +  "," + type + "," + name +  "," + indentationLevel + "]";
         }
 
         public boolean equals(Object o) {
@@ -37,8 +36,12 @@ public class getTokens {
     //Stores the start and end of a set of curly braces,
     //along with the type (method, class, if, while, etc.) and the name
     public static class BracePair extends Token {
+        public int start;
         public int end;
+        public String type;
+        public String name;
         int nestedness;
+        int indentationLevel;
 
 
 
@@ -91,14 +94,17 @@ public class getTokens {
             lineNum++;
 
             //Removes all non word or brace characters
-            line = line.replaceAll("([\"']).*(\\1)+|[^a-zA-Z0-9{}\"/']+", " ");
+            line = line.replaceAll("([\"']).*(\\1)+|[^a-zA-Z0-9{}\"']+", " ");
 
 
             //Breaks up each line into statements in the case that a line contains multiple statements
             for (String statement : line.split(";")) {
                 if (statement.contains("//")) {
                     tokenArrayList.add(new Token(lineNum, "Comment", statement, indentLevel));
-                    continue;
+                    break;
+                }
+                if (statement.contains("import")) {
+                    tokenArrayList.add(new Token(lineNum, "Import", statement, indentLevel));
                 }
                 Scanner s = new Scanner(statement);
 
@@ -131,8 +137,6 @@ public class getTokens {
 
         //Sorts arraylist so that pairs that start earlier are first in the array
         tokenArrayList.sort((a, b) -> ((a.start > b.start) ? 1 : -1));
-
-        System.out.println(tokenArrayList);
 
         return tokenArrayList;
     }
