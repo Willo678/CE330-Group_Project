@@ -22,7 +22,6 @@ public class targetUITest extends JFrame {
     private final String title = "XPdiness Analysis and Dashboard";
 
     private String analyzeJavaFile(File javaFile) {
-        StringBuilder result = new StringBuilder();
         try {
             TokeniserTest tokeniser = new TokeniserTest();
             ArrayList<TokeniserTest.Token> tokens = tokeniser.preprocess(javaFile.getAbsolutePath());
@@ -32,19 +31,11 @@ public class targetUITest extends JFrame {
             double indentationScore = indentationChecker.checkIndentation(tokens);
             double XPdiness = (classScore * 0.5) + (functionScore * 0.25) + (indentationScore * 0.25);
 
-            result.append("File: ").append(javaFile.getName()).append("\n");
-            result.append("  Class Structure Score      : ").append(classScore).append("\n");
-            result.append("  Function Structure Score   : ").append(functionScore).append("\n");
-            result.append("  Indentation Structure Score: ").append(indentationScore).append("\n");
-            result.append("  Overall XPdiness Score     : ").append(XPdiness).append("\n\n");
-
             displayDials(classScore, functionScore, indentationScore, XPdiness);
 
         } catch (Exception e) {
-            result.append("Error analyzing file: ").append(javaFile.getName()).append("\n");
-            result.append(e.getMessage()).append("\n\n");
         }
-        return result.toString();
+        return "";
     }
 
     private void displayDials(double classScore, double functionScore, double indentationScore, double totalScore) {
@@ -103,7 +94,7 @@ public class targetUITest extends JFrame {
         this.setLayout(new GridBagLayout());
 
         JFileChooser folderSelect = new JFileChooser();
-        folderSelect.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        folderSelect.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -160,8 +151,6 @@ public class targetUITest extends JFrame {
                         throw new InvalidPathException(path, "Path does not exist.");
                     }
 
-                    StringBuilder result = new StringBuilder("=== XPdiness Analysis Results ===\n");
-
                     if (projectFile.isDirectory()) {
                         if (!directoryContainsJava(projectFile)) {
                             throw new InvalidPathException(path, "The directory does not contain any Java files.");
@@ -179,19 +168,16 @@ public class targetUITest extends JFrame {
                         for (String subdirectory : subdirectories) {
                             ArrayList<File> javaFiles = getAllJavaFile(new File(subdirectory));
                             for (File javaFile : javaFiles) {
-                                result.append(analyzeJavaFile(javaFile));
+                                analyzeJavaFile(javaFile); // 仅通过仪表盘显示
                             }
                         }
 
                     } else if (projectFile.isFile() && projectFile.getName().endsWith(".java")) {
-                        result.append(analyzeJavaFile(projectFile));
+                        analyzeJavaFile(projectFile); // 仅通过仪表盘显示
 
                     } else {
                         throw new InvalidPathException(path, "Path is not a valid Java file or directory.");
                     }
-
-                    // Show result
-                    JOptionPane.showMessageDialog(this, result.toString(), "Analysis Complete", JOptionPane.INFORMATION_MESSAGE);
 
                 } catch (InvalidPathException e) {
                     JOptionPane.showMessageDialog(this,
