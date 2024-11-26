@@ -8,8 +8,7 @@ public class getJavaSubdirectories {
     public static ArrayList<String> getJavaSubdirectories(File f){
         ArrayList<String> l = new ArrayList<>();
 
-        int dotIndex = f.getName().lastIndexOf('.');
-        boolean isJava = (dotIndex==-1) ? false : f.getName().substring(dotIndex).equals(".java");
+        boolean isJava = f.getName().endsWith(".java");
         if (isJava) {l.add(f.getAbsolutePath());}
 
         if (f.isDirectory()){

@@ -1,82 +1,78 @@
 package XP_Metrics;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.List;
+import java.util.Objects;
+
+import XP_Metrics.getTokens.BracePair;
 
 public class indentationChecker {
 
-
-    public static class Token {
-        public int start;
-        public int end;
-        public String name;
-        public String type;
-
-        public Token(int Start){
-            start = Start;
-        }
-        public Token(int Start, String Type, String Name){
-            start = Start;
-            type = Type;
-            name = Name;
-        }
-
-        @Override
-        public String toString(){
-            return "["+start+","+end+","+type+","+name+"]";
-        }
+    static int idealMethodLength = 20;
+    static int idealControlStatementLength = 5;
+    static int idealNestedness = 3;
 
 
-    }
+    public static ArrayList<Score> checkIndentation(List<BracePair> bracePairs) {
 
-    public static int checkIndentation(String path){
-        int score = 100;
+        ArrayList<Score> scores = new ArrayList<>();
 
-        ArrayList<Token> tokenArrayList = getTokenated(path);
+        int index = 0;
+        int lastMethodNestedness = 0;
+        int lastEnd = 0;
 
-        System.out.println(tokenArrayList);
-
-        return score;
-    }
+        for (BracePair p : bracePairs) {
 
 
-    public static ArrayList<Token> getTokenated(String path){
-        Scanner s;
-        try {
-            s = new Scanner(new File(path));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        ArrayList<Token> tokenArrayList = new ArrayList<>();
-        Stack<Token> tokenStack = new Stack<>();
-
-
-        int lineNum = 0;
-        while (s.hasNextLine()){
-            String line = s.nextLine();
-            lineNum++;
-
-            if (line.contains("{")){
-                tokenStack.push(new Token(lineNum,"" , line.trim()));
-            }
-            if (line.contains("}")){
-                if (!tokenStack.isEmpty()) {
-                    tokenStack.peek().end = lineNum;
-                    tokenArrayList.add(tokenStack.pop());
+            if (Objects.equals(p.type, "METHOD")) {
+                lastEnd = p.end;
+                lastMethodNestedness = p.nestedness;
+                if (p.type.equals("METHOD") && ((p.end - p.start) > idealMethodLength)) {
+                    int difference = p.end - p.start;
+                    scores.add(new Score(difference / 5, "Method at line " + p.start + " is too big (" + difference + " lines)"));
+                    //Handle method too big
+                    //"Sorry your method is too big"
+                }
+            } else {
+                if (p.start > lastEnd) {
+                    continue;
+                }
+                if ((p.nestedness - lastMethodNestedness) > idealNestedness) {
+                    int difference = p.nestedness - lastMethodNestedness;
+                    scores.add(new Score(difference * 5, "Method too nested, at line " + p.start));
+                    //Handle method too nested
+                    //Tell the programmer to go **** themselves
+                }
+                if (isControlStatement(p.type) && (((p.end - p.start) > idealControlStatementLength))) {
+                    int difference = p.end - p.start;
+                    scores.add(new Score(difference / 5, "Control statement at line " + p.start + " is too big (" + difference + " lines)"));
+                    //Handle control statement too big
+                    //"Why don't you create a method to handle this statement?"
                 }
             }
 
 
+            index++;
         }
 
-
-        tokenArrayList.sort((a, b)-> ((a.start>b.start) ? 1 : -1));
-        return tokenArrayList;
+        return scores;
     }
+
+    private static boolean isControlStatement(String s) {
+        return switch (s) {
+            default -> false;
+            case "FOR",
+                 "WHILE",
+                 "IF",
+                 "ELSE",
+                 "SWITCH" -> true;
+        };
+    }
+
+
+//        tokenArrayList.sort((a, b)-> ((a.start>b.start) ? 1 : -1));
+//        return tokenArrayList;
+//    }
 
 
 

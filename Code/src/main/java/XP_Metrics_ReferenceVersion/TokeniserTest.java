@@ -1,23 +1,24 @@
-package utils;
+package XP_Metrics_ReferenceVersion;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
 
-/*
-QUICK NOTES:
-I basically rewrote wills initial tokeniser for indentation as an all encompassing tokeniser
-for an entire file. Tried to be as thorough as I could (It's currently 4am and my brain is fried
-working out the logic for this) but there are improvements to be made. For example, we could just
-refactor slightly to have 1 callable method from this class that preprocesses everything when called
-from the GUI.
 
-ALSO CURRENTLY HAS AN ISSUE WITH NOT TOKENISING INNER CLASSES, SUCH AS THE TOKEN INNER CLASS IN THIS FILE
-*/
+public class TokeniserTest {
+    public ArrayList<Token> preprocess(String path) {
+        ArrayList<Token> rawTokens = tokenisation(path);
+        ArrayList<Token> processedTokens = typeTokens(rawTokens);
+        addSubTokens(rawTokens, processedTokens);
 
+        for (Token token : processedTokens) {
+            System.out.println(token);
+        }
 
-public class Tokeniser {
+        return processedTokens;
+    }
+
     public enum TokenType {
         IMPORT,
         CLASS,
@@ -176,8 +177,8 @@ public class Tokeniser {
     }
 
     public static void main(String[] args) {
-        Tokeniser tk = new Tokeniser();
-        ArrayList<Token> tokens = tk.tokenisation("Code/src/main/java/utils/Tokeniser.java");
+        TokeniserTest tk = new TokeniserTest();
+        ArrayList<Token> tokens = tk.tokenisation("/Group_Project/Code/src/main/java/XP_Metrics_ReferenceVersion/TokeniserTest.java");
         ArrayList<Token> processedTokens = tk.typeTokens(tokens);
         tk.addSubTokens(tokens, processedTokens);
         for (Token token : processedTokens) {
