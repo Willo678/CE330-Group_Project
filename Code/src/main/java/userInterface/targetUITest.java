@@ -1,5 +1,6 @@
 package userInterface;
 
+import XP_Metrics.EvaluateXP;
 import XP_Metrics_ReferenceVersion.indentationChecker;
 import XP_Metrics_ReferenceVersion.classChecker;
 import XP_Metrics_ReferenceVersion.functionChecker;
@@ -30,6 +31,7 @@ public class targetUITest extends JFrame {
             double functionScore = functionChecker.checkFunctionStructure(tokens);
             double indentationScore = indentationChecker.checkIndentation(tokens);
             double XPdiness = (classScore * 0.5) + (functionScore * 0.25) + (indentationScore * 0.25);
+
 
             displayDials(classScore, functionScore, indentationScore, XPdiness);
 
