@@ -30,41 +30,54 @@ public class targetUITest extends JFrame {
             double functionScore = functionChecker.checkFunctionStructure(tokens);
             double indentationScore = indentationChecker.checkIndentation(tokens);
             double XPdiness = (classScore * 0.5) + (functionScore * 0.25) + (indentationScore * 0.25);
-
-            displayDials(classScore, functionScore, indentationScore, XPdiness);
+            String fileName = javaFile.getName();
+            displayDials(classScore, functionScore, indentationScore, XPdiness, fileName);
 
         } catch (Exception e) {
         }
         return "";
     }
 
-    private void displayDials(double classScore, double functionScore, double indentationScore, double totalScore) {
+    private void displayDials(double classScore, double functionScore, double indentationScore, double totalScore, String fileName) {
         JFrame dashboardFrame = new JFrame("XPdiness Dashboard");
-        dashboardFrame.setSize(600, 600);
-        dashboardFrame.setLayout(new GridLayout(4, 1));
+        dashboardFrame.setSize(800, 600);
+        dashboardFrame.setResizable(false);
+        dashboardFrame.setLayout(new BorderLayout(10, 10));
+
+        JPanel headerPanel = new JPanel(new GridLayout(2, 1));
+        headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JLabel fileNameLabel = new JLabel("Current File: " + fileName, SwingConstants.CENTER);
+        fileNameLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        fileNameLabel.setForeground(new Color(34, 139, 34));
+
+        JLabel totalScoreLabel = new JLabel("Overall XPdiness Score: " + totalScore, SwingConstants.CENTER);
+        totalScoreLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        totalScoreLabel.setForeground(new Color(0, 102, 204));
+
+        headerPanel.add(fileNameLabel);
+        headerPanel.add(totalScoreLabel);
+        dashboardFrame.add(headerPanel, BorderLayout.NORTH);
+
+        JPanel dialsPanel = new JPanel(new GridLayout(1, 3, 10, 10));
+        dialsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         DialPanel classDial = new DialPanel("Class Structure Score");
         DialPanel functionDial = new DialPanel("Function Structure Score");
         DialPanel indentationDial = new DialPanel("Indentation Structure Score");
 
-        dashboardFrame.add(classDial);
-        dashboardFrame.add(functionDial);
-        dashboardFrame.add(indentationDial);
-
-        JPanel totalPanel = new JPanel();
-        JLabel totalScoreLabel = new JLabel("Overall XPdiness Score: " + totalScore);
-        totalPanel.add(totalScoreLabel);
-        dashboardFrame.add(totalPanel);
-
-        dashboardFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        dashboardFrame.setVisible(true);
-
         classDial.setScore(classScore / 100.0);
         functionDial.setScore(functionScore / 100.0);
         indentationDial.setScore(indentationScore / 100.0);
 
-        dashboardFrame.revalidate();
-        dashboardFrame.repaint();
+        dialsPanel.add(classDial);
+        dialsPanel.add(functionDial);
+        dialsPanel.add(indentationDial);
+
+        dashboardFrame.add(dialsPanel, BorderLayout.CENTER);
+
+        dashboardFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        dashboardFrame.setVisible(true);
     }
 
     public static ArrayList<File> getAllJavaFile(File directory) {
