@@ -1,10 +1,10 @@
 package XP_Metrics;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
-import XP_Metrics.getBracePairs.BracePair;
+import XP_Metrics.getTokens.BracePair;
 
 public class indentationChecker {
 
@@ -13,7 +13,7 @@ public class indentationChecker {
     static int idealNestedness = 3;
 
 
-    public static ArrayList<Score> checkIndentation(ArrayList<BracePair> bracePairs) {
+    public static ArrayList<Score> checkIndentation(List<BracePair> bracePairs) {
 
         ArrayList<Score> scores = new ArrayList<>();
 
@@ -24,10 +24,10 @@ public class indentationChecker {
         for (BracePair p : bracePairs) {
 
 
-            if (p.type == "METHOD") {
+            if (Objects.equals(p.type, "METHOD")) {
                 lastEnd = p.end;
                 lastMethodNestedness = p.nestedness;
-                if (p.type == "METHOD" && ((p.end - p.start) > idealMethodLength)) {
+                if (p.type.equals("METHOD") && ((p.end - p.start) > idealMethodLength)) {
                     int difference = p.end - p.start;
                     scores.add(new Score(difference / 5, "Method at line " + p.start + " is too big (" + difference + " lines)"));
                     //Handle method too big

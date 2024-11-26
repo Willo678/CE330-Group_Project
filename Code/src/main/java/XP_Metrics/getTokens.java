@@ -5,11 +5,33 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-public class getBracePairs {
+public class getTokens {
+
+
+
+    public static class Token {
+        public int start;
+        public String type;
+        public String name;
+        public int indentationLevel;
+
+        public Token(int start, String type, String name, int indentationLevel) {
+            this.start = start;
+            this.type = type;
+            this.name = name;
+            this.indentationLevel = indentationLevel;
+        }
+
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof Token token)) return false;
+            return start > token.start;
+        }
+    }
 
     //Stores the start and end of a set of curly braces,
     //along with the type (method, class, if, while, etc.) and the name
-    public static class BracePair {
+    public static class BracePair extends Token {
         public int start;
         public int end;
         public String type;
@@ -20,11 +42,8 @@ public class getBracePairs {
 
 
         public BracePair(int Start, String Type, String Name, int Nestedness, int Indentation) {
-            start = Start;
-            type = Type;
-            name = Name;
+            super(Start, Type, Name, Indentation);
             this.nestedness = Nestedness;
-            this.indentationLevel = Indentation;
         }
 
         @Override
@@ -47,7 +66,7 @@ public class getBracePairs {
 
 
     //Returns an arraylist of Bracepairs for a given class
-    public static ArrayList<BracePair> getBracePairs(String path) {
+    public static ArrayList<Token> getBracePairs(String path) {
         Scanner scanner;
         try {
             scanner = new Scanner(new File(path));
@@ -55,7 +74,7 @@ public class getBracePairs {
             throw new RuntimeException(e);
         }
 
-        ArrayList<BracePair> bracePairArrayList = new ArrayList<>();
+        ArrayList<Token> tokenArrayList = new ArrayList<>();
         Stack<BracePair> bracePairStack = new Stack<>();
 
 
@@ -77,6 +96,7 @@ public class getBracePairs {
             //Breaks up each line into statements in the case that a line contains multiple statements
             for (String statement : line.split(";")) {
                 if (statement.contains("//")) {
+                    tokenArrayList.add(new Token(lineNum, "Comment", statement, indentLevel));
                     break;
                 }
                 Scanner s = new Scanner(statement);
@@ -100,7 +120,7 @@ public class getBracePairs {
                     //If "}" detected, updates the end value of the top item of the stack, and moves it from the stack to arraylist
                     if (word.contains("}")) {
                         bracePairStack.peek().end = lineNum;
-                        bracePairArrayList.add(bracePairStack.pop());
+                        tokenArrayList.add(bracePairStack.pop());
                         nestLevel--;
                     }
 
@@ -109,9 +129,9 @@ public class getBracePairs {
         }
 
         //Sorts arraylist so that pairs that start earlier are first in the array
-        bracePairArrayList.sort((a, b) -> ((a.start > b.start) ? 1 : -1));
+        tokenArrayList.sort((a, b) -> ((a.start > b.start) ? 1 : -1));
 
-        return bracePairArrayList;
+        return tokenArrayList;
     }
 
     //Returns whether a given string is a Java keyword, an identifier, or a name

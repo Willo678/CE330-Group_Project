@@ -2,21 +2,27 @@ package XP_Metrics;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-import XP_Metrics.getBracePairs.*;
+import XP_Metrics.getTokens.*;
 
 public class EvaluateXP {
 
-    ArrayList<BracePair> bracePairs;
+    List<Token> bracePairs;
     public ArrayList<Score> scoreIndentation;
     int scoreClassStructure;
     int scoreMethodStructure;
 
 
     public EvaluateXP(String path) {
-        bracePairs = getBracePairs.getBracePairs(path);
+        bracePairs = getTokens.getBracePairs(path).stream().filter(x-> x instanceof BracePair).toList();
 
-        scoreIndentation = indentationChecker.checkIndentation(bracePairs);
+        scoreIndentation = indentationChecker.checkIndentation(
+                bracePairs
+                        .stream()
+                        .filter(BracePair.class::isInstance)
+                        .map(BracePair.class::cast).toList()
+        );
 
     }
 
