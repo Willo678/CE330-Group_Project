@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6969f1b7-0291-4350-99ec-5f2c247a1fc5" name="Changes" comment="Link static dial widget">
+    <list default="true" id="6969f1b7-0291-4350-99ec-5f2c247a1fc5" name="Changes" comment="Display the total score results in the panel as well">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -87,7 +87,7 @@
       <workItem from="1732568324424" duration="1381000" />
       <workItem from="1732569718490" duration="12595000" />
       <workItem from="1732618551132" duration="826000" />
-      <workItem from="1732626061084" duration="693000" />
+      <workItem from="1732626061084" duration="5713000" />
     </task>
     <task id="LOCAL-00001" summary="xml">
       <option name="closed" value="true" />
@@ -137,7 +137,31 @@
       <option name="project" value="LOCAL" />
       <updated>1732619285211</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="[Driver: dz24070]&#10;[Navigator: cj24178]&#10;&lt;Merge XPdining Analysis Results with UI Dashboard&gt;">
+      <option name="closed" value="true" />
+      <created>1732626866931</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1732626866931</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Display the total score results in the panel as well">
+      <option name="closed" value="true" />
+      <created>1732631207433</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1732631207433</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Display the total score results in the panel as well">
+      <option name="closed" value="true" />
+      <created>1732631278765</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1732631278765</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -161,6 +185,8 @@
     <MESSAGE value="Add a new functionChecker" />
     <MESSAGE value="Add a new Tokeniser(Test)" />
     <MESSAGE value="Link static dial widget" />
-    <option name="LAST_COMMIT_MESSAGE" value="Link static dial widget" />
+    <MESSAGE value="[Driver: dz24070]&#10;[Navigator: cj24178]&#10;&lt;Merge XPdining Analysis Results with UI Dashboard&gt;" />
+    <MESSAGE value="Display the total score results in the panel as well" />
+    <option name="LAST_COMMIT_MESSAGE" value="Display the total score results in the panel as well" />
   </component>
 </project>

@@ -14,7 +14,7 @@ public class EvaluateXP {
 
 
     public EvaluateXP(String path) {
-        bracePairs = getTokens.getBracePairs(path);
+        bracePairs = getTokens.getTokens(path);
 
         scoreIndentation = indentationChecker.checkIndentation(
                 bracePairs

@@ -21,6 +21,7 @@ public class targetUITest extends JFrame {
     private final int sizeY = 650;
     private final String title = "XPdiness Analysis and Dashboard";
 
+
     private String analyzeJavaFile(File javaFile) {
         try {
             TokeniserTest tokeniser = new TokeniserTest();
@@ -41,7 +42,6 @@ public class targetUITest extends JFrame {
     private void displayDials(double classScore, double functionScore, double indentationScore, double totalScore, String fileName) {
         JFrame dashboardFrame = new JFrame("XPdiness Dashboard");
         dashboardFrame.setSize(800, 600);
-        dashboardFrame.setResizable(false);
         dashboardFrame.setLayout(new BorderLayout(10, 10));
 
         JPanel headerPanel = new JPanel(new GridLayout(2, 1));
@@ -59,26 +59,30 @@ public class targetUITest extends JFrame {
         headerPanel.add(totalScoreLabel);
         dashboardFrame.add(headerPanel, BorderLayout.NORTH);
 
-        JPanel dialsPanel = new JPanel(new GridLayout(1, 3, 10, 10));
+        JPanel dialsPanel = new JPanel(new GridLayout(1, 4, 10, 10));
         dialsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         DialPanel classDial = new DialPanel("Class Structure Score");
         DialPanel functionDial = new DialPanel("Function Structure Score");
         DialPanel indentationDial = new DialPanel("Indentation Structure Score");
+        DialPanel AnalysisDial = new DialPanel("Overall XPdiness Score");
 
         classDial.setScore(classScore / 100.0);
         functionDial.setScore(functionScore / 100.0);
         indentationDial.setScore(indentationScore / 100.0);
+        AnalysisDial.setScore(totalScore / 100.0);
 
         dialsPanel.add(classDial);
         dialsPanel.add(functionDial);
         dialsPanel.add(indentationDial);
+        dialsPanel.add(AnalysisDial);
 
         dashboardFrame.add(dialsPanel, BorderLayout.CENTER);
 
         dashboardFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         dashboardFrame.setVisible(true);
     }
+
 
     public static ArrayList<File> getAllJavaFile(File directory) {
         ArrayList<File> javaFiles = new ArrayList<>();
@@ -130,6 +134,7 @@ public class targetUITest extends JFrame {
         gbc.weightx = 1;
         JTextField filePath = new JTextField("Select a project directory:");
         selectionPanel.add(filePath, gbc);
+
         filePath.setBackground(Color.WHITE);
         filePath.setForeground(Color.BLACK);
         filePath.setBorder(new LineBorder(new Color(0), 1));
@@ -148,6 +153,7 @@ public class targetUITest extends JFrame {
                 filePath.setText(folderSelect.getSelectedFile().getAbsolutePath());
             }
         });
+
 
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -181,12 +187,12 @@ public class targetUITest extends JFrame {
                         for (String subdirectory : subdirectories) {
                             ArrayList<File> javaFiles = getAllJavaFile(new File(subdirectory));
                             for (File javaFile : javaFiles) {
-                                analyzeJavaFile(javaFile); // 仅通过仪表盘显示
+                                analyzeJavaFile(javaFile);
                             }
                         }
 
                     } else if (projectFile.isFile() && projectFile.getName().endsWith(".java")) {
-                        analyzeJavaFile(projectFile); // 仅通过仪表盘显示
+                        analyzeJavaFile(projectFile);
 
                     } else {
                         throw new InvalidPathException(path, "Path is not a valid Java file or directory.");
