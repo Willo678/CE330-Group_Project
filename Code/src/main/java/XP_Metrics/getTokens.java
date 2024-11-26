@@ -100,6 +100,10 @@ public class getTokens {
                     tokenArrayList.add(new Token(lineNum, "Comment", statement, indentLevel));
                     continue;
                 }
+                if (statement.contains("import")) {
+                    tokenArrayList.add(new Token(lineNum, "Import", statement, indentLevel));
+                    continue;
+                }
                 Scanner s = new Scanner(statement);
 
                 //Iterates through statement word by word, rather than using .contains("{") to prevent errors if multiple curly brackets occur
