@@ -4,18 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6969f1b7-0291-4350-99ec-5f2c247a1fc5" name="Changes" comment="Add a new Tokeniser(Test)">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Code/src/main/java/userInterface/DialPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="6969f1b7-0291-4350-99ec-5f2c247a1fc5" name="Changes" comment="Link static dial widget">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Code/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/src/main/java/XP_Metrics/indentationChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/src/main/java/XP_Metrics/indentationChecker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/src/main/java/userInterface/DialWidget.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/src/main/java/userInterface/targetUITest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/src/main/java/userInterface/targetUITest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +86,8 @@
       <workItem from="1732443309659" duration="56000" />
       <workItem from="1732568324424" duration="1381000" />
       <workItem from="1732569718490" duration="12595000" />
-      <workItem from="1732618551132" duration="401000" />
+      <workItem from="1732618551132" duration="826000" />
+      <workItem from="1732626061084" duration="693000" />
     </task>
     <task id="LOCAL-00001" summary="xml">
       <option name="closed" value="true" />
@@ -138,7 +129,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732031781112</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Link static dial widget">
+      <option name="closed" value="true" />
+      <created>1732619285211</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1732619285211</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -161,6 +160,7 @@
     <MESSAGE value="Add a new classChecker" />
     <MESSAGE value="Add a new functionChecker" />
     <MESSAGE value="Add a new Tokeniser(Test)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add a new Tokeniser(Test)" />
+    <MESSAGE value="Link static dial widget" />
+    <option name="LAST_COMMIT_MESSAGE" value="Link static dial widget" />
   </component>
 </project>
