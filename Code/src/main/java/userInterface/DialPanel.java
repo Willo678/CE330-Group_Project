@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Arc2D;
 
-
 public class DialPanel extends JPanel {
     private double score;
     private final String label;
