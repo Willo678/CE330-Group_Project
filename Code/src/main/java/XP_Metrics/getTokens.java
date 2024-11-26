@@ -22,6 +22,11 @@ public class getTokens {
             this.indentationLevel = indentationLevel;
         }
 
+        @Override
+        public String toString() {
+            return "[" + start + "," + type + "," + name + "," + indentationLevel + "]";
+        }
+
         public boolean equals(Object o) {
             if (this == o) return true;
             if (!(o instanceof Token token)) return false;
@@ -32,12 +37,8 @@ public class getTokens {
     //Stores the start and end of a set of curly braces,
     //along with the type (method, class, if, while, etc.) and the name
     public static class BracePair extends Token {
-        public int start;
         public int end;
-        public String type;
-        public String name;
         int nestedness;
-        int indentationLevel;
 
 
 
@@ -66,7 +67,7 @@ public class getTokens {
 
 
     //Returns an arraylist of Bracepairs for a given class
-    public static ArrayList<Token> getBracePairs(String path) {
+    public static ArrayList<Token> getTokens(String path) {
         Scanner scanner;
         try {
             scanner = new Scanner(new File(path));
@@ -90,14 +91,18 @@ public class getTokens {
             lineNum++;
 
             //Removes all non word or brace characters
-            line = line.replaceAll("([\"']).*(\\1)+|[^a-zA-Z0-9{}\"']+", " ");
+            line = line.replaceAll("([\"']).*(\\1)+|[^a-zA-Z0-9{}\"/']+", " ");
 
 
             //Breaks up each line into statements in the case that a line contains multiple statements
             for (String statement : line.split(";")) {
                 if (statement.contains("//")) {
                     tokenArrayList.add(new Token(lineNum, "Comment", statement, indentLevel));
-                    break;
+                    continue;
+                }
+                if (statement.contains("import")) {
+                    tokenArrayList.add(new Token(lineNum, "Import", statement, indentLevel));
+                    continue;
                 }
                 Scanner s = new Scanner(statement);
 
@@ -131,7 +136,18 @@ public class getTokens {
         //Sorts arraylist so that pairs that start earlier are first in the array
         tokenArrayList.sort((a, b) -> ((a.start > b.start) ? 1 : -1));
 
+        System.out.println(tokenArrayList);
+
         return tokenArrayList;
+    }
+
+
+    public static List<BracePair> getBracePairs(String path) {
+        return getTokens(path).stream().filter(BracePair.class::isInstance).map(BracePair.class::cast).toList();
+    }
+
+    public static List<Token> getComments(String path) {
+        return getTokens(path).stream().filter(x -> (Objects.equals(((Token) x).type, "Comment"))).toList();
     }
 
     //Returns whether a given string is a Java keyword, an identifier, or a name

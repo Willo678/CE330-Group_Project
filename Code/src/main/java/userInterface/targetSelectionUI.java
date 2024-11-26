@@ -82,7 +82,7 @@ public class targetSelectionUI extends JPanel {
                     //Pass on path to be analysed
                     for (String p : getJavaSubdirectories(new File(path))){
                         System.out.println(p);
-                        //EvaluateXP evaluator = new EvaluateXP(p);
+                        EvaluateXP evaluator = new EvaluateXP(p);
                         //System.out.println(evaluator.scoreIndentation);
                        // System.out.println(evaluator.normalisedScore());
                         //System.out.println();
