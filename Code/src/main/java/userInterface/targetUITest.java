@@ -1,8 +1,6 @@
 package userInterface;
 
-import XP_Metrics_ReferenceVersion.indentationChecker;
-import XP_Metrics_ReferenceVersion.classChecker;
-import XP_Metrics_ReferenceVersion.functionChecker;
+import XP_Metrics_ReferenceVersion.*;
 import XP_Metrics_ReferenceVersion.TokeniserTest;
 
 import javax.swing.*;
@@ -30,16 +28,17 @@ public class targetUITest extends JFrame {
             double classScore = classChecker.checkClassStructure(tokens);
             double functionScore = functionChecker.checkFunctionStructure(tokens);
             double indentationScore = indentationChecker.checkIndentation(tokens);
-            double XPdiness = (classScore * 0.5) + (functionScore * 0.25) + (indentationScore * 0.25);
+            double camelScore = camelChecker.checkCamelCase(tokens);
+            double XPdiness = (classScore * 0.25) + (functionScore * 0.25) + (indentationScore * 0.25) + (camelScore * 0.25);
             String fileName = javaFile.getName();
-            displayDials(classScore, functionScore, indentationScore, XPdiness, fileName);
+            displayDials(classScore, functionScore, indentationScore, XPdiness, fileName, camelScore);
 
         } catch (Exception e) {
         }
         return "";
     }
 
-    private void displayDials(double classScore, double functionScore, double indentationScore, double totalScore, String fileName) {
+    private void displayDials(double classScore, double functionScore, double indentationScore, double totalScore, String fileName, double camelScore) {
         JFrame dashboardFrame = new JFrame("XPdiness Dashboard");
         dashboardFrame.setSize(800, 600);
         dashboardFrame.setLayout(new BorderLayout(10, 10));
@@ -62,16 +61,19 @@ public class targetUITest extends JFrame {
         JPanel dialsPanel = new JPanel(new GridLayout(1, 4, 10, 10));
         dialsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+        DialPanel camelDial = new DialPanel("CamelCase Structure Score");
         DialPanel classDial = new DialPanel("Class Structure Score");
         DialPanel functionDial = new DialPanel("Function Structure Score");
         DialPanel indentationDial = new DialPanel("Indentation Structure Score");
         DialPanel AnalysisDial = new DialPanel("Overall XPdiness Score");
 
+        camelDial.setScore(camelScore / 100.0);
         classDial.setScore(classScore / 100.0);
         functionDial.setScore(functionScore / 100.0);
         indentationDial.setScore(indentationScore / 100.0);
         AnalysisDial.setScore(totalScore / 100.0);
 
+        dialsPanel.add(camelDial);
         dialsPanel.add(classDial);
         dialsPanel.add(functionDial);
         dialsPanel.add(indentationDial);
