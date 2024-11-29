@@ -25,48 +25,62 @@ public class DialPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        setBackground(Color.WHITE);
-
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         int width = getWidth();
         int height = getHeight();
         int radius = Math.min(width, height) / 2 - 20;
-        int x = (width - radius * 2) / 2;
-        int y = (height - radius) / 2;
+        int centerX = width / 2;
+        int centerY = height / 2 + 20;
 
-        g2d.setColor(Color.BLACK);
-        int numberOfTicks = 11;
-        for (int i = 0; i < numberOfTicks; i++) {
-            int tickAngle = (int) (i * 180 / (numberOfTicks - 1));
-            double angleRad = Math.toRadians(tickAngle);
-            int startX = (int) (width / 2 + radius * Math.cos(angleRad));
-            int startY = (int) (height / 2 + radius * Math.sin(angleRad));
-            int endX = (int) (width / 2 + (radius + 10) * Math.cos(angleRad));
-            int endY = (int) (height / 2 + (radius + 10) * Math.sin(angleRad));
-            g2d.drawLine(startX, startY, endX, endY);
 
-            String tickLabel = String.valueOf(i * 10);
-            g2d.drawString(tickLabel, endX - 10, endY - 5);
+        setBackground(new Color(20, 20, 20));
+        g2d.setColor(new Color(45, 45, 45));
+        g2d.fillOval(centerX - radius - 10, centerY - radius - 10, (radius + 10) * 2, (radius + 10) * 2);
+
+        g2d.setColor(new Color(60, 60, 60));
+        g2d.setStroke(new BasicStroke(8));
+        g2d.drawArc(centerX - radius, centerY - radius, radius * 2, radius * 2, 0, 180);
+
+        g2d.setColor(new Color(0, 191, 255));
+        g2d.setStroke(new BasicStroke(10));
+        g2d.drawArc(centerX - radius, centerY - radius, radius * 2, radius * 2, 0, (int) Math.round(score * 180));
+
+        int pointerAngle = (int) Math.round(score * 180);
+        double pointerRad = Math.toRadians(180 - pointerAngle);
+        int pointerX = (int) (centerX + radius * 0.8 * Math.cos(pointerRad));
+        int pointerY = (int) (centerY - radius * 0.8 * Math.sin(pointerRad));
+        g2d.setColor(Color.WHITE);
+        g2d.setStroke(new BasicStroke(3));
+        g2d.drawLine(centerX, centerY, pointerX, pointerY);
+
+        g2d.setColor(new Color(45, 45, 45));
+        g2d.fillOval(centerX - 10, centerY - 10, 20, 20);
+
+        g2d.setColor(Color.GRAY);
+        g2d.setStroke(new BasicStroke(2));
+        int tickRadius = radius + 5;
+        for (int i = 0; i <= 10; i++) {
+            int tickAngle = (int) (i * 180 / 10);
+            double angleRad = Math.toRadians(180 - tickAngle);
+            int tickX1 = (int) (centerX + tickRadius * Math.cos(angleRad));
+            int tickY1 = (int) (centerY - tickRadius * Math.sin(angleRad));
+            int tickX2 = (int) (centerX + (tickRadius - 10) * Math.cos(angleRad));
+            int tickY2 = (int) (centerY - (tickRadius - 10) * Math.sin(angleRad));
+            g2d.drawLine(tickX1, tickY1, tickX2, tickY2);
         }
 
-        int pointerAngle = (int) (score * 180);
-        double pointerRad = Math.toRadians(pointerAngle);
-        int pointerX = (int) (width / 2 + (radius - 10) * Math.cos(pointerRad));
-        int pointerY = (int) (height / 2 + (radius - 10) * Math.sin(pointerRad));
-        g2d.setColor(Color.RED);
-        g2d.setStroke(new BasicStroke(2));
-        g2d.drawLine(width / 2, height / 2, pointerX, pointerY);
-
-        g2d.setColor(Color.BLACK);
-        g2d.setFont(new Font("Arial", Font.BOLD, 14));
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(new Font("Arial", Font.BOLD, 16));
         FontMetrics metrics = g2d.getFontMetrics();
-        int labelWidth = metrics.stringWidth(label);
-        g2d.drawString(label, (width - labelWidth) / 2, height / 3);
+        String labelText = label;
+        int labelWidth = metrics.stringWidth(labelText);
+        g2d.drawString(labelText, centerX - labelWidth / 2, centerY + radius + 30);
 
-        String scoreText = String.format("%.2f", score * 100);
+        g2d.setFont(new Font("Arial", Font.BOLD, 36));
+        String scoreText = String.format("%.1f%%", score * 100);
         int scoreWidth = metrics.stringWidth(scoreText);
-        g2d.drawString(scoreText, (width - scoreWidth) / 2, height / 2 + 10);
+        g2d.drawString(scoreText, centerX - scoreWidth / 2, centerY);
     }
 }

@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6969f1b7-0291-4350-99ec-5f2c247a1fc5" name="Changes" comment="Link static dial widget">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/src/main/java/XP_Metrics/CodeAnalysis.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/src/main/java/XP_Metrics/CodeAnalysis.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/src/main/java/userInterface/DialPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/src/main/java/userInterface/DialPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/src/main/java/userInterface/targetUITest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/src/main/java/userInterface/targetUITest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +24,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -31,7 +32,7 @@
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="2p4fj7SpRfPcIZWeIonqL7kW5cY" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+  <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -67,20 +68,6 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Code/src/main/java" />
     </key>
-  </component>
-  <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
-      <module name="Code" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.Main" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -153,15 +140,7 @@
       <option name="project" value="LOCAL" />
       <updated>1732619285211</updated>
     </task>
-    <task id="LOCAL-00007" summary="[Driver : sj22795]&#10;[Navigator : wp22246]&#10;making changes to CodeAnalysis">
-      <option name="closed" value="true" />
-      <created>1732632277034</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1732632277034</updated>
-    </task>
-    <option name="localTasksCounter" value="8" />
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -185,7 +164,6 @@
     <MESSAGE value="Add a new functionChecker" />
     <MESSAGE value="Add a new Tokeniser(Test)" />
     <MESSAGE value="Link static dial widget" />
-    <MESSAGE value="[Driver : sj22795]&#10;[Navigator : wp22246]&#10;making changes to CodeAnalysis" />
-    <option name="LAST_COMMIT_MESSAGE" value="[Driver : sj22795]&#10;[Navigator : wp22246]&#10;making changes to CodeAnalysis" />
+    <option name="LAST_COMMIT_MESSAGE" value="Link static dial widget" />
   </component>
 </project>

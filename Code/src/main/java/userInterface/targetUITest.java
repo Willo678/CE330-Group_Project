@@ -58,33 +58,37 @@ public class targetUITest extends JFrame {
         headerPanel.add(totalScoreLabel);
         dashboardFrame.add(headerPanel, BorderLayout.NORTH);
 
-        JPanel dialsPanel = new JPanel(new GridLayout(1, 4, 10, 10));
-        dialsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        JPanel scoresPanel = new JPanel(new GridLayout(4, 1, 10, 10));
+        scoresPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        DialPanel camelDial = new DialPanel("CamelCase Structure Score");
-        DialPanel classDial = new DialPanel("Class Structure Score");
-        DialPanel functionDial = new DialPanel("Function Structure Score");
-        DialPanel indentationDial = new DialPanel("Indentation Structure Score");
-        DialPanel AnalysisDial = new DialPanel("Overall XPdiness Score");
+        JLabel camelScoreLabel = new JLabel("CamelCase Structure Score: " + camelScore, SwingConstants.CENTER);
+        camelScoreLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+        JLabel classScoreLabel = new JLabel("Class Structure Score: " + classScore, SwingConstants.CENTER);
+        classScoreLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+        JLabel functionScoreLabel = new JLabel("Function Structure Score: " + functionScore, SwingConstants.CENTER);
+        functionScoreLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+        JLabel indentationScoreLabel = new JLabel("Indentation Structure Score: " + indentationScore, SwingConstants.CENTER);
+        indentationScoreLabel.setFont(new Font("Arial", Font.PLAIN, 16));
 
-        camelDial.setScore(camelScore / 100.0);
-        classDial.setScore(classScore / 100.0);
-        functionDial.setScore(functionScore / 100.0);
-        indentationDial.setScore(indentationScore / 100.0);
-        AnalysisDial.setScore(totalScore / 100.0);
+        scoresPanel.add(camelScoreLabel);
+        scoresPanel.add(classScoreLabel);
+        scoresPanel.add(functionScoreLabel);
+        scoresPanel.add(indentationScoreLabel);
 
-        dialsPanel.add(camelDial);
-        dialsPanel.add(classDial);
-        dialsPanel.add(functionDial);
-        dialsPanel.add(indentationDial);
-        dialsPanel.add(AnalysisDial);
+        dashboardFrame.add(scoresPanel, BorderLayout.WEST);
 
-        dashboardFrame.add(dialsPanel, BorderLayout.CENTER);
+        JPanel dialPanel = new JPanel(new BorderLayout());
+        dialPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        DialPanel analysisDial = new DialPanel("Overall XPdiness Score");
+        analysisDial.setScore(totalScore / 100.0);
+        dialPanel.add(analysisDial, BorderLayout.CENTER);
+
+        dashboardFrame.add(dialPanel, BorderLayout.CENTER);
 
         dashboardFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         dashboardFrame.setVisible(true);
     }
-
 
     public static ArrayList<File> getAllJavaFile(File directory) {
         ArrayList<File> javaFiles = new ArrayList<>();
