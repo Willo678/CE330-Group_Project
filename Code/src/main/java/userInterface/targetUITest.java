@@ -2,7 +2,6 @@ package userInterface;
 
 import XP_Metrics_ReferenceVersion.*;
 import XP_Metrics_ReferenceVersion.TokeniserTest;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -10,6 +9,7 @@ import java.awt.*;
 import java.io.File;
 import java.nio.file.InvalidPathException;
 import java.util.ArrayList;
+
 
 import static utils.directoryContainsJava.directoryContainsJava;
 import static utils.getJavaSubdirectories.getJavaSubdirectories;
