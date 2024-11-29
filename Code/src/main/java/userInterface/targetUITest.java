@@ -19,7 +19,6 @@ public class targetUITest extends JFrame {
     private final int sizeY = 650;
     private final String title = "XPdiness Analysis and Dashboard";
 
-
     private String analyzeJavaFile(File javaFile) {
         try {
             TokeniserTest tokeniser = new TokeniserTest();

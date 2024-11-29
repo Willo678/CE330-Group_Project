@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6969f1b7-0291-4350-99ec-5f2c247a1fc5" name="Changes" comment="Link static dial widget">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/src/main/java/userInterface/DialPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/src/main/java/userInterface/DialPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/src/main/java/userInterface/targetUITest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/src/main/java/userInterface/targetUITest.java" afterDir="false" />
-    </list>
+    <list default="true" id="6969f1b7-0291-4350-99ec-5f2c247a1fc5" name="Changes" comment="Modify the UI interface and complete data transfer" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -140,7 +135,23 @@
       <option name="project" value="LOCAL" />
       <updated>1732619285211</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Modify the UI interface and complete data transfer">
+      <option name="closed" value="true" />
+      <created>1732920002664</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1732920002664</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Modify the UI interface and complete data transfer">
+      <option name="closed" value="true" />
+      <created>1732920039724</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1732920039724</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -164,6 +175,7 @@
     <MESSAGE value="Add a new functionChecker" />
     <MESSAGE value="Add a new Tokeniser(Test)" />
     <MESSAGE value="Link static dial widget" />
-    <option name="LAST_COMMIT_MESSAGE" value="Link static dial widget" />
+    <MESSAGE value="Modify the UI interface and complete data transfer" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modify the UI interface and complete data transfer" />
   </component>
 </project>

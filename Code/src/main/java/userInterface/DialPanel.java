@@ -83,5 +83,6 @@ public class DialPanel extends JPanel {
         String scoreText = String.format("%.1f%%", score * 100);
         int scoreWidth = metrics.stringWidth(scoreText);
         g2d.drawString(scoreText, centerX - scoreWidth / 2, centerY);
+
     }
 }
