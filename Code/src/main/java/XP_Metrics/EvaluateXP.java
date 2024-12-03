@@ -9,7 +9,7 @@ public class EvaluateXP {
 
     ArrayList<Token> bracePairs;
     public ArrayList<Score> scoreIndentation;
-    int scoreClassStructure;
+    ArrayList<Score> scoreClassStructure;
     int scoreMethodStructure;
 
 
@@ -22,13 +22,13 @@ public class EvaluateXP {
                         .filter(BracePair.class::isInstance)
                         .map(BracePair.class::cast).toList()
         );
-
+        scoreClassStructure = classChecker.checkImports(path, bracePairs);
     }
 
     public int normalisedScore() {
         //Indentation, class structure, method structure (add as necessary)
         int[] weights = new int[]{25,25,25};
-        int[] percentages = new int[]{getScorePercentage(scoreIndentation), scoreClassStructure, scoreMethodStructure};
+        int[] percentages = new int[]{getScorePercentage(scoreIndentation), getScorePercentage(scoreClassStructure), scoreMethodStructure};
 
 
         int weightTotal = Arrays.stream(weights).sum();

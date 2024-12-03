@@ -80,6 +80,8 @@ public class targetSelectionUI extends JPanel {
                     System.out.println("Success, pass on to other modules: "+path);
 
                     //Pass on path to be analysed
+                    // TODO: get path which can be used by other objects
+                    // need this for source code display
                     for (String p : getJavaSubdirectories(new File(path))){
                         System.out.println(p);
                         EvaluateXP evaluator = new EvaluateXP(p);
@@ -87,7 +89,6 @@ public class targetSelectionUI extends JPanel {
                        // System.out.println(evaluator.normalisedScore());
                         //System.out.println();
                     }
-
 
                 } catch (InvalidPathException | NullPointerException e) {
                     System.out.println("Invalid path");

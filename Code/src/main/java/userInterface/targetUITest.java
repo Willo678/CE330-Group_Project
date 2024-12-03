@@ -1,10 +1,7 @@
 package userInterface;
 
-import XP_Metrics_ReferenceVersion.indentationChecker;
-import XP_Metrics_ReferenceVersion.classChecker;
-import XP_Metrics_ReferenceVersion.functionChecker;
+import XP_Metrics_ReferenceVersion.*;
 import XP_Metrics_ReferenceVersion.TokeniserTest;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -12,6 +9,7 @@ import java.awt.*;
 import java.io.File;
 import java.nio.file.InvalidPathException;
 import java.util.ArrayList;
+
 
 import static utils.directoryContainsJava.directoryContainsJava;
 import static utils.getJavaSubdirectories.getJavaSubdirectories;
@@ -29,19 +27,19 @@ public class targetUITest extends JFrame {
             double classScore = classChecker.checkClassStructure(tokens);
             double functionScore = functionChecker.checkFunctionStructure(tokens);
             double indentationScore = indentationChecker.checkIndentation(tokens);
-            double XPdiness = (classScore * 0.5) + (functionScore * 0.25) + (indentationScore * 0.25);
+            double camelScore = camelChecker.checkCamelCase(tokens);
+            double XPdiness = (classScore * 0.25) + (functionScore * 0.25) + (indentationScore * 0.25) + (camelScore * 0.25);
             String fileName = javaFile.getName();
-            displayDials(classScore, functionScore, indentationScore, XPdiness, fileName);
+            displayDials(classScore, functionScore, indentationScore, XPdiness, fileName, camelScore);
 
         } catch (Exception e) {
         }
         return "";
     }
 
-    private void displayDials(double classScore, double functionScore, double indentationScore, double totalScore, String fileName) {
+    private void displayDials(double classScore, double functionScore, double indentationScore, double totalScore, String fileName, double camelScore) {
         JFrame dashboardFrame = new JFrame("XPdiness Dashboard");
         dashboardFrame.setSize(800, 600);
-        dashboardFrame.setResizable(false);
         dashboardFrame.setLayout(new BorderLayout(10, 10));
 
         JPanel headerPanel = new JPanel(new GridLayout(2, 1));
@@ -59,22 +57,33 @@ public class targetUITest extends JFrame {
         headerPanel.add(totalScoreLabel);
         dashboardFrame.add(headerPanel, BorderLayout.NORTH);
 
-        JPanel dialsPanel = new JPanel(new GridLayout(1, 3, 10, 10));
-        dialsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        JPanel scoresPanel = new JPanel(new GridLayout(4, 1, 10, 10));
+        scoresPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        DialPanel classDial = new DialPanel("Class Structure Score");
-        DialPanel functionDial = new DialPanel("Function Structure Score");
-        DialPanel indentationDial = new DialPanel("Indentation Structure Score");
+        JLabel camelScoreLabel = new JLabel("CamelCase Structure Score: " + camelScore, SwingConstants.CENTER);
+        camelScoreLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+        JLabel classScoreLabel = new JLabel("Class Structure Score: " + classScore, SwingConstants.CENTER);
+        classScoreLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+        JLabel functionScoreLabel = new JLabel("Function Structure Score: " + functionScore, SwingConstants.CENTER);
+        functionScoreLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+        JLabel indentationScoreLabel = new JLabel("Indentation Structure Score: " + indentationScore, SwingConstants.CENTER);
+        indentationScoreLabel.setFont(new Font("Arial", Font.PLAIN, 16));
 
-        classDial.setScore(classScore / 100.0);
-        functionDial.setScore(functionScore / 100.0);
-        indentationDial.setScore(indentationScore / 100.0);
+        scoresPanel.add(camelScoreLabel);
+        scoresPanel.add(classScoreLabel);
+        scoresPanel.add(functionScoreLabel);
+        scoresPanel.add(indentationScoreLabel);
 
-        dialsPanel.add(classDial);
-        dialsPanel.add(functionDial);
-        dialsPanel.add(indentationDial);
+        dashboardFrame.add(scoresPanel, BorderLayout.WEST);
 
-        dashboardFrame.add(dialsPanel, BorderLayout.CENTER);
+        JPanel dialPanel = new JPanel(new BorderLayout());
+        dialPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        DialPanel analysisDial = new DialPanel("Overall XPdiness Score");
+        analysisDial.setScore(totalScore / 100.0);
+        dialPanel.add(analysisDial, BorderLayout.CENTER);
+
+        dashboardFrame.add(dialPanel, BorderLayout.CENTER);
 
         dashboardFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         dashboardFrame.setVisible(true);
@@ -130,6 +139,7 @@ public class targetUITest extends JFrame {
         gbc.weightx = 1;
         JTextField filePath = new JTextField("Select a project directory:");
         selectionPanel.add(filePath, gbc);
+
         filePath.setBackground(Color.WHITE);
         filePath.setForeground(Color.BLACK);
         filePath.setBorder(new LineBorder(new Color(0), 1));
@@ -148,6 +158,7 @@ public class targetUITest extends JFrame {
                 filePath.setText(folderSelect.getSelectedFile().getAbsolutePath());
             }
         });
+
 
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -181,12 +192,12 @@ public class targetUITest extends JFrame {
                         for (String subdirectory : subdirectories) {
                             ArrayList<File> javaFiles = getAllJavaFile(new File(subdirectory));
                             for (File javaFile : javaFiles) {
-                                analyzeJavaFile(javaFile); // 仅通过仪表盘显示
+                                analyzeJavaFile(javaFile);
                             }
                         }
 
                     } else if (projectFile.isFile() && projectFile.getName().endsWith(".java")) {
-                        analyzeJavaFile(projectFile); // 仅通过仪表盘显示
+                        analyzeJavaFile(projectFile);
 
                     } else {
                         throw new InvalidPathException(path, "Path is not a valid Java file or directory.");
