@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b617a369-fdb8-4b85-91c1-69acbfc3efd4" name="Changes" comment="Added testing for DialPanel" />
+    <list default="true" id="b617a369-fdb8-4b85-91c1-69acbfc3efd4" name="Changes" comment="Optimized code, but have bug">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/userInterface/codeMetricsUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/userInterface/codeMetricsUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/userInterface/targetSelectionUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/userInterface/targetSelectionUI.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,13 +33,13 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
     <option name="RESET_MODE" value="HARD" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="2of1mbn9qm5lSboevN1xxZbIZTI" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -226,15 +232,23 @@
       <option name="project" value="LOCAL" />
       <updated>1732630906585</updated>
     </task>
-    <task id="LOCAL-00017" summary="Added testing for DialPanel">
+    <task id="LOCAL-00017" summary="Optimized calculation method">
       <option name="closed" value="true" />
-      <created>1733238823991</created>
+      <created>1733239387848</created>
       <option name="number" value="00017" />
       <option name="presentableId" value="LOCAL-00017" />
       <option name="project" value="LOCAL" />
-      <updated>1733238823991</updated>
+      <updated>1733239387848</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Optimized code, but have bug">
+      <option name="closed" value="true" />
+      <created>1733240948241</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1733240948241</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -277,8 +291,18 @@
     <MESSAGE value="[Driver: of20214]&#10;[Navigator: wp22246]&#10;Fixed bugs from last commit" />
     <MESSAGE value="[Driver: of21284]&#10;[Navigator: wp22246]&#10;Fixed bugs from last commit" />
     <MESSAGE value="[Driver: of21284]&#10;[Navigator: wp22246]&#10;Fixed merge conflict" />
-    <MESSAGE value="Completed testing for dial panel" />
-    <MESSAGE value="Added testing for DialPanel" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added testing for DialPanel" />
+    <MESSAGE value="Optimized calculation method" />
+    <MESSAGE value="Optimized code, but have bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="Optimized code, but have bug" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.nio.file.InvalidPathException" package="java.nio.file" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
