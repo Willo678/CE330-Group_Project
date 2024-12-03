@@ -1,6 +1,8 @@
 package userInterface;
 
+import XP_Metrics.CodeAnalysis;
 import XP_Metrics.EvaluateXP;
+import XP_Metrics.Score;
 import utils.hintTextField;
 
 import javax.swing.*;
@@ -10,98 +12,137 @@ import java.awt.*;
 import java.io.File;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
-
-import static XP_Metrics.indentationChecker.checkIndentation;
 import static utils.directoryContainsJava.directoryContainsJava;
 import static utils.getJavaSubdirectories.getJavaSubdirectories;
 
-public class targetSelectionUI extends JPanel {
+public class targetSelectionUI extends JFrame {
+    private final userInterface.codeMetricsUI metricsUI;
+    private final JTextField pathField;
+    private final JFileChooser folderSelect;
 
-    public targetSelectionUI(){
-        this(0,0);
-    }
+    public targetSelectionUI() {
+        setLayout(new BorderLayout());
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    public targetSelectionUI(int width, int height){
-
-        super();
-        this.setLayout(new GridBagLayout());
-
-        JFileChooser folderSelect = new JFileChooser();
+        metricsUI = createMetricsWindow();
+        pathField = createPathField();
+        folderSelect = new JFileChooser();
         folderSelect.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
+        add(createSelectionPanel(), BorderLayout.NORTH);
+        setupWindow();
+    }
+
+    private JPanel createSelectionPanel() {
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBorder(new EmptyBorder(10, 30, 10, 30));
+
         GridBagConstraints gbc = new GridBagConstraints();
+        JButton selectButton = createSelectButton();
+        JButton confirmButton = createConfirmButton();
 
-        //Holds components
-        this.setBorder(new EmptyBorder(0, 30, 0, 30));
-        if (height<=0 || width<=0) {
-            gbc.weightx=1; gbc.fill = GridBagConstraints.HORIZONTAL;
-        } else {
-            this.setSize(width, height);
-        }
+        addComponents(panel, gbc, selectButton, confirmButton);
 
+        return panel;
+    }
 
-        gbc = new GridBagConstraints();
+    private codeMetricsUI createMetricsWindow() {
+        codeMetricsUI metricsUI = new userinterface.codeMetricsUI();
+        JFrame frame = new JFrame("Code Metrics");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.add(metricsUI);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        return metricsUI;
+    }
 
-        //Text field, user can manually enter a path, or select one using the dialogue
-        gbc.gridx = 0; gbc.gridy = 0; gbc.fill = GridBagConstraints.BOTH; gbc.weightx = 1;
-        JTextField filePath = new hintTextField("Select a project directory:"); this.add(filePath, gbc);
-        filePath.setBackground(new Color(0xD1D1D1));
-        filePath.setForeground(new Color(0x5C5C5C));
-        filePath.setBorder(new LineBorder(new Color(0), 1));
-        filePath.setFont(filePath.getFont().deriveFont(Font.ITALIC, 10));
-        filePath.setMargin(new Insets(3, 10, 3, 0));
+    private JTextField createPathField() {
+        JTextField field = new hintTextField("Select a project directory:");
+        field.setBackground(new Color(0xD1D1D1));
+        field.setForeground(new Color(0x5C5C5C));
+        field.setBorder(new LineBorder(Color.BLACK, 1));
+        field.setFont(field.getFont().deriveFont(Font.ITALIC, 10));
+        field.setMargin(new Insets(3, 10, 3, 0));
+        return field;
+    }
 
+    private void addComponents(JPanel panel, GridBagConstraints gbc,
+                               JButton selectButton, JButton confirmButton) {
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1;
+        panel.add(pathField, gbc);
 
-        //Button to trigger the file select dialogue
-        gbc.gridx = 1; gbc.gridy = 0; gbc.fill = GridBagConstraints.NONE; gbc.weightx = 0;
-        JButton selectButton = new JButton("SELECT"); this.add(selectButton, gbc);
-        selectButton.grabFocus();
-        selectButton.addActionListener((x) -> { //had to add "(x) or the lambda wouldnt work"
-            int returnVal = folderSelect.showOpenDialog(this);
-            if (returnVal==JFileChooser.APPROVE_OPTION) {
-                filePath.setText(folderSelect.getSelectedFile().getAbsolutePath());
-            } else {
-                //Either an error occurred, or user cancelled operation
+        gbc.gridx = 1;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        panel.add(selectButton, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel.add(confirmButton, gbc);
+    }
+
+    private JButton createSelectButton() {
+        JButton button = new JButton("SELECT");
+        button.addActionListener(e -> {
+            if (folderSelect.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+                pathField.setText(folderSelect.getSelectedFile().getAbsolutePath());
             }
         });
+        return button;
+    }
 
-
-        //Button to confirm selection and pass on the path to other areas of the project
-        gbc.gridx = 0; gbc.gridy = 1; gbc.fill = GridBagConstraints.HORIZONTAL; gbc.gridwidth = 2;
-        JButton confirmButton = new JButton("CONFIRM"); this.add(confirmButton, gbc);
-        confirmButton.addActionListener((x) -> { //had to add "(x) or the lambda wouldnt work"
-            String path = filePath.getText();
-            System.out.println(path);
-            if (!path.isEmpty()){
+    private JButton createConfirmButton() {
+        JButton button = new JButton("CONFIRM");
+        button.addActionListener(e -> {
+            String path = pathField.getText();
+            if (!path.isEmpty()) {
                 try {
-                    Paths.get(path);
-                    if (!directoryContainsJava(new File(path))){throw new InvalidPathException(path, "Given path does not contain a java file");}
-                    System.out.println("Success, pass on to other modules: "+path);
-
-                    //Pass on path to be analysed
-                    // TODO: get path which can be used by other objects
-                    // need this for source code display
-                    for (String p : getJavaSubdirectories(new File(path))){
-                        System.out.println(p);
-                        EvaluateXP evaluator = new EvaluateXP(p);
-                        System.out.println(evaluator.normalisedScore());
-                        //System.out.println(evaluator.scoreIndentation);
-                       // System.out.println(evaluator.normalisedScore());
-                        //System.out.println();
-                    }
-
-                } catch (InvalidPathException | NullPointerException e) {
-                    System.out.println("Invalid path");
-                    e.printStackTrace();
+                    processPath(path);
+                } catch (Exception ex) {
+                    showError(ex.getMessage());
                 }
             }
         });
-
-
-        this.setVisible(true);
+        return button;
     }
 
+    private void processPath(String path) throws InvalidPathException {
+        Paths.get(path);
+        File directory = new File(path);
 
+        if (!directoryContainsJava(directory)) {
+            throw new InvalidPathException(path, "No Java files found");
+        }
 
+        for (String filePath : getJavaSubdirectories(directory)) {
+            EvaluateXP evaluator = new EvaluateXP(filePath);
+            ArrayList<Score> codeAnalysisScores = CodeAnalysis.CodeAnalysis(evaluator.bracePairs);
+            metricsUI.updateMetrics(
+                    evaluator.scoreIndentation,
+                    evaluator.scoreClassStructure,
+                    codeAnalysisScores
+            );
+        }
+    }
+
+    private void showError(String message) {
+        JOptionPane.showMessageDialog(this,
+                "Error: " + message,
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void setupWindow() {
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
 }
