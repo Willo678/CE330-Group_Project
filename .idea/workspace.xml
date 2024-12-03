@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d10180bd-fa2d-46d9-bf03-58a886a13057" name="Changes" comment="[Driver: jf22470]&#10;[Navigator: wp22246]&#10;Created test for 'classChecker' class">
+      <change afterPath="$PROJECT_DIR$/Code/src/test/java/XP_Metrics/indentationCheckerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code/src/test/java/test_sample_data/sampleCode2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Code/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/src/test/java/XP_Metrics/getTokensTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/src/test/java/XP_Metrics/getTokensTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/src/main/java/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +22,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -31,6 +34,8 @@
     "Application.Main.executor": "Run",
     "JUnit.getTokensTest.executor": "Run",
     "JUnit.getTokensTest.getBracePairs.executor": "Run",
+    "JUnit.indentationCheckerTest.checkIndentation.executor": "Run",
+    "JUnit.indentationCheckerTest.checkIndentationComplex.executor": "Run",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "git-widget-placeholder": "main",
@@ -48,14 +53,7 @@
       <recent name="XP_Metrics" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.getTokensTest">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
-      <module name="Code" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.indentationCheckerTest">
     <configuration name="getTokensTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Code" />
       <extension name="coverage">
@@ -87,11 +85,60 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="indentationCheckerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Code" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="XP_Metrics.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="XP_Metrics" />
+      <option name="MAIN_CLASS_NAME" value="XP_Metrics.indentationCheckerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="indentationCheckerTest.checkIndentation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Code" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="XP_Metrics.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="XP_Metrics" />
+      <option name="MAIN_CLASS_NAME" value="XP_Metrics.indentationCheckerTest" />
+      <option name="METHOD_NAME" value="checkIndentation" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="indentationCheckerTest.checkIndentationComplex" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Code" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="XP_Metrics.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="XP_Metrics" />
+      <option name="MAIN_CLASS_NAME" value="XP_Metrics.indentationCheckerTest" />
+      <option name="METHOD_NAME" value="checkIndentationComplex" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.indentationCheckerTest" />
+        <item itemvalue="JUnit.indentationCheckerTest.checkIndentationComplex" />
+        <item itemvalue="JUnit.indentationCheckerTest.checkIndentation" />
         <item itemvalue="JUnit.getTokensTest" />
         <item itemvalue="JUnit.getTokensTest.getBracePairs" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
