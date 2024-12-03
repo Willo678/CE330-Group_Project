@@ -49,7 +49,7 @@ public class targetSelectionUI extends JFrame {
     }
 
     private codeMetricsUI createMetricsWindow() {
-        codeMetricsUI metricsUI = new userinterface.codeMetricsUI();
+        codeMetricsUI metricsUI = new codeMetricsUI();
         JFrame frame = new JFrame("Code Metrics");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.add(metricsUI);
