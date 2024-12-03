@@ -1,0 +1,15 @@
+Index: src/main/java/XP_Metrics_ReferenceVersion/camelChecker.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/XP_Metrics_ReferenceVersion/camelChecker.java b/src/main/java/XP_Metrics_ReferenceVersion/camelChecker.java
+new file mode 100644
+--- /dev/null	(date 1732632933963)
++++ b/src/main/java/XP_Metrics_ReferenceVersion/camelChecker.java	(date 1732632933963)
+@@ -0,0 +1,5 @@
++package XP_Metrics_ReferenceVersion;
++
++public class camelChecker {
++
++}
