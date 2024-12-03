@@ -31,7 +31,6 @@ class getTokensTest {
         List<Token> comments = getTokens.getComments("src/test/java/test_sample_data/sampleCode1.java");
         assertIterableEquals(tokens.stream().filter(x -> (Objects.equals(((Token) x).type, "Comment"))).toList(), comments);
 
-
         assertEquals(1, comments.size());
     }
 
