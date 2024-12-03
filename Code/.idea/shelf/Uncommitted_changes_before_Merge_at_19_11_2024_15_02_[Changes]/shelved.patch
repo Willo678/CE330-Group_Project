@@ -1,0 +1,131 @@
+Index: src/main/java/userInterface/fileViewerUI.java
+===================================================================
+diff --git a/src/main/java/userInterface/fileViewerUI.java b/src/main/java/userInterface/fileViewerUI.java
+deleted file mode 100644
+--- a/src/main/java/userInterface/fileViewerUI.java	(revision d59487ca9cb6c1cb4b8addc5b6cd4e3dc8927c02)
++++ /dev/null	(revision d59487ca9cb6c1cb4b8addc5b6cd4e3dc8927c02)
+@@ -1,30 +0,0 @@
+-// file viewer ui first draft
+-// by sj22795
+-package userInterface;
+-import javax.swing.*;
+-import java.awt.*;
+-
+-public class fileViewerUI {
+-    fileViewerUI(){
+-        JFrame fileViewerFrame = new JFrame("Code Analysis");
+-        JPanel fileViewerPanel = new JPanel(new BorderLayout());
+-        JPanel codePanel = new JPanel(new BorderLayout());
+-
+-        fileViewerPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+-        JLabel fileLabel = new JLabel("Folder tab");
+-        fileViewerPanel.add(fileLabel);
+-        fileViewerPanel.setSize(new Dimension(200, 800));
+-
+-        JTextArea codeArea = new JTextArea();
+-        codeArea.setSize(800, 800);
+-        codePanel.add(codeArea);
+-
+-        fileViewerFrame.setSize(1000,800);
+-        fileViewerFrame.setResizable(true);
+-        fileViewerFrame.setLocationRelativeTo(null);
+-        fileViewerFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+-        fileViewerFrame.add(fileViewerPanel, BorderLayout.WEST);
+-        fileViewerPanel.add(codeArea, BorderLayout.EAST);
+-        fileViewerFrame.setVisible(true);
+-    }
+-}
+Index: .gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>target/\r\n!.mvn/wrapper/maven-wrapper.jar\r\n!**/src/main/**/target/\r\n!**/src/test/**/target/\r\n\r\n### IntelliJ IDEA ###\r\n.idea/modules.xml\r\n.idea/jarRepositories.xml\r\n.idea/compiler.xml\r\n.idea/libraries/\r\n*.iws\r\n*.iml\r\n*.ipr\r\n\r\n### Eclipse ###\r\n.apt_generated\r\n.classpath\r\n.factorypath\r\n.project\r\n.settings\r\n.springBeans\r\n.sts4-cache\r\n\r\n### NetBeans ###\r\n/nbproject/private/\r\n/nbbuild/\r\n/dist/\r\n/nbdist/\r\n/.nb-gradle/\r\nbuild/\r\n!**/src/main/**/build/\r\n!**/src/test/**/build/\r\n\r\n### VS Code ###\r\n.vscode/\r\n\r\n### Mac OS ###\r\n.DS_Store
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.gitignore b/.gitignore
+--- a/.gitignore	(revision d59487ca9cb6c1cb4b8addc5b6cd4e3dc8927c02)
++++ b/.gitignore	(date 1732028544259)
+@@ -35,4 +35,5 @@
+ .vscode/
+ 
+ ### Mac OS ###
+-.DS_Store
+\ No newline at end of file
++.DS_Store
++/.idea/inspectionProfiles/Project_Default.xml
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"MavenProjectsManager\">\r\n    <option name=\"originalFiles\">\r\n      <list>\r\n        <option value=\"$PROJECT_DIR$/pom.xml\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_22\" default=\"true\" project-jdk-name=\"22\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/out\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision d59487ca9cb6c1cb4b8addc5b6cd4e3dc8927c02)
++++ b/.idea/misc.xml	(date 1732028544287)
+@@ -8,7 +8,7 @@
+       </list>
+     </option>
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_22" default="true" project-jdk-name="22" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_22" default="true" project-jdk-name="corretto-22" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/out" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># Default ignored files\r\n/shelf/\r\n/workspace.xml\r\n# Editor-based HTTP Client requests\r\n/httpRequests/\r\n# Datasource local storage ignored files\r\n/dataSources/\r\n/dataSources.local.xml\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+--- a/.idea/.gitignore	(revision d59487ca9cb6c1cb4b8addc5b6cd4e3dc8927c02)
++++ b/.idea/.gitignore	(date 1732028544273)
+@@ -6,3 +6,5 @@
+ # Datasource local storage ignored files
+ /dataSources/
+ /dataSources.local.xml
++/misc.xml
++/uiDesigner.xml
+Index: src/main/java/XP_Metrics/EvaluateXP.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/XP_Metrics/EvaluateXP.java b/src/main/java/XP_Metrics/EvaluateXP.java
+new file mode 100644
+--- /dev/null	(date 1732028544294)
++++ b/src/main/java/XP_Metrics/EvaluateXP.java	(date 1732028544294)
+@@ -0,0 +1,30 @@
++package XP_Metrics;
++
++import java.util.ArrayList;
++import XP_Metrics.getBracePairs.*;
++
++public class EvaluateXP {
++
++    ArrayList<BracePair> bracePairs;
++    public ArrayList<Score> scoreIndentation;
++    int scoreClassStructure;
++    int scoreMethodStructure;
++
++
++    public EvaluateXP(String path) {
++        bracePairs = getBracePairs.getBracePairs(path);
++
++        scoreIndentation = indentationChecker.checkIndentation(bracePairs);
++
++    }
++
++    public int normalisedScore() {
++        return sumScoreArray(scoreIndentation)
++                +scoreClassStructure+scoreMethodStructure;
++    }
++
++    private static int sumScoreArray(ArrayList<Score> scoreArray) {
++        return scoreArray.stream().mapToInt(a -> ((Score)a).score).sum();
++    }
++
++}
