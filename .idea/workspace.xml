@@ -4,17 +4,81 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
+    <list default="true" id="6969f1b7-0291-4350-99ec-5f2c247a1fc5" name="Changes" comment="" />
+=======
     <list default="true" id="d10180bd-fa2d-46d9-bf03-58a886a13057" name="Changes" comment="[Driver: jf22470]&#10;[Navigator: wp22246]&#10;Created test for 'classChecker' class">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Code/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/.idea/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/src/test/java/XP_Metrics/getTokensTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/src/test/java/XP_Metrics/getTokensTest.java" afterDir="false" />
     </list>
+>>>>>>> origin/main
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+<<<<<<< HEAD
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2pi4xqlXJgY5yDAdSdweZy9iXLy" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/26531/Group_Project&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="Group_Project" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="Group_Project" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6969f1b7-0291-4350-99ec-5f2c247a1fc5" name="Changes" comment="" />
+      <created>1733235811341</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1733235811341</updated>
+      <workItem from="1733235812302" duration="54000" />
+      <workItem from="1733235868660" duration="44000" />
+      <workItem from="1733236069183" duration="6000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+=======
   <component name="ChangesViewManager" show_ignored="true" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -131,5 +195,6 @@
     <MESSAGE value="[Driver: wp22246]&#10;[Navigator: cj24178]&#10;Added test for 'getTokens' class" />
     <MESSAGE value="[Driver: jf22470]&#10;[Navigator: wp22246]&#10;Created test for 'classChecker' class" />
     <option name="LAST_COMMIT_MESSAGE" value="[Driver: jf22470]&#10;[Navigator: wp22246]&#10;Created test for 'classChecker' class" />
+>>>>>>> origin/main
   </component>
 </project>

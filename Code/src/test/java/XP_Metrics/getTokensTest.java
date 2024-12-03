@@ -14,6 +14,7 @@ class getTokensTest {
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
          tokens = getTokens.getTokens("src/test/java/test_sample_data/sampleCode1.java");
+         tokens.stream().
     }
 
 

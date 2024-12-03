@@ -1,0 +1,21 @@
+Index: src/test/java/userInterfaceTest/DialPanelTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package userInterfaceTest;\r\n\r\nimport userInterface.DialPanel;\r\n\r\nimport javax.swing.*;\r\nimport java.awt.*;\r\nimport javax.swing.event.ChangeEvent;\r\nimport javax.swing.event.ChangeListener;\r\n\r\npublic class DialPanelTest {\r\n    public static void main(String[] args) {\r\n        JFrame frame = new JFrame(\"Dial Panel Test\");\r\n        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);\r\n        frame.setSize(400, 400);\r\n        frame.setLayout(new BorderLayout());\r\n\r\n        DialPanel dialPanel = new DialPanel(\"XP Adherence\");\r\n        frame.add(dialPanel, BorderLayout.CENTER);\r\n\r\n        JSlider slider = new JSlider(0, 100, 0);\r\n        slider.setMajorTickSpacing(10);\r\n        slider.setPaintTicks(true);\r\n        slider.setPaintLabels(true);\r\n\r\n        slider.addChangeListener(new ChangeListener() {\r\n            @Override\r\n            public void stateChanged(ChangeEvent e) {\r\n                int value = slider.getValue();\r\n                double normalizedScore = value / 100.0;\r\n                dialPanel.setScore(normalizedScore);\r\n            }\r\n        });\r\n\r\n\r\n        frame.add(slider, BorderLayout.SOUTH);\r\n        frame.setVisible(true);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/userInterfaceTest/DialPanelTest.java b/src/test/java/userInterfaceTest/DialPanelTest.java
+--- a/src/test/java/userInterfaceTest/DialPanelTest.java	(revision 37357b732955c4bbc29a7ce4554ac56799c5ff3e)
++++ b/src/test/java/userInterfaceTest/DialPanelTest.java	(date 1733238537199)
+@@ -31,8 +31,9 @@
+             }
+         });
+ 
+-
+         frame.add(slider, BorderLayout.SOUTH);
+         frame.setVisible(true);
+     }
+ }
++
++
