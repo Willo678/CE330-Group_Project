@@ -14,10 +14,8 @@ class getTokensTest {
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
          tokens = getTokens.getTokens("src/test/java/test_sample_data/sampleCode1.java");
-         tokens.stream().
+         tokens.stream();
     }
-
-
 
     @org.junit.jupiter.api.Test
     void getBracePairs() {
