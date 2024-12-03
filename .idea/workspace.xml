@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d10180bd-fa2d-46d9-bf03-58a886a13057" name="Changes" comment="[Driver: jf22470]&#10;[Navigator: wp22246]&#10;Created test for 'classChecker' class">
-      <change beforePath="$PROJECT_DIR$/Code/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Code/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Code/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/.idea/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/src/test/java/XP_Metrics/getTokensTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/src/test/java/XP_Metrics/getTokensTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
