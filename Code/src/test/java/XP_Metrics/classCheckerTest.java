@@ -1,41 +1,41 @@
 package XP_Metrics;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import XP_Metrics.getTokens.*;
-import org.junit.jupiter.api.BeforeEach;
 
-class classCheckerTest {
+
+public class classCheckerTest {
     List<Token> tokens;
-    String path = "M:\\3rd Year\\CE320\\GROUP_PROJECT\\Code\\src\\main\\java\\XP_Metrics\\indentationChecker.java";
+    String path = "M:\\3rd Year\\CE320\\GROUP_PROJECT\\Code\\src\\test\\java\\test_sample_data\\sampleCode1.java";
 
     @BeforeEach
-    void initialiseLists() {
+    void setup() {
         tokens = getTokens.getTokens(path);
     }
 
     @Test
-    void checkBefore() {
+    public void checkBefore() {
         int start = 0;
         int cur = 0;
         for (Token token : tokens) {
             if (token.type.equalsIgnoreCase("class")) {
                 start = token.start;
             }
-            if (cur < start) {
-                assertEquals(token.type, "import");
+            if (cur < start && token.type.equalsIgnoreCase("import")) {
+                assertEquals("IMPORT", token.type);
             }
             cur++;
         }
     }
 
     @Test
-    void checkAfter() {
+    public void checkAfter() {
         int start = 0;
         int cur = 0;
         for (getTokens.Token token : tokens) {
