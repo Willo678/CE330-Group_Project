@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6969f1b7-0291-4350-99ec-5f2c247a1fc5" name="Changes" comment="[driver: of21284]&#10;[navigator: sj22795]&#10;&#10;adding unit testing to the code base.">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/src/test/java/XP_Metrics/EvaluateXPTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/src/test/java/XP_Metrics/EvaluateXPTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/src/test/java/XP_Metrics/getTokensTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/src/test/java/XP_Metrics/getTokensTest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JUnit.EvaluateXPTest.executor": "Run",
+    "JUnit.EvaluateXPTest.normalisedScore.executor": "Run",
+    "JUnit.getTokensTest.executor": "Run",
+    "git-widget-placeholder": "main",
+    "node.js.selected.package.tslint": "(autodetect)"
+  }
+}]]></component>
+  <component name="RunManager" selected="JUnit.EvaluateXPTest.normalisedScore">
+    <configuration name="EvaluateXPTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Code" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="XP_Metrics.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="XP_Metrics" />
+      <option name="MAIN_CLASS_NAME" value="XP_Metrics.EvaluateXPTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EvaluateXPTest.normalisedScore" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Code" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="XP_Metrics.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="XP_Metrics" />
+      <option name="MAIN_CLASS_NAME" value="XP_Metrics.EvaluateXPTest" />
+      <option name="METHOD_NAME" value="normalisedScore" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="getTokensTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Code" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="XP_Metrics.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="XP_Metrics" />
+      <option name="MAIN_CLASS_NAME" value="XP_Metrics.getTokensTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.EvaluateXPTest.normalisedScore" />
+        <item itemvalue="JUnit.EvaluateXPTest" />
+        <item itemvalue="JUnit.getTokensTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <servers />
+  </component>
+</project>
