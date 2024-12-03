@@ -21,7 +21,7 @@ public class CodeAnalysis {
         scores.addAll(methodNameAnalysis(tokenList.stream().filter(getTokens.BracePair.class::isInstance).map(getTokens.BracePair.class::cast).toList()));
         scores.addAll(methodCommentAnalysis(tokenList));
 //        codeLineTypeAnalysis(tokenList);
-        return new ArrayList<>();
+        return scores;
     }
 
 
@@ -64,48 +64,34 @@ public class CodeAnalysis {
 
     public static ArrayList<Score> methodCommentAnalysis(List<Token> tokens) {
         ArrayList<Score> scores = new ArrayList<>();
-        int tokenIndex = 0;
 
-
-        for (; tokenIndex < tokens.size(); tokenIndex++) {
-
+        for (int tokenIndex = 0; tokenIndex < tokens.size(); tokenIndex++) {
             if (tokens.get(tokenIndex).type == "METHOD") {
                 boolean commentFound = false;
                 boolean endMethod = false;
+                int searchIndex = tokenIndex + 1;
 
-                while (!commentFound && !endMethod) {
-                    tokenIndex++;
+                while (!commentFound && !endMethod && searchIndex < tokens.size()) {
+                    Token currentToken = tokens.get(searchIndex);
 
-                    if (tokens.get(tokenIndex).type == "COMMENT") {
+                    if (currentToken.type == "COMMENT") {
                         commentFound = true;
-
-                        if (tokenIndex + 2 <= tokens.size()) {
-                            if (tokens.get(tokenIndex + 1).type == "COMMENT" && tokens.get(tokenIndex + 2).type == "COMMENT") {
-
-                                scores.add(new Score(20, "Method comment block too large"));
-                                System.out.println("method comment block");
-                            }
+                        if (searchIndex + 2 < tokens.size() &&
+                                tokens.get(searchIndex + 1).type == "COMMENT" &&
+                                tokens.get(searchIndex + 2).type == "COMMENT") {
+                            scores.add(new Score(20, "Method comment block too large"));
                         }
-                    }
-                    if (tokens.get(tokenIndex).type == "METHOD") {
-
+                    } else if (currentToken.type == "METHOD") {
                         endMethod = true;
                     }
+                    searchIndex++;
                 }
+
                 if (!commentFound) {
-
                     scores.add(new Score(20, "Method needs at least one comment"));
-                    System.out.println("method comment not found");
                 }
             }
-
-            if (tokenIndex < tokens.size() - 1) {
-                tokenIndex++;
-            }
-
         }
-
         return scores;
     }
-
 }
