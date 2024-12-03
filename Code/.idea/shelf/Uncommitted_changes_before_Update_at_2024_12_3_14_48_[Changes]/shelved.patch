@@ -1,0 +1,14 @@
+Index: src/test/java/XP_Metrics/userInterfaceTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/XP_Metrics/userInterfaceTest.java b/src/test/java/XP_Metrics/userInterfaceTest.java
+new file mode 100644
+--- /dev/null	(date 1733236687204)
++++ b/src/test/java/XP_Metrics/userInterfaceTest.java	(date 1733236687204)
+@@ -0,0 +1,4 @@
++package XP_Metrics;
++
++public class userInterfaceTest {
++}

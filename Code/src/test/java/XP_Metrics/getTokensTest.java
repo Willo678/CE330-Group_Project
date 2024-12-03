@@ -14,9 +14,8 @@ class getTokensTest {
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
          tokens = getTokens.getTokens("src/test/java/test_sample_data/sampleCode1.java");
+         tokens.stream();
     }
-
-
 
     @org.junit.jupiter.api.Test
     void getBracePairs() {
@@ -31,7 +30,6 @@ class getTokensTest {
     void getComments() {
         List<Token> comments = getTokens.getComments("src/test/java/test_sample_data/sampleCode1.java");
         assertIterableEquals(tokens.stream().filter(x -> (Objects.equals(((Token) x).type, "Comment"))).toList(), comments);
-
 
         assertEquals(1, comments.size());
     }
