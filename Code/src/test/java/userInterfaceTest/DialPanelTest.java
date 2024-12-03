@@ -31,8 +31,8 @@ public class DialPanelTest {
             }
         });
 
+
         frame.add(slider, BorderLayout.SOUTH);
         frame.setVisible(true);
-
     }
 }
