@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6969f1b7-0291-4350-99ec-5f2c247a1fc5" name="Changes" comment="[driver: of21284]&#10;[navigator: sj22795]&#10;&#10;adding unit testing to the code base.">
+    <list default="true" id="d10180bd-fa2d-46d9-bf03-58a886a13057" name="Changes" comment="[Driver: jf22470]&#10;[Navigator: wp22246]&#10;Created test for 'classChecker' class">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/src/test/java/XP_Metrics/EvaluateXPTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/src/test/java/XP_Metrics/EvaluateXPTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Code/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/.idea/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/src/test/java/XP_Metrics/getTokensTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/src/test/java/XP_Metrics/getTokensTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -14,49 +15,43 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  <component name="ChangesViewManager" show_ignored="true" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+      </list>
+    </option>
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+  <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "JUnit.EvaluateXPTest.executor": "Run",
-    "JUnit.EvaluateXPTest.normalisedScore.executor": "Run",
+    "Application.Main.executor": "Run",
     "JUnit.getTokensTest.executor": "Run",
+    "JUnit.getTokensTest.getBracePairs.executor": "Run",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "git-widget-placeholder": "main",
-    "node.js.selected.package.tslint": "(autodetect)"
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
   }
 }]]></component>
-  <component name="RunManager" selected="JUnit.EvaluateXPTest.normalisedScore">
-    <configuration name="EvaluateXPTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="XP_Metrics" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.getTokensTest">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="Code" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="XP_Metrics.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="XP_Metrics" />
-      <option name="MAIN_CLASS_NAME" value="XP_Metrics.EvaluateXPTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="EvaluateXPTest.normalisedScore" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Code" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="XP_Metrics.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="XP_Metrics" />
-      <option name="MAIN_CLASS_NAME" value="XP_Metrics.EvaluateXPTest" />
-      <option name="METHOD_NAME" value="normalisedScore" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -76,15 +71,65 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="getTokensTest.getBracePairs" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Code" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="XP_Metrics.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="XP_Metrics" />
+      <option name="MAIN_CLASS_NAME" value="XP_Metrics.getTokensTest" />
+      <option name="METHOD_NAME" value="getBracePairs" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.EvaluateXPTest.normalisedScore" />
-        <item itemvalue="JUnit.EvaluateXPTest" />
         <item itemvalue="JUnit.getTokensTest" />
+        <item itemvalue="JUnit.getTokensTest.getBracePairs" />
+        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
   <component name="TaskManager">
+    <task id="LOCAL-00001" summary="[Driver: wp22246]&#10;[Navigator: cj24178]&#10;Added test for 'getTokens' class">
+      <option name="closed" value="true" />
+      <created>1733236348638</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1733236348638</updated>
+    </task>
+    <task id="LOCAL-00002" summary="[Driver: jf22470]&#10;[Navigator: wp22246]&#10;Created test for 'classChecker' class">
+      <option name="closed" value="true" />
+      <created>1733236817611</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1733236817611</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Removed xml files from git" />
+    <MESSAGE value="[Driver: wp22246]&#10;[Navigator: cj24178]&#10;Added test for 'getTokens' class" />
+    <MESSAGE value="[Driver: jf22470]&#10;[Navigator: wp22246]&#10;Created test for 'classChecker' class" />
+    <option name="LAST_COMMIT_MESSAGE" value="[Driver: jf22470]&#10;[Navigator: wp22246]&#10;Created test for 'classChecker' class" />
   </component>
 </project>
