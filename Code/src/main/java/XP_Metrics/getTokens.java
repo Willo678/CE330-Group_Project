@@ -136,7 +136,7 @@ public class getTokens {
         //Sorts arraylist so that pairs that start earlier are first in the array
         tokenArrayList.sort((a, b) -> ((a.start > b.start) ? 1 : -1));
 
-        System.out.println(tokenArrayList);
+        //System.out.println(tokenArrayList);
 
         return tokenArrayList;
     }
