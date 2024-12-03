@@ -22,6 +22,7 @@ public class DialPanelTest {
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
 
+
         slider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -30,7 +31,6 @@ public class DialPanelTest {
                 dialPanel.setScore(normalizedScore);
             }
         });
-
 
         frame.add(slider, BorderLayout.SOUTH);
         frame.setVisible(true);
