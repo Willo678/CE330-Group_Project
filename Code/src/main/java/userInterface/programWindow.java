@@ -13,6 +13,14 @@ public class programWindow extends JFrame {
         return targetSelectionUI;
     }
 
+    public userInterface.sourceCodeDisplayUI getSourceCodeDisplayUI() {
+        return sourceCodeDisplayUI;
+    }
+
+    public userInterface.codeMetricsUI getCodeMetricsUI() {
+        return codeMetricsUI;
+    }
+
     public programWindow() {
 
         tabbedPane.addTab("Target Selection", targetSelectionUI);
