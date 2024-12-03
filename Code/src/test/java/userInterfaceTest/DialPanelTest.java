@@ -1,7 +1,6 @@
 package userInterfaceTest;
 
 import userInterface.DialPanel;
-
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.event.ChangeEvent;
@@ -9,7 +8,7 @@ import javax.swing.event.ChangeListener;
 
 public class DialPanelTest {
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Dial Panel Test");
+        JFrame frame = new JFrame("Dial Panel Test"); //
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 400);
         frame.setLayout(new BorderLayout());
