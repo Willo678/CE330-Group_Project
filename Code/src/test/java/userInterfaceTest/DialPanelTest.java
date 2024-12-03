@@ -6,6 +6,7 @@ import java.awt.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+
 public class DialPanelTest {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Dial Panel Test"); //
