@@ -1,6 +1,7 @@
 package userInterface;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -16,7 +17,11 @@ public class sourceCodeDisplayUI extends JPanel {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.showOpenDialog(null);
 
-        this.fileName = fileName;
+        File file = fileChooser.getSelectedFile();
+        String filePath = file.getAbsolutePath();
+        System.out.println(filePath);
+
+        this.fileName = filePath;
     }
 
     public void setCurrentFolder(String currentFolder) {
@@ -25,12 +30,16 @@ public class sourceCodeDisplayUI extends JPanel {
 
     public sourceCodeDisplayUI() {
         super();
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS)); // makes layout easier
 
         JButton chooseSource = new JButton("Choose Source File");
+        JTextArea codeArea = new JTextArea();
         chooseSource.addActionListener(e -> setFileName(fileName));
+
+
         this.add(chooseSource);
-        this.add(new JTextArea());
-        System.out.println(fileName);
+        this.add(codeArea);
+
     }
 
     public ArrayList<String> getCode(String fileName) throws FileNotFoundException {
