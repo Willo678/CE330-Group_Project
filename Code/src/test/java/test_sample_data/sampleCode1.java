@@ -2,6 +2,8 @@ package test_sample_data;
 
 public class sampleCode1 {
 
+        //Example Comment
+
         public int score;
         public String reason;
 

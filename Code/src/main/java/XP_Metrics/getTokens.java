@@ -9,7 +9,7 @@ public class getTokens {
 
 
 
-    public static class Token {
+    public static class Token implements Comparable<Token> {
         public int start;
         public String type;
         public String name;
@@ -27,10 +27,21 @@ public class getTokens {
             return "[" + start + "," + type + "," + name + "," + indentationLevel + "]";
         }
 
+        @Override
         public boolean equals(Object o) {
             if (this == o) return true;
             if (!(o instanceof Token token)) return false;
-            return start > token.start;
+            return start == token.start && indentationLevel == token.indentationLevel && Objects.equals(type, token.type) && Objects.equals(name, token.name);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(start, type, name, indentationLevel);
+        }
+
+        @Override
+        public int compareTo(Token o) {
+            return start-o.start;
         }
     }
 
@@ -56,13 +67,15 @@ public class getTokens {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (!(o instanceof BracePair bracePair)) return false;
-            return end > bracePair.end;
+            if (!super.equals(o)) return false;
+            return end == bracePair.end && nestedness == bracePair.nestedness;
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(start, end, type);
+            return Objects.hash(super.hashCode(), end, nestedness);
         }
+
     }
 
 
@@ -134,7 +147,7 @@ public class getTokens {
         }
 
         //Sorts arraylist so that pairs that start earlier are first in the array
-        tokenArrayList.sort((a, b) -> ((a.start > b.start) ? 1 : -1));
+        Collections.sort(tokenArrayList);
 
         //System.out.println(tokenArrayList);
 
