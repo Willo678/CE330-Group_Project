@@ -38,6 +38,7 @@ public class EvaluateXP {
         }
         return result;
 
+
     }
 
     private static int sumScoreArray(ArrayList<Score> scoreArray) {
