@@ -23,6 +23,8 @@ public class EvaluateXP {
                         .map(BracePair.class::cast).toList()
         );
         scoreClassStructure = classChecker.checkImports(path, bracePairs);
+        ArrayList<Score> codeAnalysisScores = CodeAnalysis.CodeAnalysis(bracePairs);
+        scoreMethodStructure = 100 - sumScoreArray(codeAnalysisScores);
     }
 
     public int normalisedScore() {

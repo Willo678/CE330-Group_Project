@@ -1,0 +1,13 @@
+Index: .gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/Code/.idea/inspectionProfiles/Project_Default.xml\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.gitignore b/.gitignore
+--- a/.gitignore	(revision 36d8264736f47d2dd22db0ee81908de5f2ba26fd)
++++ b/.gitignore	(date 1733233492977)
+@@ -1,1 +1,2 @@
+ /Code/.idea/inspectionProfiles/Project_Default.xml
++/tuleap pull pass.txt
