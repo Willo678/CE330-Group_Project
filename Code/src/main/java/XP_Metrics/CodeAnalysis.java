@@ -31,6 +31,9 @@ public class CodeAnalysis {
     public static ArrayList<Score> methodNameAnalysis(List<getTokens.BracePair> bracePairs) {
         ArrayList<Score> scores = new ArrayList<>();
         for (getTokens.BracePair bracePair : bracePairs) {
+            if (bracePair.name == null) {
+                System.out.println("Null method name detected for bracePair: " + bracePair);
+            }
             if (bracePair.type != null && bracePair.type.equals("METHOD")) {
                 String methodName = bracePair.name;
                 if (methodName != null) {
@@ -74,7 +77,8 @@ public class CodeAnalysis {
         ArrayList<Score> scores = new ArrayList<>();
 
         for (int tokenIndex = 0; tokenIndex < tokens.size(); tokenIndex++) {
-            if (tokens.get(tokenIndex).type == "METHOD") {
+            Token token = tokens.get(tokenIndex);
+            if (token.type != null && token.type.equals("METHOD")) {
                 boolean commentFound = false;
                 boolean endMethod = false;
                 int searchIndex = tokenIndex + 1;

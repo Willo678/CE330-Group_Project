@@ -19,18 +19,27 @@ import static utils.getJavaSubdirectories.getJavaSubdirectories;
 
 public class targetSelectionUI extends JPanel {
     private final userInterface.codeMetricsUI metricsUI;
+    private final JPanel mainPanel;
     private final JTextField pathField;
     private final JFileChooser folderSelect;
+    private final CardLayout cardLayout;
 
     public targetSelectionUI(codeMetricsUI metricsUI) {
         this.metricsUI = metricsUI;
-        setLayout(new BorderLayout());
+        this.cardLayout = new CardLayout();
+        this.mainPanel = new JPanel(cardLayout);
 
+        setLayout(new BorderLayout());
         pathField = createPathField();
         folderSelect = new JFileChooser();
         folderSelect.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-        add(createSelectionPanel(), BorderLayout.NORTH);
+        JPanel selectionPanel = createSelectionPanel();
+        mainPanel.add(selectionPanel, "selection");
+        mainPanel.add(metricsUI, "metrics");
+
+        add(mainPanel, BorderLayout.CENTER);
+        cardLayout.show(mainPanel, "selection");
     }
 
     private JPanel createSelectionPanel() {
@@ -94,6 +103,7 @@ public class targetSelectionUI extends JPanel {
             if (!path.isEmpty()) {
                 try {
                     processPath(path);
+                    cardLayout.show(mainPanel, "metrics");
                 } catch (Exception ex) {
                     showError(ex.getMessage());
                 }
@@ -115,13 +125,14 @@ public class targetSelectionUI extends JPanel {
             throw new InvalidPathException(path, "No valid Java files found in subdirectories");
         }
 
+        boolean processed = false;
         for (String filePath : filePaths) {
             try {
                 EvaluateXP evaluator = new EvaluateXP(filePath);
                 if (evaluator.bracePairs == null ||
                         evaluator.scoreIndentation == null ||
                         evaluator.scoreClassStructure == null) {
-                    continue;  // Skip files that failed to evaluate
+                    continue;
                 }
 
                 ArrayList<Score> codeAnalysisScores = CodeAnalysis.CodeAnalysis(evaluator.bracePairs);
@@ -131,11 +142,20 @@ public class targetSelectionUI extends JPanel {
                             evaluator.scoreClassStructure,
                             codeAnalysisScores
                     );
+                    processed = true;
                 }
             } catch (Exception ex) {
                 System.err.println("Error processing file: " + filePath + " - " + ex.getMessage());
-                continue;  // Skip problematic files and continue with others
             }
+        }
+
+        if (processed) {
+            Window window = SwingUtilities.getWindowAncestor(this);
+            if (window instanceof programWindow) {
+                ((programWindow) window).switchToTab(2); // 切换到 Metrics 标签页
+            }
+        } else {
+            throw new InvalidPathException(path, "No files were successfully processed");
         }
     }
 

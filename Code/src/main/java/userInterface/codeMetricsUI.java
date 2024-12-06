@@ -76,7 +76,6 @@ public class codeMetricsUI extends JPanel {
         int indentationScore = calculateScore(indentation);
         int classStructureScore = calculateScore(classStructure);
 
-        // 分开方法结构和命名规范分数
         ArrayList<Score> methodScores = new ArrayList<>();
         ArrayList<Score> namingScores = new ArrayList<>();
 
