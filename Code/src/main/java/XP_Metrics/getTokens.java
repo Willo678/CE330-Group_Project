@@ -81,76 +81,75 @@ public class getTokens {
 
     //Returns an arraylist of Bracepairs for a given class
     public static ArrayList<Token> getTokens(String path) {
-        Scanner scanner;
-        try {
-            scanner = new Scanner(new File(path));
+        ArrayList<Token> tokenArrayList = new ArrayList<>();
+        Stack<BracePair> bracePairStack = new Stack<>();
+
+        try (Scanner scanner = new Scanner(new File(path))) {
+            int lineNum = 0;
+            int nestLevel = 0;
+            String latestKeyword = null;
+            String latestIdentity = null;
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                int indentLevel = (line.length() - line.replaceAll("^(\\t| {4})+", "").length()) / 4;
+                lineNum++;
+
+                line = line.replaceAll("([\"']).*(\\1)+|[^a-zA-Z0-9{}\"/']+", " ");
+
+                for (String statement : line.split(";")) {
+                    if (statement == null) continue;
+
+                    if (statement.contains("//")) {
+                        tokenArrayList.add(new Token(lineNum, "Comment", statement.trim(), indentLevel));
+                        continue;
+                    }
+                    if (statement.contains("import")) {
+                        tokenArrayList.add(new Token(lineNum, "Import", statement.trim(), indentLevel));
+                        continue;
+                    }
+
+                    try (Scanner s = new Scanner(statement)) {
+                        while (s.hasNext()) {
+                            String word = s.next();
+                            if (word == null) continue;
+
+                            String keyword = isControlStatement(word);
+                            String identity = isIdentityStatement(word);
+
+                            latestKeyword = keyword != null ? keyword : latestKeyword;
+                            latestIdentity = identity != null ? identity : latestIdentity;
+
+                            if (word.contains("{") && !bracePairStack.isEmpty()) {
+                                BracePair bracePair = new BracePair(lineNum,
+                                        latestKeyword != null ? latestKeyword : "BLOCK",
+                                        latestIdentity,
+                                        nestLevel,
+                                        indentLevel
+                                );
+                                bracePairStack.push(bracePair);
+                                latestKeyword = null;
+                                latestIdentity = null;
+                                nestLevel++;
+                            }
+
+                            if (word.contains("}") && !bracePairStack.isEmpty()) {
+                                BracePair topPair = bracePairStack.peek();
+                                if (topPair != null) {
+                                    topPair.end = lineNum;
+                                    tokenArrayList.add(bracePairStack.pop());
+                                    nestLevel = Math.max(0, nestLevel - 1);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
 
-        ArrayList<Token> tokenArrayList = new ArrayList<>();
-        Stack<BracePair> bracePairStack = new Stack<>();
-
-
-        int lineNum = 0;
-        int nestLevel = 0;
-
-        String latestKeyword = null;
-        String latestIdentity = null;
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-
-            int indentLevel = (line.length() - line.replaceAll("^(\\t| {4})+", "").length()) / 4;
-            lineNum++;
-
-            //Removes all non word or brace characters
-            line = line.replaceAll("([\"']).*(\\1)+|[^a-zA-Z0-9{}\"/']+", " ");
-
-
-            //Breaks up each line into statements in the case that a line contains multiple statements
-            for (String statement : line.split(";")) {
-                if (statement.contains("//")) {
-                    tokenArrayList.add(new Token(lineNum, "Comment", statement, indentLevel));
-                    continue;
-                }
-                if (statement.contains("import")) {
-                    tokenArrayList.add(new Token(lineNum, "Import", statement, indentLevel));
-                    continue;
-                }
-                Scanner s = new Scanner(statement);
-
-                //Iterates through statement word by word, rather than using .contains("{") to prevent errors if multiple curly brackets occur
-                while (s.hasNext()) {
-                    String word = s.next();
-
-                    //Updates the most recently detected keyword and identity if not null
-                    latestKeyword = Optional.ofNullable(isControlStatement(word)).orElse(latestKeyword);
-                    latestIdentity = Optional.ofNullable(isIdentityStatement(word)).orElse(latestIdentity);
-
-                    //If "{" detected, adds new bracepair to the stack
-                    if (word.contains("{")) {
-                        bracePairStack.push(new BracePair(lineNum, latestKeyword, latestIdentity, nestLevel, indentLevel));
-                        latestKeyword = null;
-                        latestIdentity = null;
-                        nestLevel++;
-                    }
-
-                    //If "}" detected, updates the end value of the top item of the stack, and moves it from the stack to arraylist
-                    if (word.contains("}")) {
-                        bracePairStack.peek().end = lineNum;
-                        tokenArrayList.add(bracePairStack.pop());
-                        nestLevel--;
-                    }
-
-                }
-            }
-        }
-
-        //Sorts arraylist so that pairs that start earlier are first in the array
         Collections.sort(tokenArrayList);
-
-        //System.out.println(tokenArrayList);
-
         return tokenArrayList;
     }
 
@@ -175,39 +174,38 @@ public class getTokens {
 
     //Detects if given string is a reserved Java keyword
     private static String isControlStatement(String s) {
-        s = s.replaceAll("(([\"']).*(\\2)+|\\W)+", "");
-        if (SourceVersion.isKeyword(s)) {
-            s = s.toUpperCase();
-            return switch (s) {
-                default -> s;
-                case "PUBLIC", //If any of these words are detected, identifies as method declaration
-                     "PRIVATE",
-                     "PROTECTED",
-                     "STATIC",
-                     "VOID" -> "METHOD";
-                case "NULL", //Java primitives are also identified as keywords; prevents being identified as such
-                     "INT",
-                     "DOUBLE",
-                     "FLOAT",
-                     "LONG",
-                     "SHORT",
-                     "BYTE",
-                     "CHAR",
-                     "BREAK" -> null;
-            };
+        if (s == null || s.trim().isEmpty()) {
+            return null;
         }
 
+        String cleaned = s.replaceAll("(([\"']).*(\\2)+|\\W)+", "");
+        if (cleaned.isEmpty()) {
+            return null;
+        }
+
+        if (SourceVersion.isKeyword(cleaned)) {
+            String upper = cleaned.toUpperCase();
+            return switch (upper) {
+                default -> upper;
+                case "PUBLIC", "PRIVATE", "PROTECTED", "STATIC", "VOID" -> "METHOD";
+                case "NULL", "INT", "DOUBLE", "FLOAT", "LONG",
+                     "SHORT", "BYTE", "CHAR", "BREAK" -> null;
+            };
+        }
         return null;
     }
 
-    //Detects if given string is a valid variable name
     private static String isIdentityStatement(String s) {
-        s = s.replaceAll("(([\"']).*(\\2)+|\\W)+", "");
-        if (SourceVersion.isIdentifier(s)) {
-            return s.toUpperCase();
+        if (s == null || s.trim().isEmpty()) {
+            return null;
         }
 
-        return null;
+        String cleaned = s.replaceAll("(([\"']).*(\\2)+|\\W)+", "");
+        if (cleaned.isEmpty()) {
+            return null;
+        }
+
+        return SourceVersion.isIdentifier(cleaned) ? cleaned.toUpperCase() : null;
     }
 
 
