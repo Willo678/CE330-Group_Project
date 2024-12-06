@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import static utils.directoryContainsJava.directoryContainsJava;
 import static utils.getJavaSubdirectories.getJavaSubdirectories;
 
-public class targetSelectionUI extends JFrame {
+public class targetSelectionUI extends JPanel {
     private final userInterface.codeMetricsUI metricsUI;
     private final JTextField pathField;
     private final JFileChooser folderSelect;
@@ -128,9 +128,4 @@ public class targetSelectionUI extends JFrame {
                 JOptionPane.ERROR_MESSAGE);
     }
 
-    private void setupWindow() {
-        pack();
-        setLocationRelativeTo(null);
-        setVisible(true);
-    }
 }
