@@ -1,24 +1,21 @@
 package userInterface;
 
-import XP_Metrics.CodeAnalysis;
-import XP_Metrics.EvaluateXP;
+
 import XP_Metrics.Score;
-import userInterface.DialPanel;
+
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.nio.file.InvalidPathException;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 
-import static utils.directoryContainsJava.directoryContainsJava;
-import static utils.getJavaSubdirectories.getJavaSubdirectories;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
 
 public class codeMetricsUI extends JPanel {
     private final DialPanel totalScoreDial;
     private final JPanel metricsPanel;
     private final JTextArea detailsArea;
+    private final JLabel adherenceLabel;
 
     public codeMetricsUI() {
         setLayout(new BorderLayout(10, 10));
@@ -26,7 +23,7 @@ public class codeMetricsUI extends JPanel {
         metricsPanel = createMetricsPanel();
         detailsArea = createDetailsArea();
         totalScoreDial = new DialPanel("Overall Score");
-
+        adherenceLabel = new JLabel("Ready", SwingConstants.CENTER);
         layoutComponents();
     }
 
@@ -50,6 +47,7 @@ public class codeMetricsUI extends JPanel {
         JPanel leftPanel = new JPanel(new BorderLayout(5, 5));
         leftPanel.add(metricsPanel, BorderLayout.NORTH);
         leftPanel.add(scrollPane, BorderLayout.CENTER);
+        leftPanel.add(adherenceLabel, BorderLayout.SOUTH);
 
         add(leftPanel, BorderLayout.CENTER);
         add(totalScoreDial, BorderLayout.EAST);
@@ -77,15 +75,28 @@ public class codeMetricsUI extends JPanel {
 
         int indentationScore = calculateScore(indentation);
         int classStructureScore = calculateScore(classStructure);
-        int codeAnalysisScore = calculateScore(codeAnalysis);
+        int methodLengthScore = calculateScore(codeAnalysis.stream()
+                .filter(s -> s.reason.contains("too big"))
+                .collect(Collectors.toCollection(ArrayList::new)));
+        int camelCaseScore = calculateScore(codeAnalysis.stream()
+                .filter(s -> !s.reason.contains("too big"))
+                .collect(Collectors.toCollection(ArrayList::new)));
 
-        metricsPanel.add(createScorePanel("Indentation", indentationScore));
+        metricsPanel.setLayout(new GridLayout(4, 1, 5, 5));
+        metricsPanel.add(createScorePanel("Blocks & Indenting", indentationScore));
         metricsPanel.add(createScorePanel("Class Structure", classStructureScore));
-        metricsPanel.add(createScorePanel("Code Analysis", codeAnalysisScore));
+        metricsPanel.add(createScorePanel("Function Length", methodLengthScore));
+        metricsPanel.add(createScorePanel("CamelCase", camelCaseScore));
 
-        double averageScore = (indentationScore + classStructureScore + codeAnalysisScore) / 300.0;
+        double averageScore = (indentationScore + classStructureScore + methodLengthScore + camelCaseScore) / 4.0 / 100.0;
         totalScoreDial.setScore(averageScore);
+
+        String adherenceLevel = averageScore >= 0.8 ? "High adherence" :
+                averageScore >= 0.5 ? "Moderate adherence" :
+                        "Low adherence";
+        adherenceLabel.setText(adherenceLevel + " - " + String.format("%.1f%%", averageScore * 100));
     }
+
 
     private int calculateScore(ArrayList<Score> scores) {
         return Math.max(100 - scores.stream()
