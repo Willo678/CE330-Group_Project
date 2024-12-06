@@ -12,7 +12,12 @@ public class Main {
         //programWindow window = new programWindow();
 
         EvaluateXP evaluator = new EvaluateXP("src/main/java/XP_Metrics/CodeAnalysis.java");
-        System.out.println(evaluator.normalisedScore());
+        System.out.println("Averaged scores: " + evaluator.normalisedScore());
+
+        System.out.println(evaluator.scoreIndentation);
+        System.out.println(evaluator.scoreClassStructure);
+        System.out.println(evaluator.scoreMethodStructure);
+
 
     }
 }

@@ -39,7 +39,7 @@ public class indentationChecker {
                 }
                 if ((p.nestedness - lastMethodNestedness) > idealNestedness) {
                     int difference = p.nestedness - lastMethodNestedness;
-                    scores.add(new Score(difference * 5, "Method too nested, at line " + p.start));
+                    scores.add(new Score(difference * 3, "Method too nested, at line " + p.start));
                     //Handle method too nested
                     //Tell the programmer to go **** themselves
                 }
