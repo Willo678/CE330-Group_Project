@@ -12,6 +12,7 @@ public class programWindow extends JFrame {
     private final JLabel statusLabel;
 
     public programWindow() {
+        setLayout(new BorderLayout());
         tabbedPane = new JTabbedPane();
         statusBar = new JPanel(new FlowLayout(FlowLayout.LEFT));
         statusLabel = new JLabel("Ready");
@@ -34,7 +35,6 @@ public class programWindow extends JFrame {
             }
         });
 
-        setLayout(new BorderLayout());
         add(tabbedPane, BorderLayout.CENTER);
         add(statusBar, BorderLayout.SOUTH);
 
@@ -47,13 +47,6 @@ public class programWindow extends JFrame {
         setMinimumSize(new Dimension(800, 600));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            SwingUtilities.updateComponentTreeUI(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public targetSelectionUI getTargetSelectionUI() {
@@ -76,12 +69,5 @@ public class programWindow extends JFrame {
         if (index >= 0 && index < tabbedPane.getTabCount()) {
             tabbedPane.setSelectedIndex(index);
         }
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            programWindow window = new programWindow();
-            window.setVisible(true);
-        });
     }
 }
