@@ -22,17 +22,15 @@ public class targetSelectionUI extends JFrame {
     private final JTextField pathField;
     private final JFileChooser folderSelect;
 
-    public targetSelectionUI() {
+    public targetSelectionUI(codeMetricsUI metricsUI) {
+        this.metricsUI = metricsUI;
         setLayout(new BorderLayout());
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        metricsUI = createMetricsWindow();
         pathField = createPathField();
         folderSelect = new JFileChooser();
         folderSelect.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
         add(createSelectionPanel(), BorderLayout.NORTH);
-        setupWindow();
     }
 
     private JPanel createSelectionPanel() {
@@ -48,16 +46,6 @@ public class targetSelectionUI extends JFrame {
         return panel;
     }
 
-    private codeMetricsUI createMetricsWindow() {
-        codeMetricsUI metricsUI = new codeMetricsUI();
-        JFrame frame = new JFrame("Code Metrics");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.add(metricsUI);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-        return metricsUI;
-    }
 
     private JTextField createPathField() {
         JTextField field = new hintTextField("Select a project directory:");
