@@ -1,15 +1,11 @@
 package userInterface;
 
-
 import XP_Metrics.Score;
-
 
 import javax.swing.*;
 import java.awt.*;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
-
 
 public class codeMetricsUI extends JPanel {
     private final DialPanel totalScoreDial;

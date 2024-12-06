@@ -52,18 +52,15 @@ public class CodeAnalysis {
                     if (!(isLowerCase(nameChars[0]))) {
                         scores.add(new Score(5, "First character is not lower case"));
                     }
-
                     for (char c : nameChars) {
                         if (isUpperCase(c)) {
                             upperCaseFound = true;
                             break;
                         }
                     }
-
                     if (!(upperCaseFound)) {
                         scores.add(new Score(5, "No uppercase found"));
                     }
-
                     if (!(methodWords.length >= 2)) {
                         scores.add(new Score(5, "Needs at least 2 words"));
                     }
