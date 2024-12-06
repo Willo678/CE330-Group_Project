@@ -34,11 +34,16 @@ public class CodeAnalysis {
                 char[] nameChars = methodName.toCharArray();
                 boolean upperCaseFound = false;
 
-                if (methodName.length() <= 4 || methodName.length() > 20) {
-                    scores.add(new Score(20, "Method name is not between 2-20 characters"));
+                if (methodName.length() < 4) {
+                    int score = 4 - methodName.length();
+                    scores.add(new Score(score, "Method name is not between 4-20 characters"));
+                }
+                if(methodName.length() > 20){
+                    int score = methodName.length() - 20;
+                    scores.add(new Score(score, "Method name is not between 4-20 characters"));
                 }
                 if (!(isLowerCase(nameChars[0]))) {
-                    scores.add(new Score(20, "First character is not lower case"));
+                    scores.add(new Score(5, "First character is not lower case"));
                 }
 
                 for (int i = 0; i < nameChars.length; i++) {
@@ -49,11 +54,11 @@ public class CodeAnalysis {
                 }
 
                 if (!(upperCaseFound)) {
-                    scores.add(new Score(20, "No uppercase found"));
+                    scores.add(new Score(5, "No uppercase found"));
                 }
 
                 if (!(methodWords.length >= 2)) {
-                    scores.add(new Score(20, "Needs at least 2 words"));
+                    scores.add(new Score(5, "Needs at least 2 words"));
                 }
 
             }
@@ -79,7 +84,7 @@ public class CodeAnalysis {
                         if (searchIndex + 2 < tokens.size() &&
                                 tokens.get(searchIndex + 1).type == "COMMENT" &&
                                 tokens.get(searchIndex + 2).type == "COMMENT") {
-                            scores.add(new Score(20, "Method comment block too large"));
+                            scores.add(new Score(3, "Method comment block too large"));
                         }
                     } else if (currentToken.type == "METHOD") {
                         endMethod = true;
@@ -88,7 +93,7 @@ public class CodeAnalysis {
                 }
 
                 if (!commentFound) {
-                    scores.add(new Score(20, "Method needs at least one comment"));
+                    scores.add(new Score(5, "Method needs at least one comment"));
                 }
             }
         }
