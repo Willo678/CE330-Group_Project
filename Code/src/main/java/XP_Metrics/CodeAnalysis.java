@@ -20,7 +20,7 @@ public class CodeAnalysis {
 
         scores.addAll(methodNameAnalysis(tokenList.stream().filter(getTokens.BracePair.class::isInstance).map(getTokens.BracePair.class::cast).toList()));
         scores.addAll(methodCommentAnalysis(tokenList));
-//        codeLineTypeAnalysis(tokenList);
+
         return scores;
     }
 

@@ -10,7 +10,7 @@ public class EvaluateXP {
     public ArrayList<Token> bracePairs;
     public ArrayList<Score> scoreIndentation;
     public ArrayList<Score> scoreClassStructure;
-    int scoreMethodStructure;
+    public ArrayList<Score> scoreMethodStructure;
 
 
     public EvaluateXP(String path) {
@@ -23,18 +23,21 @@ public class EvaluateXP {
                         .map(BracePair.class::cast).toList()
         );
         scoreClassStructure = classChecker.checkImports(path, bracePairs);
-        ArrayList<Score> codeAnalysisScores = CodeAnalysis.CodeAnalysis(bracePairs);
-        scoreMethodStructure = 100 - sumScoreArray(codeAnalysisScores);
+        scoreMethodStructure = CodeAnalysis.CodeAnalysis(bracePairs);
+
     }
 
     public int normalisedScore() {
-        int[] weights = new int[]{25, 25, 25, 25};  //Four parts, 25 points each
+        int[] weights = new int[]{33, 33, 33};  //Three parts, 33 points each
         int[] percentages = new int[]{
                 getScorePercentage(scoreIndentation),
                 getScorePercentage(scoreClassStructure),
-                scoreMethodStructure,
-                getScorePercentage(CodeAnalysis.CodeAnalysis(bracePairs))
+                getScorePercentage(scoreMethodStructure)
         };
+
+        System.out.println("Indentation score: "+getScorePercentage(scoreIndentation));
+        System.out.println("ClassStructure score: "+getScorePercentage(scoreClassStructure));
+        System.out.println("MethodStructure score: "+getScorePercentage(scoreMethodStructure));
 
         int result = 0;
         for (int i = 0; i < weights.length; i++) {

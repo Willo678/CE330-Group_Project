@@ -9,7 +9,10 @@ public class Main {
 
 
 
-        programWindow window = new programWindow();
+        //programWindow window = new programWindow();
+
+        EvaluateXP evaluator = new EvaluateXP("src/main/java/XP_Metrics/CodeAnalysis.java");
+        System.out.println(evaluator.normalisedScore());
 
     }
 }
