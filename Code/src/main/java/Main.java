@@ -26,6 +26,6 @@ public class Main {
         System.out.println(evaluator.scoreClassStructure);
         System.out.println(evaluator.scoreMethodStructure);
 
-
     }
+
 }
