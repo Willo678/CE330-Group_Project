@@ -102,7 +102,7 @@ public class targetSelectionUI extends JPanel {
         return button;
     }
 
-    private void processPath(String path) throws InvalidPathException {
+    public void processPath(String path) throws InvalidPathException {
         Paths.get(path);
         File directory = new File(path);
 
@@ -110,14 +110,32 @@ public class targetSelectionUI extends JPanel {
             throw new InvalidPathException(path, "No Java files found");
         }
 
-        for (String filePath : getJavaSubdirectories(directory)) {
-            EvaluateXP evaluator = new EvaluateXP(filePath);
-            ArrayList<Score> codeAnalysisScores = CodeAnalysis.CodeAnalysis(evaluator.bracePairs);
-            metricsUI.updateMetrics(
-                    evaluator.scoreIndentation,
-                    evaluator.scoreClassStructure,
-                    codeAnalysisScores
-            );
+        ArrayList<String> filePaths = getJavaSubdirectories(directory);
+        if (filePaths.isEmpty()) {
+            throw new InvalidPathException(path, "No valid Java files found in subdirectories");
+        }
+
+        for (String filePath : filePaths) {
+            try {
+                EvaluateXP evaluator = new EvaluateXP(filePath);
+                if (evaluator.bracePairs == null ||
+                        evaluator.scoreIndentation == null ||
+                        evaluator.scoreClassStructure == null) {
+                    continue;  // Skip files that failed to evaluate
+                }
+
+                ArrayList<Score> codeAnalysisScores = CodeAnalysis.CodeAnalysis(evaluator.bracePairs);
+                if (codeAnalysisScores != null) {
+                    metricsUI.updateMetrics(
+                            evaluator.scoreIndentation,
+                            evaluator.scoreClassStructure,
+                            codeAnalysisScores
+                    );
+                }
+            } catch (Exception ex) {
+                System.err.println("Error processing file: " + filePath + " - " + ex.getMessage());
+                continue;  // Skip problematic files and continue with others
+            }
         }
     }
 
