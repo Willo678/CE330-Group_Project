@@ -75,12 +75,21 @@ public class codeMetricsUI extends JPanel {
 
         int indentationScore = calculateScore(indentation);
         int classStructureScore = calculateScore(classStructure);
-        int methodLengthScore = calculateScore(codeAnalysis.stream()
-                .filter(s -> s.reason.contains("too big"))
-                .collect(Collectors.toCollection(ArrayList::new)));
-        int camelCaseScore = calculateScore(codeAnalysis.stream()
-                .filter(s -> !s.reason.contains("too big"))
-                .collect(Collectors.toCollection(ArrayList::new)));
+
+        // 分开方法结构和命名规范分数
+        ArrayList<Score> methodScores = new ArrayList<>();
+        ArrayList<Score> namingScores = new ArrayList<>();
+
+        for (Score s : codeAnalysis) {
+            if (s.reason.contains("too big") || s.reason.contains("nested") || s.reason.contains("statement")) {
+                methodScores.add(s);
+            } else {
+                namingScores.add(s);
+            }
+        }
+
+        int methodLengthScore = calculateScore(methodScores);
+        int camelCaseScore = calculateScore(namingScores);
 
         metricsPanel.setLayout(new GridLayout(4, 1, 5, 5));
         metricsPanel.add(createScorePanel("Blocks & Indenting", indentationScore));
