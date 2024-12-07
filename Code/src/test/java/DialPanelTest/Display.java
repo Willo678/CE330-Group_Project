@@ -1,36 +1,56 @@
 package DialPanelTest;
 
 import userInterface.DialPanel;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import java.lang.reflect.Method;
+import java.awt.image.BufferedImage;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class Display {
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Dial Panel Test");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 400);
-        frame.setLayout(new BorderLayout());
 
-        DialPanel dialPanel = new DialPanel("XP Adherence");
-        frame.add(dialPanel, BorderLayout.CENTER);
+    private DialPanel dialPanel;
 
-        JSlider slider = new JSlider(0, 100, 0);
-        slider.setMajorTickSpacing(10);
-        slider.setPaintTicks(true);
-        slider.setPaintLabels(true);
+    @BeforeEach
+    public void setUp() {
+        dialPanel = new DialPanel("XP Adherence");
+    }
 
-        slider.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                int value = slider.getValue();
-                double normalizedScore = value / 100.0;
-                dialPanel.setScore(normalizedScore);
-            }
-        });
+    @Test
+    public void testDialPanelCreation() {
+        assertNotNull(dialPanel);
+    }
 
-        frame.add(slider, BorderLayout.SOUTH);
-        frame.setVisible(true);
+    @Test
+    public void testScoreSetting() {
+        dialPanel.setScore(0.5);
+
+        try {
+            Method paintMethod = DialPanel.class.getDeclaredMethod("paintComponent", Graphics.class);
+            paintMethod.setAccessible(true);
+            BufferedImage image = new BufferedImage(300, 300, BufferedImage.TYPE_INT_ARGB);
+            Graphics g = image.getGraphics();
+            paintMethod.invoke(dialPanel, g);
+        } catch (Exception e) {
+            fail("Exception occurred while invoking paintComponent: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testScoreBoundaries() {
+        dialPanel.setScore(-0.1);
+        assertEquals(0.0, dialPanel.getScore());
+
+        dialPanel.setScore(1.1);
+        assertEquals(1.0, dialPanel.getScore());
+    }
+
+    @Test
+    public void testPanelSize() {
+        assertEquals(new Dimension(300, 300), dialPanel.getPreferredSize());
     }
 }
