@@ -15,6 +15,7 @@ public class codeMetricsUI extends JPanel {
 
     public codeMetricsUI() {
         setLayout(new BorderLayout(10, 10));
+        setBackground(new Color(255, 255, 255));
 
         metricsPanel = createMetricsPanel();
         detailsArea = createDetailsArea();
@@ -25,13 +26,13 @@ public class codeMetricsUI extends JPanel {
 
     private JPanel createMetricsPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(4, 1, 10, 10));
-        panel.setBackground(new Color(40, 40, 40));  // Dark background for contrast
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBackground(new Color(255, 255, 255));
         panel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createLineBorder(Color.CYAN, 2),
+                BorderFactory.createLineBorder(new Color(0, 191, 255), 2),
                 "Detailed Scores",
                 TitledBorder.LEFT, TitledBorder.TOP,
-                new Font("Arial", Font.BOLD, 16), Color.CYAN
+                new Font("Roboto", Font.BOLD, 16), new Color(0, 191, 255)
         ));
         return panel;
     }
@@ -39,10 +40,10 @@ public class codeMetricsUI extends JPanel {
     private JTextArea createDetailsArea() {
         JTextArea area = new JTextArea();
         area.setEditable(false);
-        area.setFont(new Font("Verdana", Font.PLAIN, 14));
-        area.setForeground(Color.WHITE);
-        area.setBackground(new Color(30, 30, 30));
-        area.setCaretColor(Color.WHITE);
+        area.setFont(new Font("Roboto", Font.PLAIN, 14));
+        area.setForeground(Color.BLACK);
+        area.setBackground(new Color(255, 255, 255));
+        area.setCaretColor(Color.BLACK);
         return area;
     }
 
@@ -51,13 +52,27 @@ public class codeMetricsUI extends JPanel {
         scrollPane.setPreferredSize(new Dimension(350, 150));
 
         JPanel leftPanel = new JPanel(new BorderLayout(5, 5));
-        leftPanel.setBackground(new Color(50, 50, 50));
+        leftPanel.setBackground(new Color(255, 255, 255));
         leftPanel.add(metricsPanel, BorderLayout.NORTH);
         leftPanel.add(scrollPane, BorderLayout.CENTER);
         leftPanel.add(adherenceLabel, BorderLayout.SOUTH);
 
-        add(leftPanel, BorderLayout.CENTER);
-        add(totalScoreDial, BorderLayout.EAST);
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBackground(new Color(255, 255, 255));
+        mainPanel.add(leftPanel, BorderLayout.CENTER);
+        mainPanel.add(totalScoreDial, BorderLayout.EAST);
+
+        add(mainPanel, BorderLayout.CENTER);
+        add(createBottomPanel(), BorderLayout.SOUTH);
+    }
+
+    private JPanel createBottomPanel() {
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        bottomPanel.setBackground(new Color(255, 255, 255));
+        adherenceLabel.setFont(new Font("Roboto", Font.BOLD, 16));
+        adherenceLabel.setForeground(new Color(0, 191, 255));
+        bottomPanel.add(adherenceLabel);
+        return bottomPanel;
     }
 
     public void updateMetrics(ArrayList<Score> indentation,
@@ -97,10 +112,10 @@ public class codeMetricsUI extends JPanel {
         int methodLengthScore = calculateScore(methodScores);
         int camelCaseScore = calculateScore(namingScores);
 
-        metricsPanel.add(createScorePanel("Blocks & Indenting", indentationScore, new Color(255, 165, 0)));  // Orange color
-        metricsPanel.add(createScorePanel("Class Structure", classStructureScore, new Color(0, 255, 0)));  // Green color
-        metricsPanel.add(createScorePanel("Function Length", methodLengthScore, new Color(0, 191, 255)));  // Blue color
-        metricsPanel.add(createScorePanel("CamelCase", camelCaseScore, new Color(255, 20, 147)));  // Deep pink
+        metricsPanel.add(createScorePanel("Blocks & Indenting", indentationScore, new Color(255, 165, 0)));
+        metricsPanel.add(createScorePanel("Class Structure", classStructureScore, new Color(0, 255, 0)));
+        metricsPanel.add(createScorePanel("Function Length", methodLengthScore, new Color(0, 191, 255)));
+        metricsPanel.add(createScorePanel("CamelCase", camelCaseScore, new Color(255, 20, 147)));
 
         double averageScore = (indentationScore + classStructureScore + methodLengthScore + camelCaseScore) / 4.0 / 100.0;
         totalScoreDial.setScore(averageScore);
@@ -118,12 +133,15 @@ public class codeMetricsUI extends JPanel {
     }
 
     private JPanel createScorePanel(String label, int score, Color color) {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panel.setBackground(new Color(40, 40, 40));
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panel.setBackground(new Color(255, 255, 255));
+
         JLabel scoreLabel = new JLabel(label + ": " + score + "%");
-        scoreLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        scoreLabel.setFont(new Font("Roboto", Font.BOLD, 18));
         scoreLabel.setForeground(color);
         panel.add(scoreLabel);
+
         return panel;
     }
 

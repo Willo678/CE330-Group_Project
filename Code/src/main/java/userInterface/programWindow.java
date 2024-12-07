@@ -44,10 +44,11 @@ public class programWindow extends JFrame {
     private void setupWindow() {
         setTitle("Code Analysis Tool");
         setSize(1000, 800);
-        setMinimumSize(new Dimension(800, 600));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setResizable(false);
     }
+
 
     public targetSelectionUI getTargetSelectionUI() {
         return targetSelectionUI;

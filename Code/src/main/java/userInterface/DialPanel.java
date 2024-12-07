@@ -20,7 +20,6 @@ public class DialPanel extends JPanel {
         repaint();
     }
 
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
