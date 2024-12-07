@@ -6,9 +6,6 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.List;
 
 public class codeMetricsUI extends JPanel {
     private final DialPanel totalScoreDial;
@@ -32,10 +29,10 @@ public class codeMetricsUI extends JPanel {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBackground(new Color(255, 255, 255));
         panel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createLineBorder(new Color(0, 191, 255), 3),
+                BorderFactory.createLineBorder(new Color(0, 191, 255), 2),
                 "Detailed Scores",
-                TitledBorder.CENTER, TitledBorder.TOP,
-                new Font("Roboto", Font.BOLD, 18), new Color(0, 191, 255)
+                TitledBorder.LEFT, TitledBorder.TOP,
+                new Font("Roboto", Font.BOLD, 16), new Color(0, 191, 255)
         ));
         return panel;
     }
@@ -43,27 +40,24 @@ public class codeMetricsUI extends JPanel {
     private JTextArea createDetailsArea() {
         JTextArea area = new JTextArea();
         area.setEditable(false);
-        area.setFont(new Font("Roboto", Font.PLAIN, 16));
+        area.setFont(new Font("Roboto", Font.PLAIN, 14));
         area.setForeground(Color.BLACK);
-        area.setBackground(new Color(240, 240, 240));
+        area.setBackground(new Color(255, 255, 255));
         area.setCaretColor(Color.BLACK);
-        area.setLineWrap(true);
-        area.setWrapStyleWord(true);
         return area;
     }
 
     private void layoutComponents() {
         JScrollPane scrollPane = new JScrollPane(detailsArea);
-        scrollPane.setPreferredSize(new Dimension(350, 200));
-        scrollPane.setBorder(BorderFactory.createLineBorder(new Color(0, 191, 255), 2));
+        scrollPane.setPreferredSize(new Dimension(350, 150));
 
         JPanel leftPanel = new JPanel(new BorderLayout(5, 5));
         leftPanel.setBackground(new Color(255, 255, 255));
-        leftPanel.add(metricsPanel, BorderLayout.CENTER);
-        leftPanel.add(scrollPane, BorderLayout.SOUTH);
-        leftPanel.add(adherenceLabel, BorderLayout.NORTH);
+        leftPanel.add(metricsPanel, BorderLayout.NORTH);
+        leftPanel.add(scrollPane, BorderLayout.CENTER);
+        leftPanel.add(adherenceLabel, BorderLayout.SOUTH);
 
-        JPanel mainPanel = new JPanel(new BorderLayout(20, 10));
+        JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(new Color(255, 255, 255));
         mainPanel.add(leftPanel, BorderLayout.CENTER);
         mainPanel.add(totalScoreDial, BorderLayout.EAST);
@@ -75,7 +69,7 @@ public class codeMetricsUI extends JPanel {
     private JPanel createBottomPanel() {
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         bottomPanel.setBackground(new Color(255, 255, 255));
-        adherenceLabel.setFont(new Font("Roboto", Font.BOLD, 18));
+        adherenceLabel.setFont(new Font("Roboto", Font.BOLD, 16));
         adherenceLabel.setForeground(new Color(0, 191, 255));
         bottomPanel.add(adherenceLabel);
         return bottomPanel;
@@ -118,7 +112,7 @@ public class codeMetricsUI extends JPanel {
         int methodLengthScore = calculateScore(methodScores);
         int camelCaseScore = calculateScore(namingScores);
 
-        metricsPanel.add(createScorePanel("Blocks & Indentation", indentationScore, new Color(255, 165, 0)));
+        metricsPanel.add(createScorePanel("Blocks & Indenting", indentationScore, new Color(255, 165, 0)));
         metricsPanel.add(createScorePanel("Class Structure", classStructureScore, new Color(0, 255, 0)));
         metricsPanel.add(createScorePanel("Function Length", methodLengthScore, new Color(0, 191, 255)));
         metricsPanel.add(createScorePanel("CamelCase", camelCaseScore, new Color(255, 20, 147)));
@@ -144,7 +138,7 @@ public class codeMetricsUI extends JPanel {
         panel.setBackground(new Color(255, 255, 255));
 
         JLabel scoreLabel = new JLabel(label + ": " + score + "%");
-        scoreLabel.setFont(new Font("Roboto", Font.BOLD, 20));
+        scoreLabel.setFont(new Font("Roboto", Font.BOLD, 18));
         scoreLabel.setForeground(color);
         panel.add(scoreLabel);
 
@@ -170,57 +164,5 @@ public class codeMetricsUI extends JPanel {
             }
             sb.append("\n");
         }
-    }
-
-    public void updateDetailedScores(List<Map<String, Object>> detailedScores, double totalScore) {
-        metricsPanel.removeAll();
-
-        for (Map<String, Object> scoreData : detailedScores) {
-            String fileName = (String) scoreData.get("fileName");
-            @SuppressWarnings("unchecked")
-            ArrayList<Score> indentationScores = (ArrayList<Score>) scoreData.get("indentationScore");
-            @SuppressWarnings("unchecked")
-            ArrayList<Score> classStructureScores = (ArrayList<Score>) scoreData.get("classStructureScore");
-            @SuppressWarnings("unchecked")
-            ArrayList<Score> analysisScores = (ArrayList<Score>) scoreData.get("analysisScores");
-            double fileTotalScore = (double) scoreData.get("fileTotalScore");
-
-            JPanel filePanel = new JPanel();
-            filePanel.setLayout(new BoxLayout(filePanel, BoxLayout.Y_AXIS));
-            filePanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(0, 191, 255)), fileName));
-
-            filePanel.add(createScoreLabel("Indentation Scores", indentationScores));
-            filePanel.add(createScoreLabel("Class Structure Scores", classStructureScores));
-            filePanel.add(createScoreLabel("Analysis Scores", analysisScores));
-            filePanel.add(new JLabel("File Total Score: " + fileTotalScore));
-
-            metricsPanel.add(filePanel);//
-        }
-
-        JLabel totalScoreLabel = new JLabel("Total Score: " + totalScore);
-        totalScoreLabel.setFont(new Font("Roboto", Font.BOLD, 16));
-        totalScoreLabel.setForeground(new Color(0, 191, 255));
-
-        metricsPanel.add(totalScoreLabel);
-
-        metricsPanel.revalidate();
-        metricsPanel.repaint();
-    }
-
-    private JPanel createScoreLabel(String label, ArrayList<Score> scores) {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panel.setBackground(new Color(255, 255, 255));
-
-        JLabel titleLabel = new JLabel(label + ": ");
-        titleLabel.setFont(new Font("Roboto", Font.BOLD, 14));
-        panel.add(titleLabel);
-
-        JLabel scoresLabel = new JLabel(scores.stream()
-                .map(score -> score.getScore() + " (" + score.getReason() + ")")
-                .collect(Collectors.joining(", ")));
-        scoresLabel.setFont(new Font("Roboto", Font.PLAIN, 12));
-        panel.add(scoresLabel);
-
-        return panel;
     }
 }
