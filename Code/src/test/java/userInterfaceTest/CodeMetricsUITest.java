@@ -36,7 +36,6 @@ public class CodeMetricsUITest {
         codeAnalysis.add(new Score(15, "Analysis error"));
 
         metricsUI.updateMetrics(indentation, classStructure, codeAnalysis);
-        // Add assertions to verify UI state after update
     }
 
     @Test
