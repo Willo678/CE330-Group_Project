@@ -52,5 +52,7 @@ public class Display {
     @Test
     public void testPanelSize() {
         assertEquals(new Dimension(300, 300), dialPanel.getPreferredSize());
+
     }
+
 }
