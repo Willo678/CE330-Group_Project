@@ -2,7 +2,6 @@ package utils;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.io.File;
 
 class FileUploadTest {
@@ -63,5 +62,6 @@ class FileUploadTest {
         String errorMessage = result ? "" : "Unsupported file type";
 
         assertEquals("Unsupported file type", errorMessage);
+
     }
 }
