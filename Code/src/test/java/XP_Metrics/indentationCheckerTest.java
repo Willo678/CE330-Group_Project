@@ -1,13 +1,11 @@
 package XP_Metrics;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-import XP_Metrics.*;
-
+import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
+
+
+import java.util.List;
+
 
 class indentationCheckerTest {
 

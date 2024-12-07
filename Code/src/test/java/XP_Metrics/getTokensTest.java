@@ -5,28 +5,28 @@ import java.util.Objects;
 
 import XP_Metrics.getTokens.*;
 
+import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class getTokensTest {
 
     List<Token> tokens;
 
-    @org.junit.jupiter.api.BeforeEach
+    @BeforeEach
     void setUp() {
          tokens = getTokens.getTokens("src/test/java/test_sample_data/sampleCode1.java");
-         tokens.stream();
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getBracePairs() {
         List<BracePair> braces = getTokens.getBracePairs("src/test/java/test_sample_data/sampleCode1.java");
         assertIterableEquals(tokens.stream().filter(BracePair.class::isInstance).toList(), braces);
 
-        assertEquals("sampleCode1".toUpperCase(), braces.get(0).name);
+        assertEquals("sampleCode1".toUpperCase(), braces.getFirst().name);
         assertEquals(3, braces.size());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getComments() {
         List<Token> comments = getTokens.getComments("src/test/java/test_sample_data/sampleCode1.java");
         assertIterableEquals(tokens.stream().filter(x -> (Objects.equals(((Token) x).type, "Comment"))).toList(), comments);
@@ -36,7 +36,7 @@ class getTokensTest {
 
 
 
-    @org.junit.jupiter.api.AfterEach
+    @AfterEach
     void tearDown() {
     }
 }

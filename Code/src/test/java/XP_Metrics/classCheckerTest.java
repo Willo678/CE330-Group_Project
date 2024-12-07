@@ -1,18 +1,18 @@
 package XP_Metrics;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import XP_Metrics.getTokens.*;
 
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 public class classCheckerTest {
     List<Token> tokens;
-    String path = "M:\\3rd Year\\CE320\\GROUP_PROJECT\\Code\\src\\test\\java\\test_sample_data\\sampleCode1.java";
+    String path = "src/test/java/test_sample_data/sampleCode1.java";
 
     @BeforeEach
     void setup() {

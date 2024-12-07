@@ -1,7 +1,6 @@
 package XP_Metrics;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import XP_Metrics.getTokens.*;
 
@@ -35,15 +34,20 @@ public class EvaluateXP {
                 getScorePercentage(scoreMethodStructure)
         };
 
-        System.out.println("Indentation score: "+getScorePercentage(scoreIndentation));
-        System.out.println("ClassStructure score: "+getScorePercentage(scoreClassStructure));
-        System.out.println("MethodStructure score: "+getScorePercentage(scoreMethodStructure));
-
         int result = 0;
         for (int i = 0; i < weights.length; i++) {
             result += (percentages[i] * weights[i]) / 100;
         }
         return result;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Indentation score: "+getScorePercentage(scoreIndentation)
+                + "ClassStructure score: "+getScorePercentage(scoreClassStructure)
+                + "MethodStructure score: "+getScorePercentage(scoreMethodStructure)
+                + "Overall score: "+normalisedScore();
     }
 
     private static int sumScoreArray(ArrayList<Score> scoreArray) {

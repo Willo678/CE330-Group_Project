@@ -1,8 +1,6 @@
 package XP_Metrics;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
@@ -17,7 +15,7 @@ class EvaluateXPTest {
         int weightTotal = Arrays.stream(weights).mapToInt(o -> Arrays.stream(o).sum()).sum();
         int result = 0;
         for (int[] weight : weights) {
-            result += (int) (0.25 * (Arrays.stream(weight).sum() / weightTotal));
+            result += (int) (0.25 * ((double) Arrays.stream(weight).sum() / weightTotal));
         }
         assertEquals(11.25, result);
 
