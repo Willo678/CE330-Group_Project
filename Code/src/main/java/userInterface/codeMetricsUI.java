@@ -6,6 +6,9 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.List;
 
 public class codeMetricsUI extends JPanel {
     private final DialPanel totalScoreDial;
@@ -164,5 +167,57 @@ public class codeMetricsUI extends JPanel {
             }
             sb.append("\n");
         }
+    }
+
+    public void updateDetailedScores(List<Map<String, Object>> detailedScores, double totalScore) {
+        metricsPanel.removeAll();
+
+        for (Map<String, Object> scoreData : detailedScores) {
+            String fileName = (String) scoreData.get("fileName");
+            @SuppressWarnings("unchecked")
+            ArrayList<Score> indentationScores = (ArrayList<Score>) scoreData.get("indentationScore");
+            @SuppressWarnings("unchecked")
+            ArrayList<Score> classStructureScores = (ArrayList<Score>) scoreData.get("classStructureScore");
+            @SuppressWarnings("unchecked")
+            ArrayList<Score> analysisScores = (ArrayList<Score>) scoreData.get("analysisScores");
+            double fileTotalScore = (double) scoreData.get("fileTotalScore");
+
+            JPanel filePanel = new JPanel();
+            filePanel.setLayout(new BoxLayout(filePanel, BoxLayout.Y_AXIS));
+            filePanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(0, 191, 255)), fileName));
+
+            filePanel.add(createScoreLabel("Indentation Scores", indentationScores));
+            filePanel.add(createScoreLabel("Class Structure Scores", classStructureScores));
+            filePanel.add(createScoreLabel("Analysis Scores", analysisScores));
+            filePanel.add(new JLabel("File Total Score: " + fileTotalScore));
+
+            metricsPanel.add(filePanel);
+        }
+
+        JLabel totalScoreLabel = new JLabel("Total Score: " + totalScore);
+        totalScoreLabel.setFont(new Font("Roboto", Font.BOLD, 16));
+        totalScoreLabel.setForeground(new Color(0, 191, 255));
+
+        metricsPanel.add(totalScoreLabel);
+
+        metricsPanel.revalidate();
+        metricsPanel.repaint();
+    }
+
+    private JPanel createScoreLabel(String label, ArrayList<Score> scores) {
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        panel.setBackground(new Color(255, 255, 255));
+
+        JLabel titleLabel = new JLabel(label + ": ");
+        titleLabel.setFont(new Font("Roboto", Font.BOLD, 14));
+        panel.add(titleLabel);
+
+        JLabel scoresLabel = new JLabel(scores.stream()
+                .map(score -> score.getScore() + " (" + score.getReason() + ")")
+                .collect(Collectors.joining(", ")));
+        scoresLabel.setFont(new Font("Roboto", Font.PLAIN, 12));
+        panel.add(scoresLabel);
+
+        return panel;
     }
 }
