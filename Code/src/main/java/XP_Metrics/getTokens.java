@@ -172,7 +172,6 @@ public class getTokens {
         return "UNIDENTIFIED";
     }
 
-    //Detects if given string is a reserved Java keyword
     private static String isControlStatement(String s) {
         if (s == null || s.trim().isEmpty()) {
             return null;
