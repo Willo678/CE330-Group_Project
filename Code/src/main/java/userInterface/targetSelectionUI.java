@@ -152,7 +152,7 @@ public class targetSelectionUI extends JPanel {
         if (processed) {
             Window window = SwingUtilities.getWindowAncestor(this);
             if (window instanceof programWindow) {
-                ((programWindow) window).switchToTab(2); // 切换到 Metrics 标签页
+                ((programWindow) window).switchToTab(2);
             }
         } else {
             throw new InvalidPathException(path, "No files were successfully processed");
