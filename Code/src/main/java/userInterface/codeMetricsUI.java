@@ -29,10 +29,10 @@ public class codeMetricsUI extends JPanel {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBackground(new Color(255, 255, 255));
         panel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createLineBorder(new Color(0, 191, 255), 2),
+                BorderFactory.createLineBorder(new Color(0, 191, 255), 3),
                 "Detailed Scores",
-                TitledBorder.LEFT, TitledBorder.TOP,
-                new Font("Roboto", Font.BOLD, 16), new Color(0, 191, 255)
+                TitledBorder.CENTER, TitledBorder.TOP,
+                new Font("Roboto", Font.BOLD, 18), new Color(0, 191, 255)
         ));
         return panel;
     }
@@ -40,24 +40,27 @@ public class codeMetricsUI extends JPanel {
     private JTextArea createDetailsArea() {
         JTextArea area = new JTextArea();
         area.setEditable(false);
-        area.setFont(new Font("Roboto", Font.PLAIN, 14));
+        area.setFont(new Font("Roboto", Font.PLAIN, 16));
         area.setForeground(Color.BLACK);
-        area.setBackground(new Color(255, 255, 255));
+        area.setBackground(new Color(240, 240, 240));
         area.setCaretColor(Color.BLACK);
+        area.setLineWrap(true);
+        area.setWrapStyleWord(true);
         return area;
     }
 
     private void layoutComponents() {
         JScrollPane scrollPane = new JScrollPane(detailsArea);
-        scrollPane.setPreferredSize(new Dimension(350, 150));
+        scrollPane.setPreferredSize(new Dimension(350, 200));
+        scrollPane.setBorder(BorderFactory.createLineBorder(new Color(0, 191, 255), 2));
 
         JPanel leftPanel = new JPanel(new BorderLayout(5, 5));
         leftPanel.setBackground(new Color(255, 255, 255));
-        leftPanel.add(metricsPanel, BorderLayout.NORTH);
-        leftPanel.add(scrollPane, BorderLayout.CENTER);
-        leftPanel.add(adherenceLabel, BorderLayout.SOUTH);
+        leftPanel.add(metricsPanel, BorderLayout.CENTER);
+        leftPanel.add(scrollPane, BorderLayout.SOUTH);
+        leftPanel.add(adherenceLabel, BorderLayout.NORTH);
 
-        JPanel mainPanel = new JPanel(new BorderLayout());
+        JPanel mainPanel = new JPanel(new BorderLayout(20, 10));
         mainPanel.setBackground(new Color(255, 255, 255));
         mainPanel.add(leftPanel, BorderLayout.CENTER);
         mainPanel.add(totalScoreDial, BorderLayout.EAST);
@@ -69,7 +72,7 @@ public class codeMetricsUI extends JPanel {
     private JPanel createBottomPanel() {
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         bottomPanel.setBackground(new Color(255, 255, 255));
-        adherenceLabel.setFont(new Font("Roboto", Font.BOLD, 16));
+        adherenceLabel.setFont(new Font("Roboto", Font.BOLD, 18));
         adherenceLabel.setForeground(new Color(0, 191, 255));
         bottomPanel.add(adherenceLabel);
         return bottomPanel;
@@ -112,7 +115,7 @@ public class codeMetricsUI extends JPanel {
         int methodLengthScore = calculateScore(methodScores);
         int camelCaseScore = calculateScore(namingScores);
 
-        metricsPanel.add(createScorePanel("Blocks & Indenting", indentationScore, new Color(255, 165, 0)));
+        metricsPanel.add(createScorePanel("Blocks & Indentation", indentationScore, new Color(255, 165, 0)));
         metricsPanel.add(createScorePanel("Class Structure", classStructureScore, new Color(0, 255, 0)));
         metricsPanel.add(createScorePanel("Function Length", methodLengthScore, new Color(0, 191, 255)));
         metricsPanel.add(createScorePanel("CamelCase", camelCaseScore, new Color(255, 20, 147)));
@@ -138,7 +141,7 @@ public class codeMetricsUI extends JPanel {
         panel.setBackground(new Color(255, 255, 255));
 
         JLabel scoreLabel = new JLabel(label + ": " + score + "%");
-        scoreLabel.setFont(new Font("Roboto", Font.BOLD, 18));
+        scoreLabel.setFont(new Font("Roboto", Font.BOLD, 20));
         scoreLabel.setForeground(color);
         panel.add(scoreLabel);
 
