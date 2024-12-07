@@ -1,20 +1,19 @@
 package XP_Metrics;
 
 public class Token {
-    private int id;
+    private int lineNumber;
     private String type;
     private String value;
-    private int lineNumber;
+    private int position;
 
-    public Token(int id, String type, String value, int lineNumber) {
-        this.id = id;
+    public Token(int lineNumber, String type, String value, int position) {
+        this.lineNumber = lineNumber;
         this.type = type;
         this.value = value;
-        this.lineNumber = lineNumber;
+        this.position = position;
     }
 
-    public int getId() { return id; }
-    public String getType() { return type; }
-    public String getValue() { return value; }
-    public int getLineNumber() { return lineNumber; }
+    public String getType() {
+        return type;
+    }
 }

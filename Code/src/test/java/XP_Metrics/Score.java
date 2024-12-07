@@ -2,26 +2,19 @@ package XP_Metrics;
 
 public class Score {
     private int score;
-    private String description;
+    private String message;
 
-    public Score(int score, String description) {
+    public Score(int score, String message) {
         this.score = score;
-        this.description = description;
+        this.message = message;
     }
 
     public int getScore() {
         return score;
     }
 
-    public String getDescription() {
-        return description;
+    public String getMessage() {
+        return message;
     }
 
-    @Override
-    public String toString() {
-        return "Score{" +
-                "score=" + score +
-                ", description='" + description + '\'' +
-                '}';
-    }
 }
