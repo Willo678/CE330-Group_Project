@@ -194,7 +194,7 @@ public class codeMetricsUI extends JPanel {
             filePanel.add(createScoreLabel("Analysis Scores", analysisScores));
             filePanel.add(new JLabel("File Total Score: " + fileTotalScore));
 
-            metricsPanel.add(filePanel);
+            metricsPanel.add(filePanel);//
         }
 
         JLabel totalScoreLabel = new JLabel("Total Score: " + totalScore);
