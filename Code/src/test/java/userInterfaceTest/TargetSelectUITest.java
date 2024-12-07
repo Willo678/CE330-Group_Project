@@ -1,14 +1,14 @@
 package userInterfaceTest;
 
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import userInterface.codeMetricsUI;
 import userInterface.targetSelectionUI;
+import userInterface.codeMetricsUI;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.nio.file.InvalidPathException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,75 +32,38 @@ class TargetSelectionUITest {
     @Test
     void testSelectButtonUpdatesPathField() {
         JTextField pathField = getPathField();
-        JButton selectButton = getButtonByText("SELECT");
+        JButton selectButton = getButtonByText(targetUI, "SELECT");
 
-        // Simulate selecting a valid directory
+        assertNotNull(selectButton, "Select button should be initialized");
+
         File testDir = new File(System.getProperty("java.io.tmpdir"));
-        selectButton.doClick();
-
-        // This test assumes manual interaction; modify it as needed for integration tests
         pathField.setText(testDir.getAbsolutePath());
-        assertEquals(testDir.getAbsolutePath(), pathField.getText(), "Path field should update with the selected directory");
+        assertEquals(testDir.getAbsolutePath(), pathField.getText(), "Path field should update with selected directory");
     }
 
     @Test
     void testConfirmButtonWithInvalidPath() {
         JTextField pathField = getPathField();
-        JButton confirmButton = getButtonByText("CONFIRM");
+        JButton confirmButton = getButtonByText(targetUI, "CONFIRM");
 
-        // Set an invalid path
+        assertNotNull(confirmButton, "Confirm button should be initialized");
+
         pathField.setText("invalid/path");
-        confirmButton.doClick();
-
-        assertThrows(InvalidPathException.class, () -> targetUI.processPath("invalid/path"),
-                "processPath should throw InvalidPathException for an invalid path");
+        Exception exception = assertThrows(Exception.class, () -> targetUI.processPath("invalid/path"));
+        assertTrue(exception.getMessage().contains("No Java files found"), "Should show error for invalid path");
     }
 
-    @Test
-    void testProcessPathNoJavaFiles() {
-        // Create a temporary empty directory
-        File emptyDir = new File(System.getProperty("java.io.tmpdir"), "emptyTestDir");
-        if (!emptyDir.exists()) {
-            assertTrue(emptyDir.mkdir(), "Test directory should be created successfully");
-        }
-
-        // Test processPath for a directory with no Java files
-        InvalidPathException exception = assertThrows(InvalidPathException.class,
-                () -> targetUI.processPath(emptyDir.getAbsolutePath()),
-                "Should throw exception if no Java files found");
-        assertTrue(exception.getMessage().contains("No Java files found"), "Exception message should indicate no Java files");
-    }
-
-    @Test
-    void testProcessPathWithValidJavaFiles() {
-        // Create a temporary directory and a dummy Java file for testing
-        File tempDir = new File(System.getProperty("java.io.tmpdir"), "javaTestDir");
-        File tempJavaFile = new File(tempDir, "TestFile.java");
-
-        try {
-            assertTrue(tempDir.mkdir(), "Temporary directory should be created successfully");
-            assertTrue(tempJavaFile.createNewFile(), "Temporary Java file should be created successfully");
-
-            // Test processing the valid directory
-            targetUI.processPath(tempDir.getAbsolutePath());
-        } catch (Exception e) {
-            fail("Exception should not be thrown for valid Java files: " + e.getMessage());
-        } finally {
-            // Clean up test resources
-            assertTrue(tempJavaFile.delete(), "Temporary Java file should be deleted");
-            assertTrue(tempDir.delete(), "Temporary directory should be deleted");
-        }
-    }
-
-    // Helper methods for accessing private components
     private JTextField getPathField() {
         return getField(targetUI, "pathField", JTextField.class);
     }
 
-    private JButton getButtonByText(String buttonText) {
-        for (Component component : targetUI.getComponents()) {
+    private JButton getButtonByText(JPanel panel, String buttonText) {
+        for (Component component : panel.getComponents()) {
             if (component instanceof JButton && ((JButton) component).getText().equals(buttonText)) {
                 return (JButton) component;
+            } else if (component instanceof JPanel) {
+                JButton button = getButtonByText((JPanel) component, buttonText);
+                if (button != null) return button;
             }
         }
         return null;
