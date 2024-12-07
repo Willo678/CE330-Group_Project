@@ -32,7 +32,7 @@ public class targetSelectionUI extends JPanel {
         setLayout(new BorderLayout());
         pathField = createPathField();
         folderSelect = new JFileChooser();
-        folderSelect.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        folderSelect.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
         JPanel selectionPanel = createSelectionPanel();
         mainPanel.add(selectionPanel, "selection");
