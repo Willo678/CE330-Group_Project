@@ -36,5 +36,7 @@ public class CodeAnalysisTest {
         String[] methods = code.split("void");
         count = methods.length - 1;
         return count;
+
     }
+
 }
