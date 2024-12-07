@@ -45,12 +45,12 @@ public class DialPanel extends JPanel {
 
         g2d.setColor(new Color(0, 191, 255));
         g2d.setStroke(new BasicStroke(10));
-        g2d.drawArc(centerX - radius, centerY - radius, radius * 2, radius * 2, 0, (int) Math.round(score * 180));
+        g2d.drawArc(centerX - radius, centerY - radius, radius * 2, radius * 2, 180, -(int) Math.round(score * 180));
 
         int pointerAngle = (int) Math.round(score * 180);
-        double pointerRad = Math.toRadians(180 - pointerAngle);
-        int pointerX = (int) (centerX + radius * 0.8 * Math.cos(pointerRad));
-        int pointerY = (int) (centerY - radius * 0.8 * Math.sin(pointerRad));
+        double pointerRad = - Math.toRadians(180 - pointerAngle);
+        int pointerX = (int) (centerX + radius * 0.9 * Math.cos(pointerRad));
+        int pointerY = (int) (centerY + radius * 0.9 * Math.sin(pointerRad));
         g2d.setColor(Color.WHITE);
         g2d.setStroke(new BasicStroke(3));
         g2d.drawLine(centerX, centerY, pointerX, pointerY);
