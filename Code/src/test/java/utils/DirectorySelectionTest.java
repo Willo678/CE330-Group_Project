@@ -24,5 +24,7 @@ class DirectorySelectionTest {
 
     private void submitWithoutDirectory() {
         throw new IllegalArgumentException("No directory selected");
+
     }
+
 }
