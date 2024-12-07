@@ -3,8 +3,8 @@ package userInterface;
 import XP_Metrics.Score;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
-
 import java.util.ArrayList;
 
 public class codeMetricsUI extends JPanel {
@@ -25,22 +25,33 @@ public class codeMetricsUI extends JPanel {
 
     private JPanel createMetricsPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3, 1, 5, 5));
-        panel.setBorder(BorderFactory.createTitledBorder("Detailed Scores"));
+        panel.setLayout(new GridLayout(4, 1, 10, 10));
+        panel.setBackground(new Color(40, 40, 40));  // Dark background for contrast
+        panel.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(Color.CYAN, 2),
+                "Detailed Scores",
+                TitledBorder.LEFT, TitledBorder.TOP,
+                new Font("Arial", Font.BOLD, 16), Color.CYAN
+        ));
         return panel;
     }
 
     private JTextArea createDetailsArea() {
         JTextArea area = new JTextArea();
         area.setEditable(false);
+        area.setFont(new Font("Verdana", Font.PLAIN, 14));
+        area.setForeground(Color.WHITE);
+        area.setBackground(new Color(30, 30, 30));
+        area.setCaretColor(Color.WHITE);
         return area;
     }
 
     private void layoutComponents() {
         JScrollPane scrollPane = new JScrollPane(detailsArea);
-        scrollPane.setPreferredSize(new Dimension(300, 150));
+        scrollPane.setPreferredSize(new Dimension(350, 150));
 
         JPanel leftPanel = new JPanel(new BorderLayout(5, 5));
+        leftPanel.setBackground(new Color(50, 50, 50));
         leftPanel.add(metricsPanel, BorderLayout.NORTH);
         leftPanel.add(scrollPane, BorderLayout.CENTER);
         leftPanel.add(adherenceLabel, BorderLayout.SOUTH);
@@ -86,11 +97,10 @@ public class codeMetricsUI extends JPanel {
         int methodLengthScore = calculateScore(methodScores);
         int camelCaseScore = calculateScore(namingScores);
 
-        metricsPanel.setLayout(new GridLayout(4, 1, 5, 5));
-        metricsPanel.add(createScorePanel("Blocks & Indenting", indentationScore));
-        metricsPanel.add(createScorePanel("Class Structure", classStructureScore));
-        metricsPanel.add(createScorePanel("Function Length", methodLengthScore));
-        metricsPanel.add(createScorePanel("CamelCase", camelCaseScore));
+        metricsPanel.add(createScorePanel("Blocks & Indenting", indentationScore, new Color(255, 165, 0)));  // Orange color
+        metricsPanel.add(createScorePanel("Class Structure", classStructureScore, new Color(0, 255, 0)));  // Green color
+        metricsPanel.add(createScorePanel("Function Length", methodLengthScore, new Color(0, 191, 255)));  // Blue color
+        metricsPanel.add(createScorePanel("CamelCase", camelCaseScore, new Color(255, 20, 147)));  // Deep pink
 
         double averageScore = (indentationScore + classStructureScore + methodLengthScore + camelCaseScore) / 4.0 / 100.0;
         totalScoreDial.setScore(averageScore);
@@ -101,16 +111,19 @@ public class codeMetricsUI extends JPanel {
         adherenceLabel.setText(adherenceLevel + " - " + String.format("%.1f%%", averageScore * 100));
     }
 
-
     private int calculateScore(ArrayList<Score> scores) {
         return Math.max(100 - scores.stream()
                 .mapToInt(s -> s.score)
                 .sum(), 0);
     }
 
-    private JPanel createScorePanel(String label, int score) {
+    private JPanel createScorePanel(String label, int score, Color color) {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panel.add(new JLabel(label + ": " + score + "%"));
+        panel.setBackground(new Color(40, 40, 40));
+        JLabel scoreLabel = new JLabel(label + ": " + score + "%");
+        scoreLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        scoreLabel.setForeground(color);
+        panel.add(scoreLabel);
         return panel;
     }
 
@@ -134,5 +147,4 @@ public class codeMetricsUI extends JPanel {
             sb.append("\n");
         }
     }
-
 }
