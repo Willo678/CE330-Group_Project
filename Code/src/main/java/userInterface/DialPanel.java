@@ -20,6 +20,10 @@ public class DialPanel extends JPanel {
         repaint();
     }
 
+    public double getScore() {
+        return score;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -32,7 +36,6 @@ public class DialPanel extends JPanel {
         int radius = Math.min(width, height) / 2 - 20;
         int centerX = width / 2;
         int centerY = height / 2 + 20;
-
 
         setBackground(new Color(20, 20, 20));
         g2d.setColor(new Color(45, 45, 45));
@@ -81,6 +84,5 @@ public class DialPanel extends JPanel {
         String scoreText = String.format("%.1f%%", score * 100);
         int scoreWidth = metrics.stringWidth(scoreText);
         g2d.drawString(scoreText, centerX - scoreWidth / 2, centerY);
-
     }
 }
