@@ -1,4 +1,4 @@
-package XP_Metrics_ReferenceVersion;
+package legacy.XP_Metrics_ReferenceVersion;
 
 import java.util.ArrayList;
 

@@ -1,7 +1,9 @@
 package userInterfaceTest;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+
 import userInterface.sourceCodeDisplayUI;
 
 import javax.swing.*;
@@ -10,9 +12,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
 
-class SourceCodeDisplayUITest {
+public class SourceCodeDisplayTest {
 
     private sourceCodeDisplayUI sourceCodeUI;
     private File tempFile;

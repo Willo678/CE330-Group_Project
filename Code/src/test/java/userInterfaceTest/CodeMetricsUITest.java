@@ -1,13 +1,14 @@
 package userInterfaceTest;
 
 import XP_Metrics.Score;
-import org.junit.Test;
+
 import userInterface.codeMetricsUI;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CodeMetricsUITest {
 
@@ -41,14 +42,14 @@ public class CodeMetricsUITest {
     @Test
     public void testMetricsPanelInitialization() {
         codeMetricsUI metricsUI = new codeMetricsUI();
-        assertNotNull("UI components should not be null", metricsUI.getComponents());
+        assertNotNull(metricsUI.getComponents()); //UI components should not be null
     }
 
     @Test
     public void testMetricsPanelLayout() {
         codeMetricsUI metricsUI = new codeMetricsUI();
         Component[] components = metricsUI.getComponents();
-        assertTrue("Should have at least one component", components.length > 0);
+        assertTrue(components.length > 0); //Should have at least one component
     }
 
     @Test

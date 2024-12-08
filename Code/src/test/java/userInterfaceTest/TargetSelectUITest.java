@@ -1,8 +1,9 @@
 package userInterfaceTest;
 
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
 import userInterface.targetSelectionUI;
 import userInterface.codeMetricsUI;
 
@@ -10,9 +11,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
-import static org.junit.jupiter.api.Assertions.*;
 
-class TargetSelectionUITest {
+
+public class TargetSelectUITest {
 
     private targetSelectionUI targetUI;
 

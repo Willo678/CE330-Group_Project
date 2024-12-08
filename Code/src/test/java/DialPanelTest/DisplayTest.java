@@ -1,17 +1,16 @@
 package DialPanelTest;
 
-import userInterface.DialPanel;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import javax.swing.*;
+import userInterface.DialPanel;
+
 import java.awt.*;
 import java.lang.reflect.Method;
 import java.awt.image.BufferedImage;
 
-import static org.junit.jupiter.api.Assertions.*;
 
-public class Display {
+public class DisplayTest {
 
     private DialPanel dialPanel;
 

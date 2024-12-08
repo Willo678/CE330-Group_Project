@@ -1,10 +1,11 @@
 package utils;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.File;
 
-class FileUploadTest {
+public class UploadFormatTest {
 
     boolean uploadFile(File file) {
         if (file.isDirectory()) {
