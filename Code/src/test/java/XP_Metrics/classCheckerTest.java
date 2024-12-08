@@ -2,20 +2,20 @@ package XP_Metrics;
 
 
 
-import java.util.List;
+import java.util.ArrayList;
 
-import XP_Metrics.getTokens.*;
+
 
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 
 public class classCheckerTest {
-    List<Token> tokens;
+    ArrayList<getTokens.Token> tokens;
     String path = "src/test/java/test_sample_data/sampleCode1.java";
 
     @BeforeEach
-    void setup() {
+    public void setup() {
         tokens = getTokens.getTokens(path);
     }
 
@@ -23,7 +23,7 @@ public class classCheckerTest {
     public void checkBefore() {
         int start = 0;
         int cur = 0;
-        for (Token token : tokens) {
+        for (getTokens.Token token : tokens) {
             if (token.type.equalsIgnoreCase("class")) {
                 start = token.start;
             }

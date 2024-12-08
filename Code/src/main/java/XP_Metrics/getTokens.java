@@ -49,7 +49,7 @@ public class getTokens {
     //along with the type (method, class, if, while, etc.) and the name
     public static class BracePair extends Token {
         public int end;
-        int nestedness;
+        public int nestedness;
 
 
 
@@ -159,7 +159,7 @@ public class getTokens {
     }
 
     public static List<Token> getComments(String path) {
-        return getTokens(path).stream().filter(x -> (Objects.equals(((Token) x).type, "Comment"))).toList();
+        return getTokens(path).stream().filter(x -> (Objects.equals(x.type, "Comment"))).toList();
     }
 
     //Returns whether a given string is a Java keyword, an identifier, or a name
