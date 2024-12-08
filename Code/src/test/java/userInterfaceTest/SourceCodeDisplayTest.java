@@ -20,7 +20,7 @@ public class SourceCodeDisplayTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        sourceCodeUI = new sourceCodeDisplayUI();
+        sourceCodeUI = new sourceCodeDisplayUI(null);
 
         // Create a temporary file for testing
         tempFile = File.createTempFile("testFile", ".txt");

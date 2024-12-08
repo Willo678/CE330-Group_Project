@@ -4,6 +4,7 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 
+import userInterface.ProgramWindow;
 import userInterface.UI_Panels.targetSelectionUI;
 import userInterface.UI_Panels.codeMetricsUI;
 
@@ -19,8 +20,8 @@ public class TargetSelectUITest {
 
     @BeforeEach
     void setUp() {
-        codeMetricsUI metricsUI = new codeMetricsUI();
-        targetUI = new targetSelectionUI(metricsUI);
+        ProgramWindow programWindow = new ProgramWindow();
+        targetUI = new targetSelectionUI(programWindow);
     }
 
     @Test

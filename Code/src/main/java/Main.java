@@ -1,5 +1,4 @@
 
-import XP_Metrics.XPEvaluator;
 import userInterface.*;
 
 import javax.swing.*;
@@ -14,7 +13,7 @@ public class Main {
         }
 
         SwingUtilities.invokeLater(() -> {
-            programWindow window = new programWindow();
+            ProgramWindow window = new ProgramWindow();
             window.setVisible(true);
         });
         //Running

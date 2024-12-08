@@ -1,5 +1,7 @@
 package userInterface.UI_Panels;
 
+import userInterface.ProgramWindow;
+
 import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,7 +34,7 @@ public class sourceCodeDisplayUI extends JPanel {
         return currentFolder;
     }
 
-    public sourceCodeDisplayUI() {
+    public sourceCodeDisplayUI(ProgramWindow programWindow) {
         super();
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 

@@ -1,6 +1,7 @@
 package userInterface.UI_Panels;
 
 import userInterface.MetricsTracker;
+import userInterface.ProgramWindow;
 import userInterface.UI_Widgets.FileSelector;
 
 import javax.swing.*;
@@ -9,11 +10,11 @@ import java.awt.*;
 import static utils.getJavaSubdirectories.getJavaSubdirectories;
 
 public class targetSelectionUI extends JPanel {
-    private final codeMetricsUI metricsUI;
+    private final ProgramWindow parent;
 
 
-    public targetSelectionUI(codeMetricsUI metricsUI) {
-        this.metricsUI = metricsUI;
+    public targetSelectionUI(ProgramWindow parent) {
+        this.parent = parent;
 
 
 
@@ -23,12 +24,14 @@ public class targetSelectionUI extends JPanel {
 
         FileSelector fileSelector = new FileSelector();
         fileSelector.addActionListener( e -> {
-            System.out.println("Updated project path to: "+ MetricsTracker.getProjectPath());
-            System.out.println(MetricsTracker.getOverallIndentationScore());
-            System.out.println(MetricsTracker.getOverallClassStructureScore());
-            System.out.println(MetricsTracker.getOverallMethodStructureScore());
-            System.out.println(MetricsTracker.getOverallScore());
-            metricsUI.updateMetrics();
+            parent.getCodeMetricsUI().updateMetrics();
+            parent.updateStatus();
+
+
+            System.out.println(MetricsTracker.getOverallIndentationScore()); //Remove
+            System.out.println(MetricsTracker.getOverallClassStructureScore()); //Remove
+            System.out.println(MetricsTracker.getOverallMethodStructureScore()); //Remove
+            System.out.println(MetricsTracker.getOverallScore()); //Remove
         });
 
 

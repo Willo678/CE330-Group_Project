@@ -7,26 +7,37 @@ import userInterface.UI_Panels.targetSelectionUI;
 import javax.swing.*;
 import java.awt.*;
 
-public class programWindow extends JFrame {
+public class ProgramWindow extends JFrame {
     private final JTabbedPane tabbedPane;
-    private final userInterface.UI_Panels.targetSelectionUI targetSelectionUI;
-    private final userInterface.UI_Panels.sourceCodeDisplayUI sourceCodeDisplayUI;
-    private final userInterface.UI_Panels.codeMetricsUI codeMetricsUI;
+    protected final userInterface.UI_Panels.targetSelectionUI targetSelectionUI;
+    protected final userInterface.UI_Panels.sourceCodeDisplayUI sourceCodeDisplayUI;
+    protected final userInterface.UI_Panels.codeMetricsUI codeMetricsUI;
+
+
     private final JPanel statusBar;
     private final JLabel statusLabelTab;
+    private final JLabel statusLabelProject;
+    private final JLabel statusLabelFile;
 
-    public programWindow() {
+    public ProgramWindow() {
         setLayout(new BorderLayout());
         tabbedPane = new JTabbedPane();
-        statusBar = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        statusLabelTab = new JLabel("Ready");
 
-        codeMetricsUI = new codeMetricsUI();
-        targetSelectionUI = new targetSelectionUI(codeMetricsUI);
-        sourceCodeDisplayUI = new sourceCodeDisplayUI();
+
+        statusBar = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        statusLabelTab = new JLabel("Current tab"); statusBar.add(statusLabelTab);
+        statusBar.add(new JSeparator(SwingConstants.VERTICAL));
+        statusLabelProject = new JLabel("Selected Project"); statusBar.add(statusLabelProject);
+        statusBar.add(new JSeparator(SwingConstants.VERTICAL));
+        statusLabelFile = new JLabel("Selected File"); statusBar.add(statusLabelFile);
+
+
+        codeMetricsUI = new codeMetricsUI(this);
+        targetSelectionUI = new targetSelectionUI(this);
+        sourceCodeDisplayUI = new sourceCodeDisplayUI(this);
 
         statusBar.setBorder(BorderFactory.createEtchedBorder());
-        statusBar.add(statusLabelTab);
+
 
         tabbedPane.addTab("Select Project", targetSelectionUI);
         tabbedPane.addTab("View Code", sourceCodeDisplayUI);
@@ -38,6 +49,7 @@ public class programWindow extends JFrame {
         add(statusBar, BorderLayout.SOUTH);
 
         setupWindow();
+        updateStatus();
     }
 
     private void setupWindow() {
@@ -73,8 +85,28 @@ public class programWindow extends JFrame {
 
     public void updateStatus() {
         int index = tabbedPane.getSelectedIndex();
+        String text = trimText(tabbedPane.getTitleAt(index),20);
         if (index != -1) {
-            statusLabelTab.setText("Current tab: " + tabbedPane.getTitleAt(index));
+            statusLabelTab.setText("Current tab: " + text);
         }
+
+        text = trimText(MetricsTracker.getProjectPath(), 50);
+        statusLabelProject.setText("Project: "+text);
+
+        text = MetricsTracker.getTrackedFile();
+        if (text==null) {text = "Viewing whole project";}
+        text = trimText(text, 50);
+        statusLabelFile.setText("Current File: "+text);
+    }
+
+
+    private String trimText(String text, int trimLength) {
+        if (text.length()>trimLength) {
+            text = ".."+text.substring(text.length()-(trimLength+2));
+        }
+        while (text.length()<trimLength) {
+            text+=" ";
+        }
+        return text;
     }
 }

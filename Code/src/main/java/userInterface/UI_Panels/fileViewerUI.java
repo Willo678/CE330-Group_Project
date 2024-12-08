@@ -1,11 +1,13 @@
 // file viewer ui first draft
 // by sj22795
 package userInterface.UI_Panels;
+import userInterface.ProgramWindow;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class fileViewerUI {
-    fileViewerUI(){
+    fileViewerUI(ProgramWindow parent){
         JFrame fileViewerFrame = new JFrame("Code Analysis");
         JPanel fileViewerPanel = new JPanel(new BorderLayout());
         JPanel codePanel = new JPanel(new BorderLayout());

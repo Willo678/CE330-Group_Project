@@ -3,6 +3,7 @@ package userInterface.UI_Panels;
 import XP_Metrics.Score;
 import XP_Metrics.XPEvaluator;
 import userInterface.MetricsTracker;
+import userInterface.ProgramWindow;
 import userInterface.UI_Widgets.DialPanelWidget;
 
 import javax.swing.*;
@@ -16,7 +17,7 @@ public class codeMetricsUI extends JPanel {
     private final JTextArea detailsArea;
     private final JLabel adherenceLabel;
 
-    public codeMetricsUI() {
+    public codeMetricsUI(ProgramWindow parent) {
         setLayout(new BorderLayout(10, 10));
         setBackground(new Color(255, 255, 255));
 
