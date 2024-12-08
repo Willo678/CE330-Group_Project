@@ -1,38 +1,74 @@
 package userInterface;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class programWindow extends JFrame {
+    private final JTabbedPane tabbedPane;
+    private final targetSelectionUI targetSelectionUI;
+    private final sourceCodeDisplayUI sourceCodeDisplayUI;
+    private final codeMetricsUI codeMetricsUI;
+    private final JPanel statusBar;
+    private final JLabel statusLabel;
 
-    JTabbedPane tabbedPane = new JTabbedPane();
-    targetSelectionUI targetSelectionUI = new targetSelectionUI();
-    sourceCodeDisplayUI sourceCodeDisplayUI = new sourceCodeDisplayUI();
-    codeMetricsUI codeMetricsUI = new codeMetricsUI();
+    public programWindow() {
+        setLayout(new BorderLayout());
+        tabbedPane = new JTabbedPane();
+        statusBar = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        statusLabel = new JLabel("Ready");
 
-    public userInterface.targetSelectionUI getTargetSelectionUI() {
+        codeMetricsUI = new codeMetricsUI();
+        targetSelectionUI = new targetSelectionUI(codeMetricsUI);
+        sourceCodeDisplayUI = new sourceCodeDisplayUI();
+
+        statusBar.setBorder(BorderFactory.createEtchedBorder());
+        statusBar.add(statusLabel);
+
+        tabbedPane.addTab("Select Project", targetSelectionUI);
+        tabbedPane.addTab("View Code", sourceCodeDisplayUI);
+        tabbedPane.addTab("Metrics", codeMetricsUI);
+
+        tabbedPane.addChangeListener(e -> {
+            int index = tabbedPane.getSelectedIndex();
+            if (index != -1) {
+                statusLabel.setText("Current tab: " + tabbedPane.getTitleAt(index));
+            }
+        });
+
+        add(tabbedPane, BorderLayout.CENTER);
+        add(statusBar, BorderLayout.SOUTH);
+
+        setupWindow();
+    }
+
+    private void setupWindow() {
+        setTitle("Code Analysis Tool");
+        setSize(1000, 800);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setResizable(false);
+    }
+
+
+    public targetSelectionUI getTargetSelectionUI() {
         return targetSelectionUI;
     }
 
-    public userInterface.sourceCodeDisplayUI getSourceCodeDisplayUI() {
+    public sourceCodeDisplayUI getSourceCodeDisplayUI() {
         return sourceCodeDisplayUI;
     }
 
-    public userInterface.codeMetricsUI getCodeMetricsUI() {
+    public codeMetricsUI getCodeMetricsUI() {
         return codeMetricsUI;
     }
 
-    public programWindow() {
-
-        tabbedPane.addTab("Target Selection", targetSelectionUI);
-        tabbedPane.addTab("Source Code Display",sourceCodeDisplayUI);
-        tabbedPane.addTab("Code Metrics", codeMetricsUI);
-
-        this.add(tabbedPane);
-
-        this.setTitle("Program Window");
-        this.setSize(500, 650);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setVisible(true);
+    public void setStatus(String message) {
+        statusLabel.setText(message);
     }
 
+    public void switchToTab(int index) {
+        if (index >= 0 && index < tabbedPane.getTabCount()) {
+            tabbedPane.setSelectedIndex(index);
+        }
+    }
 }

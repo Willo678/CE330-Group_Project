@@ -39,14 +39,14 @@ public class classChecker {
         return scores;
     }
 
-    public static void main(String[] args) {
-        String path = "M:\\3rd Year\\CE320\\GROUP_PROJECT\\Code\\src\\main\\java\\XP_Metrics\\indentationChecker.java";
-        getTokens tokens = new getTokens();
-        ArrayList<getTokens.Token> tokenList = tokens.getTokens(path);
-        ArrayList<Score> scores = checkImports(path, tokenList);
-        for (Score score : scores) {
-            System.out.println(score);
-        }
-
-    }
+//    public static void main(String[] args) {
+//        String path = "M:\\3rd Year\\CE320\\GROUP_PROJECT\\Code\\src\\main\\java\\XP_Metrics\\indentationChecker.java";
+//        getTokens tokens = new getTokens();
+//        ArrayList<getTokens.Token> tokenList = tokens.getTokens(path);
+//        ArrayList<Score> scores = checkImports(path, tokenList);
+//        for (Score score : scores) {
+//            System.out.println(score);
+//        }
+//
+//    }
 }

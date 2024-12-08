@@ -2,7 +2,6 @@ package userInterface;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Arc2D;
 
 public class DialPanel extends JPanel {
     private double score;
@@ -21,6 +20,9 @@ public class DialPanel extends JPanel {
         repaint();
     }
 
+    public double getScore() {
+        return score;
+    }
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -35,7 +37,6 @@ public class DialPanel extends JPanel {
         int centerX = width / 2;
         int centerY = height / 2 + 20;
 
-
         setBackground(new Color(20, 20, 20));
         g2d.setColor(new Color(45, 45, 45));
         g2d.fillOval(centerX - radius - 10, centerY - radius - 10, (radius + 10) * 2, (radius + 10) * 2);
@@ -46,12 +47,12 @@ public class DialPanel extends JPanel {
 
         g2d.setColor(new Color(0, 191, 255));
         g2d.setStroke(new BasicStroke(10));
-        g2d.drawArc(centerX - radius, centerY - radius, radius * 2, radius * 2, 0, (int) Math.round(score * 180));
+        g2d.drawArc(centerX - radius, centerY - radius, radius * 2, radius * 2, 180, -(int) Math.round(score * 180));
 
         int pointerAngle = (int) Math.round(score * 180);
-        double pointerRad = Math.toRadians(180 - pointerAngle);
-        int pointerX = (int) (centerX + radius * 0.8 * Math.cos(pointerRad));
-        int pointerY = (int) (centerY - radius * 0.8 * Math.sin(pointerRad));
+        double pointerRad = - Math.toRadians(180 - pointerAngle);
+        int pointerX = (int) (centerX + radius * 0.9 * Math.cos(pointerRad));
+        int pointerY = (int) (centerY + radius * 0.9 * Math.sin(pointerRad));
         g2d.setColor(Color.WHITE);
         g2d.setStroke(new BasicStroke(3));
         g2d.drawLine(centerX, centerY, pointerX, pointerY);
@@ -83,6 +84,5 @@ public class DialPanel extends JPanel {
         String scoreText = String.format("%.1f%%", score * 100);
         int scoreWidth = metrics.stringWidth(scoreText);
         g2d.drawString(scoreText, centerX - scoreWidth / 2, centerY);
-
     }
 }

@@ -17,22 +17,29 @@ import java.util.ArrayList;
 import static utils.directoryContainsJava.directoryContainsJava;
 import static utils.getJavaSubdirectories.getJavaSubdirectories;
 
-public class targetSelectionUI extends JFrame {
+public class targetSelectionUI extends JPanel {
     private final userInterface.codeMetricsUI metricsUI;
+    private final JPanel mainPanel;
     private final JTextField pathField;
     private final JFileChooser folderSelect;
+    private final CardLayout cardLayout;
 
-    public targetSelectionUI() {
+    public targetSelectionUI(codeMetricsUI metricsUI) {
+        this.metricsUI = metricsUI;
+        this.cardLayout = new CardLayout();
+        this.mainPanel = new JPanel(cardLayout);
+
         setLayout(new BorderLayout());
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        metricsUI = createMetricsWindow();
         pathField = createPathField();
         folderSelect = new JFileChooser();
-        folderSelect.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        folderSelect.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
-        add(createSelectionPanel(), BorderLayout.NORTH);
-        setupWindow();
+        JPanel selectionPanel = createSelectionPanel();
+        mainPanel.add(selectionPanel, "selection");
+        mainPanel.add(metricsUI, "metrics");
+
+        add(mainPanel, BorderLayout.CENTER);
+        cardLayout.show(mainPanel, "selection");
     }
 
     private JPanel createSelectionPanel() {
@@ -48,16 +55,6 @@ public class targetSelectionUI extends JFrame {
         return panel;
     }
 
-    private codeMetricsUI createMetricsWindow() {
-        codeMetricsUI metricsUI = new codeMetricsUI();
-        JFrame frame = new JFrame("Code Metrics");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.add(metricsUI);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-        return metricsUI;
-    }
 
     private JTextField createPathField() {
         JTextField field = new hintTextField("Select a project directory:");
@@ -106,6 +103,7 @@ public class targetSelectionUI extends JFrame {
             if (!path.isEmpty()) {
                 try {
                     processPath(path);
+                    cardLayout.show(mainPanel, "metrics");
                 } catch (Exception ex) {
                     showError(ex.getMessage());
                 }
@@ -114,7 +112,7 @@ public class targetSelectionUI extends JFrame {
         return button;
     }
 
-    private void processPath(String path) throws InvalidPathException {
+    public void processPath(String path) throws InvalidPathException {
         Paths.get(path);
         File directory = new File(path);
 
@@ -122,14 +120,42 @@ public class targetSelectionUI extends JFrame {
             throw new InvalidPathException(path, "No Java files found");
         }
 
-        for (String filePath : getJavaSubdirectories(directory)) {
-            EvaluateXP evaluator = new EvaluateXP(filePath);
-            ArrayList<Score> codeAnalysisScores = CodeAnalysis.CodeAnalysis(evaluator.bracePairs);
-            metricsUI.updateMetrics(
-                    evaluator.scoreIndentation,
-                    evaluator.scoreClassStructure,
-                    codeAnalysisScores
-            );
+        ArrayList<String> filePaths = getJavaSubdirectories(directory);
+        if (filePaths.isEmpty()) {
+            throw new InvalidPathException(path, "No valid Java files found in subdirectories");
+        }
+
+        boolean processed = false;
+        for (String filePath : filePaths) {
+            try {
+                EvaluateXP evaluator = new EvaluateXP(filePath);
+                if (evaluator.bracePairs == null ||
+                        evaluator.scoreIndentation == null ||
+                        evaluator.scoreClassStructure == null) {
+                    continue;
+                }
+
+                ArrayList<Score> codeAnalysisScores = CodeAnalysis.CodeAnalysis(evaluator.bracePairs);
+                if (codeAnalysisScores != null) {
+                    metricsUI.updateMetrics(
+                            evaluator.scoreIndentation,
+                            evaluator.scoreClassStructure,
+                            codeAnalysisScores
+                    );
+                    processed = true;
+                }
+            } catch (Exception ex) {
+                System.err.println("Error processing file: " + filePath + " - " + ex.getMessage());
+            }
+        }
+
+        if (processed) {
+            Window window = SwingUtilities.getWindowAncestor(this);
+            if (window instanceof programWindow) {
+                ((programWindow) window).switchToTab(2);
+            }
+        } else {
+            throw new InvalidPathException(path, "No files were successfully processed");
         }
     }
 
@@ -140,9 +166,4 @@ public class targetSelectionUI extends JFrame {
                 JOptionPane.ERROR_MESSAGE);
     }
 
-    private void setupWindow() {
-        pack();
-        setLocationRelativeTo(null);
-        setVisible(true);
-    }
 }
