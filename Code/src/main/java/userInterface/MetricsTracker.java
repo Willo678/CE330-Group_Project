@@ -32,6 +32,7 @@ public class MetricsTracker {
 
     public static void selectProject(String path){
         tracker = new MetricsTracker(path);
+        if (tracker.evaluationList.isEmpty()) {tracker = null;}
     }
 
     public static MetricsTracker getTracker() {return tracker;}
@@ -44,6 +45,11 @@ public class MetricsTracker {
     public static HashMap<String, XPEvaluator> getEvaluationList() {
         if (tracker!=null) {return tracker.evaluationList;}
         return new HashMap<>();
+    }
+
+    public static void setFocusedFile(String file) {
+        if (tracker!=null && tracker.evaluationList.containsKey(file)) {tracker.focusedFile = file;}
+        return;
     }
 
     public static String getFocusedFile() {

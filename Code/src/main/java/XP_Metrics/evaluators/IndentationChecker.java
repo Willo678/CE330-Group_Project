@@ -7,7 +7,7 @@ import java.util.Objects;
 import XP_Metrics.Score;
 import XP_Metrics.getTokens.BracePair;
 
-public class indentationChecker {
+public class IndentationChecker {
 
     static int idealMethodLength = 20;
     static int idealControlStatementLength = 5;

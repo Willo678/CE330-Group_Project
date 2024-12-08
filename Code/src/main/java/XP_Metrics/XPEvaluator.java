@@ -3,29 +3,30 @@ package XP_Metrics;
 import java.util.ArrayList;
 
 import XP_Metrics.evaluators.CodeChecker;
-import XP_Metrics.evaluators.classChecker;
-import XP_Metrics.evaluators.indentationChecker;
+import XP_Metrics.evaluators.ClassChecker;
+import XP_Metrics.evaluators.IndentationChecker;
 import XP_Metrics.getTokens.*;
 
 public class XPEvaluator {
 
-    public ArrayList<Token> bracePairs;
+    public ArrayList<Token> tokenList;
+
     public ArrayList<Score> scoreIndentation;
     public ArrayList<Score> scoreClassStructure;
     public ArrayList<Score> scoreMethodStructure;
 
 
     public XPEvaluator(String path) {
-        bracePairs = getTokens.getTokens(path);
+        tokenList = getTokens.getTokens(path);
 
-        scoreIndentation = indentationChecker.checkIndentation(
-                bracePairs
+        scoreIndentation = IndentationChecker.checkIndentation(
+                tokenList
                         .stream()
                         .filter(BracePair.class::isInstance)
                         .map(BracePair.class::cast).toList()
         );
-        scoreClassStructure = classChecker.checkImports(path, bracePairs);
-        scoreMethodStructure = CodeChecker.CodeAnalysis(bracePairs);
+        scoreClassStructure = ClassChecker.checkImports(path, tokenList);
+        scoreMethodStructure = CodeChecker.CodeAnalysis(tokenList);
 
     }
 

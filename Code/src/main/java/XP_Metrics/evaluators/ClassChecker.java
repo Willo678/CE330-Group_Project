@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class classChecker {
+public class ClassChecker {
     public static ArrayList<Score> checkImports(String path, ArrayList<getTokens.Token> tokenList) {
         ArrayList<Score> scores = new ArrayList<>();
         try {

@@ -120,7 +120,7 @@ public class getTokens {
                             latestKeyword = keyword != null ? keyword : latestKeyword;
                             latestIdentity = identity != null ? identity : latestIdentity;
 
-                            if (word.contains("{") && !bracePairStack.isEmpty()) {
+                            if (word.contains("{")) {
                                 BracePair bracePair = new BracePair(lineNum,
                                         latestKeyword != null ? latestKeyword : "BLOCK",
                                         latestIdentity,
