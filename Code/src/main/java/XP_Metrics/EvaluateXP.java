@@ -44,10 +44,10 @@ public class EvaluateXP {
 
     @Override
     public String toString() {
-        return "Indentation score: "+getScorePercentage(scoreIndentation)
-                + "ClassStructure score: "+getScorePercentage(scoreClassStructure)
-                + "MethodStructure score: "+getScorePercentage(scoreMethodStructure)
-                + "Overall score: "+normalisedScore();
+        return "Indentation score = "+getScorePercentage(scoreIndentation) + " : " + scoreIndentation + "\n"
+                + "ClassStructure score = "+getScorePercentage(scoreClassStructure) + " : " + scoreClassStructure + "\n"
+                + "MethodStructure score = "+getScorePercentage(scoreMethodStructure) + " : " + scoreMethodStructure + "\n"
+                + "Overall score = "+normalisedScore();
     }
 
     private static int sumScoreArray(ArrayList<Score> scoreArray) {

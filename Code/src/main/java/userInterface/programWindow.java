@@ -1,13 +1,17 @@
 package userInterface;
 
+import userInterface.UI_Panels.codeMetricsUI;
+import userInterface.UI_Panels.sourceCodeDisplayUI;
+import userInterface.UI_Panels.targetSelectionUI;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class programWindow extends JFrame {
     private final JTabbedPane tabbedPane;
-    private final targetSelectionUI targetSelectionUI;
-    private final sourceCodeDisplayUI sourceCodeDisplayUI;
-    private final codeMetricsUI codeMetricsUI;
+    private final userInterface.UI_Panels.targetSelectionUI targetSelectionUI;
+    private final userInterface.UI_Panels.sourceCodeDisplayUI sourceCodeDisplayUI;
+    private final userInterface.UI_Panels.codeMetricsUI codeMetricsUI;
     private final JPanel statusBar;
     private final JLabel statusLabel;
 

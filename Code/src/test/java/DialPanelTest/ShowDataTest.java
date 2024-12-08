@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 
-import userInterface.DialPanel;
+import userInterface.DialPanelWidget;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,11 +14,11 @@ import java.lang.reflect.Method;
 
 public class ShowDataTest {
 
-    private DialPanel dialPanel;
+    private DialPanelWidget dialPanel;
 
     @BeforeEach
     public void setUp() {
-        dialPanel = new DialPanel("XP Adherence");
+        dialPanel = new DialPanelWidget("XP Adherence");
     }
 
     @Test
@@ -26,7 +26,7 @@ public class ShowDataTest {
         dialPanel.setScore(0.75);
 
         try {
-            Method paintMethod = DialPanel.class.getDeclaredMethod("paintComponent", Graphics.class);
+            Method paintMethod = DialPanelWidget.class.getDeclaredMethod("paintComponent", Graphics.class);
             paintMethod.setAccessible(true);
 
             BufferedImage image = new BufferedImage(300, 300, BufferedImage.TYPE_INT_ARGB);
@@ -50,7 +50,7 @@ public class ShowDataTest {
         dialPanel.setScore(score);
         BufferedImage image = new BufferedImage(300, 300, BufferedImage.TYPE_INT_ARGB);
         try {
-            Method paintMethod = DialPanel.class.getDeclaredMethod("paintComponent", Graphics.class);
+            Method paintMethod = DialPanelWidget.class.getDeclaredMethod("paintComponent", Graphics.class);
             paintMethod.setAccessible(true);
             paintMethod.invoke(dialPanel, image.getGraphics());
         } catch (Exception e) {

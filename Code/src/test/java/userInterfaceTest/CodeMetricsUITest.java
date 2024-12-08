@@ -2,7 +2,7 @@ package userInterfaceTest;
 
 import XP_Metrics.Score;
 
-import userInterface.codeMetricsUI;
+import userInterface.UI_Panels.codeMetricsUI;
 
 import java.awt.*;
 import java.util.ArrayList;

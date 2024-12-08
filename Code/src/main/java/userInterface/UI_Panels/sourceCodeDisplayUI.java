@@ -1,4 +1,4 @@
-package userInterface;
+package userInterface.UI_Panels;
 
 import javax.swing.*;
 import java.io.File;

@@ -19,4 +19,8 @@ public class getJavaSubdirectories {
         return l;
     }
 
+    public static ArrayList<String> getJavaSubdirectories(String f) {
+        return getJavaSubdirectories(new File(f));
+    }
+
 }

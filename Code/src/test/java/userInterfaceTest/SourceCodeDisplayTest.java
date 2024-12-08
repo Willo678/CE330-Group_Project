@@ -4,7 +4,7 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-import userInterface.sourceCodeDisplayUI;
+import userInterface.UI_Panels.sourceCodeDisplayUI;
 
 import javax.swing.*;
 import java.io.File;

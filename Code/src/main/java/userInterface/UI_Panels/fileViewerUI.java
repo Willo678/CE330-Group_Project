@@ -1,6 +1,6 @@
 // file viewer ui first draft
 // by sj22795
-package userInterface;
+package userInterface.UI_Panels;
 import javax.swing.*;
 import java.awt.*;
 

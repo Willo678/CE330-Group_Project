@@ -4,8 +4,8 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-import userInterface.targetSelectionUI;
-import userInterface.codeMetricsUI;
+import userInterface.UI_Panels.targetSelectionUI;
+import userInterface.UI_Panels.codeMetricsUI;
 
 import javax.swing.*;
 import java.awt.*;

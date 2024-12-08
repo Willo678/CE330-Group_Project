@@ -1,6 +1,7 @@
-package userInterface;
+package userInterface.UI_Panels;
 
 import XP_Metrics.Score;
+import userInterface.DialPanelWidget;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -8,7 +9,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class codeMetricsUI extends JPanel {
-    private final DialPanel totalScoreDial;
+    private final DialPanelWidget totalScoreDial;
     private final JPanel metricsPanel;
     private final JTextArea detailsArea;
     private final JLabel adherenceLabel;
@@ -19,7 +20,7 @@ public class codeMetricsUI extends JPanel {
 
         metricsPanel = createMetricsPanel();
         detailsArea = createDetailsArea();
-        totalScoreDial = new DialPanel("Overall Score");
+        totalScoreDial = new DialPanelWidget("Overall Score");
         adherenceLabel = new JLabel("Ready", SwingConstants.CENTER);
         layoutComponents();
     }

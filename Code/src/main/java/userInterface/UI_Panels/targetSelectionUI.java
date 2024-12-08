@@ -1,8 +1,9 @@
-package userInterface;
+package userInterface.UI_Panels;
 
 import XP_Metrics.CodeAnalysis;
 import XP_Metrics.EvaluateXP;
 import XP_Metrics.Score;
+import userInterface.programWindow;
 import utils.hintTextField;
 
 import javax.swing.*;
@@ -18,7 +19,7 @@ import static utils.directoryContainsJava.directoryContainsJava;
 import static utils.getJavaSubdirectories.getJavaSubdirectories;
 
 public class targetSelectionUI extends JPanel {
-    private final userInterface.codeMetricsUI metricsUI;
+    private final codeMetricsUI metricsUI;
     private final JPanel mainPanel;
     private final JTextField pathField;
     private final JFileChooser folderSelect;

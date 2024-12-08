@@ -3,11 +3,11 @@ package userInterface;
 import javax.swing.*;
 import java.awt.*;
 
-public class DialPanel extends JPanel {
+public class DialPanelWidget extends JPanel {
     private double score;
     private final String label;
 
-    public DialPanel(String label) {
+    public DialPanelWidget(String label) {
         this.label = label;
         this.score = 0.0;
         this.setPreferredSize(new Dimension(300, 300));
