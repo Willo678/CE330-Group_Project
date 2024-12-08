@@ -9,8 +9,8 @@ import XP_Metrics.getTokens.BracePair;
 
 public class IndentationChecker {
 
-    static int idealMethodLength = 20;
-    static int idealControlStatementLength = 5;
+    static int idealMethodLength = 30;
+    static int idealControlStatementLength = 10;
     static int idealNestedness = 3;
 
 

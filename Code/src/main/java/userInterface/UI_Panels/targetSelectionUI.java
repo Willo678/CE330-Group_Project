@@ -34,7 +34,8 @@ public class targetSelectionUI extends JPanel {
         this.add(fileSelector, gbc);
 
 
-
+        gbc.gridy = 100; gbc.fill = GridBagConstraints.BOTH; gbc.weighty = 1;
+        this.add(new JPanel(), gbc);
 
     }
 
