@@ -1,4 +1,4 @@
-package utils;
+package userInterface.UI_Widgets;
 
 import javax.swing.*;
 import javax.swing.text.Document;
@@ -29,6 +29,7 @@ public class hintTextField extends JTextField implements FocusListener {
         super(doc, text, columns);
         this.hint = hint;
         super.addFocusListener(this);
+        focusLost(new FocusEvent(this, 0, true, null));
     }
 
     @Override

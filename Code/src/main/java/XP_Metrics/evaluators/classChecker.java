@@ -1,4 +1,7 @@
-package XP_Metrics;
+package XP_Metrics.evaluators;
+
+import XP_Metrics.Score;
+import XP_Metrics.getTokens;
 
 import java.io.File;
 import java.io.FileNotFoundException;

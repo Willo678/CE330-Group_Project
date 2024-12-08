@@ -1,9 +1,10 @@
-package XP_Metrics;
+package XP_Metrics.evaluators;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import XP_Metrics.Score;
 import XP_Metrics.getTokens.BracePair;
 
 public class indentationChecker {

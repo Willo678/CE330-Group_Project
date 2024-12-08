@@ -1,8 +1,9 @@
-package XP_Metrics;
+package XP_Metrics.evaluators;
 // written by sj22795
 // Code cleanliness check with improved logic
 
 
+import XP_Metrics.Score;
 import XP_Metrics.getTokens.BracePair;
 import XP_Metrics.getTokens.Token;
 
@@ -12,7 +13,7 @@ import java.util.List;
 import static java.lang.Character.isLowerCase;
 import static java.lang.Character.isUpperCase;
 
-public class CodeAnalysis {
+public class CodeChecker {
 
     public static ArrayList<Score> CodeAnalysis(ArrayList<Token> tokenList) {
         ArrayList<Score> scores = new ArrayList<>();

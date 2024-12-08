@@ -2,9 +2,12 @@ package XP_Metrics;
 
 import java.util.ArrayList;
 
+import XP_Metrics.evaluators.CodeChecker;
+import XP_Metrics.evaluators.classChecker;
+import XP_Metrics.evaluators.indentationChecker;
 import XP_Metrics.getTokens.*;
 
-public class EvaluateXP {
+public class XPEvaluator {
 
     public ArrayList<Token> bracePairs;
     public ArrayList<Score> scoreIndentation;
@@ -12,7 +15,7 @@ public class EvaluateXP {
     public ArrayList<Score> scoreMethodStructure;
 
 
-    public EvaluateXP(String path) {
+    public XPEvaluator(String path) {
         bracePairs = getTokens.getTokens(path);
 
         scoreIndentation = indentationChecker.checkIndentation(
@@ -22,16 +25,28 @@ public class EvaluateXP {
                         .map(BracePair.class::cast).toList()
         );
         scoreClassStructure = classChecker.checkImports(path, bracePairs);
-        scoreMethodStructure = CodeAnalysis.CodeAnalysis(bracePairs);
+        scoreMethodStructure = CodeChecker.CodeAnalysis(bracePairs);
 
+    }
+
+    public int indentationScore() {
+        return getScorePercentage(scoreIndentation);
+    }
+
+    public int classStructureScore() {
+        return getScorePercentage(scoreClassStructure);
+    }
+
+    public int methodStructureScore() {
+        return getScorePercentage(scoreMethodStructure);
     }
 
     public int normalisedScore() {
         int[] weights = new int[]{33, 33, 33};  //Three parts, 33 points each
         int[] percentages = new int[]{
-                getScorePercentage(scoreIndentation),
-                getScorePercentage(scoreClassStructure),
-                getScorePercentage(scoreMethodStructure)
+                indentationScore(),
+                classStructureScore(),
+                methodStructureScore()
         };
 
         int result = 0;

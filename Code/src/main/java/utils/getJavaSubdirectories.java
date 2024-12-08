@@ -2,6 +2,7 @@ package utils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class getJavaSubdirectories {
 
@@ -11,7 +12,7 @@ public class getJavaSubdirectories {
         boolean isJava = f.getName().endsWith(".java");
         if (isJava) {l.add(f.getAbsolutePath());}
 
-        if (f.isDirectory()){
+        if (f.isDirectory() && f.list()!=null){
             for (String fName : f.list()){
                 l.addAll(getJavaSubdirectories(new File(f, fName)));
             }

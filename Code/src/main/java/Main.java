@@ -1,5 +1,5 @@
 
-import XP_Metrics.EvaluateXP;
+import XP_Metrics.XPEvaluator;
 import userInterface.*;
 
 import javax.swing.*;
@@ -19,7 +19,7 @@ public class Main {
         });
         //Running
 
-        EvaluateXP evaluator = new EvaluateXP("src/main/java/XP_Metrics/CodeAnalysis.java");
+        XPEvaluator evaluator = new XPEvaluator("src/main/java/XP_Metrics/evaluators/CodeChecker.java");
         System.out.println(evaluator);
 
 
