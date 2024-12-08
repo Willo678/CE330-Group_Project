@@ -3,7 +3,7 @@ package DialPanelTest;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import userInterface.DialPanelWidget;
+import userInterface.UI_Widgets.DialPanelWidget;
 
 import java.awt.*;
 import java.lang.reflect.Method;

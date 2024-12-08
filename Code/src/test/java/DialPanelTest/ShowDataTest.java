@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 
-import userInterface.DialPanelWidget;
+import userInterface.UI_Widgets.DialPanelWidget;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

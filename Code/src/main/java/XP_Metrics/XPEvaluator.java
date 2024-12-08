@@ -15,8 +15,11 @@ public class XPEvaluator {
     public ArrayList<Score> scoreClassStructure;
     public ArrayList<Score> scoreMethodStructure;
 
+    public String path;
 
-    public XPEvaluator(String path) {
+    public XPEvaluator(String Path) {
+        path = Path;
+
         tokenList = getTokens.getTokens(path);
 
         scoreIndentation = IndentationChecker.checkIndentation(

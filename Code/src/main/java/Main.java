@@ -19,8 +19,8 @@ public class Main {
         });
         //Running
 
-        XPEvaluator evaluator = new XPEvaluator("src/main/java/XP_Metrics/evaluators/CodeChecker.java");
-        System.out.println(evaluator);
+        //XPEvaluator evaluator = new XPEvaluator("src/main/java/XP_Metrics/evaluators/CodeChecker.java");
+        //System.out.println(evaluator);
 
 
 

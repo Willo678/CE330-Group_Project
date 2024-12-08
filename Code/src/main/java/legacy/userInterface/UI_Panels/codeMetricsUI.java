@@ -1,9 +1,7 @@
-package userInterface.UI_Panels;
+package legacy.userInterface.UI_Panels;
 
 import XP_Metrics.Score;
-import XP_Metrics.XPEvaluator;
-import userInterface.MetricsTracker;
-import userInterface.UI_Widgets.DialPanelWidget;
+import legacy.userInterface.UI_Widgets.DialPanelWidget;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -78,36 +76,55 @@ public class codeMetricsUI extends JPanel {
         return bottomPanel;
     }
 
-    public void updateMetrics() {
+    public void updateMetrics(ArrayList<Score> indentation,
+                              ArrayList<Score> classStructure,
+                              ArrayList<Score> codeAnalysis) {
+        if (indentation == null || classStructure == null || codeAnalysis == null) {
+            throw new IllegalArgumentException("Score lists cannot be null");
+        }
 
         SwingUtilities.invokeLater(() -> {
-            updateScorePanels();
-            updateDetailsArea();
+            updateScorePanels(indentation, classStructure, codeAnalysis);
+            updateDetailsArea(indentation, classStructure, codeAnalysis);
             metricsPanel.revalidate();
             metricsPanel.repaint();
         });
     }
 
-    private void updateScorePanels() {
+    private void updateScorePanels(ArrayList<Score> indentation,
+                                   ArrayList<Score> classStructure,
+                                   ArrayList<Score> codeAnalysis) {
         metricsPanel.removeAll();
 
-        double indentationScore = MetricsTracker.getTrackedIndentationScore();
-        double classStructureScore = MetricsTracker.getTrackedClassStructureScore();
-        double methodStructureScore = MetricsTracker.getTrackedMethodStructureScore();
-        double averageScore = MetricsTracker.getTrackedAverageScore();
-        System.out.println(averageScore);
+        int indentationScore = calculateScore(indentation);
+        int classStructureScore = calculateScore(classStructure);
+
+        ArrayList<Score> methodScores = new ArrayList<>();
+        ArrayList<Score> namingScores = new ArrayList<>();
+
+        for (Score s : codeAnalysis) {
+            if (s.reason.contains("too big") || s.reason.contains("nested") || s.reason.contains("statement")) {
+                methodScores.add(s);
+            } else {
+                namingScores.add(s);
+            }
+        }
+
+        int methodLengthScore = calculateScore(methodScores);
+        int camelCaseScore = calculateScore(namingScores);
 
         metricsPanel.add(createScorePanel("Blocks & Indenting", indentationScore, new Color(255, 165, 0)));
         metricsPanel.add(createScorePanel("Class Structure", classStructureScore, new Color(0, 255, 0)));
-        metricsPanel.add(createScorePanel("Method Structure Length", methodStructureScore, new Color(0, 191, 255)));
+        metricsPanel.add(createScorePanel("Function Length", methodLengthScore, new Color(0, 191, 255)));
+        metricsPanel.add(createScorePanel("CamelCase", camelCaseScore, new Color(255, 20, 147)));
 
-
-        totalScoreDial.setScore(averageScore/100);
+        double averageScore = (indentationScore + classStructureScore + methodLengthScore + camelCaseScore) / 4.0 / 100.0;
+        totalScoreDial.setScore(averageScore);
 
         String adherenceLevel = averageScore >= 0.8 ? "High adherence" :
                 averageScore >= 0.5 ? "Moderate adherence" :
                         "Low adherence";
-        adherenceLabel.setText(adherenceLevel + " - " + String.format("%.1f%%", averageScore));
+        adherenceLabel.setText(adherenceLevel + " - " + String.format("%.1f%%", averageScore * 100));
     }
 
     private int calculateScore(ArrayList<Score> scores) {
@@ -116,12 +133,12 @@ public class codeMetricsUI extends JPanel {
                 .sum(), 0);
     }
 
-    private JPanel createScorePanel(String label, double score, Color color) {
+    private JPanel createScorePanel(String label, int score, Color color) {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout(FlowLayout.CENTER));
         panel.setBackground(new Color(255, 255, 255));
 
-        JLabel scoreLabel = new JLabel(label + ": " + String.format("%.1f%%", score) + "%");
+        JLabel scoreLabel = new JLabel(label + ": " + score + "%");
         scoreLabel.setFont(new Font("Roboto", Font.BOLD, 18));
         scoreLabel.setForeground(color);
         panel.add(scoreLabel);
@@ -129,24 +146,13 @@ public class codeMetricsUI extends JPanel {
         return panel;
     }
 
-    private void updateDetailsArea() {
-
-
+    private void updateDetailsArea(ArrayList<Score> indentation,
+                                   ArrayList<Score> classStructure,
+                                   ArrayList<Score> codeAnalysis) {
         StringBuilder details = new StringBuilder("Issue Details:\n\n");
-        if (MetricsTracker.getTrackedFile()!=null) {
-            XPEvaluator evaluator = MetricsTracker.getTrackedEvaluator();
-
-            ArrayList<Score> indentation = evaluator.scoreIndentation;
-            ArrayList<Score> classStructure = evaluator.scoreClassStructure;
-            ArrayList<Score> codeAnalysis = evaluator.scoreMethodStructure;
-
-            appendScoreDetails(details, "Indentation", indentation);
-            appendScoreDetails(details, "Class Structure", classStructure);
-            appendScoreDetails(details, "Code Analysis", codeAnalysis);
-
-        } else {
-            details.append("Select a project file to see a detailed breakdown");
-        }
+        appendScoreDetails(details, "Indentation", indentation);
+        appendScoreDetails(details, "Class Structure", classStructure);
+        appendScoreDetails(details, "Code Analysis", codeAnalysis);
         detailsArea.setText(details.toString());
     }
 

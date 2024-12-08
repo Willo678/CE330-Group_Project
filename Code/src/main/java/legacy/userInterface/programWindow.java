@@ -1,17 +1,17 @@
-package userInterface;
+package legacy.userInterface;
 
-import userInterface.UI_Panels.codeMetricsUI;
-import userInterface.UI_Panels.sourceCodeDisplayUI;
-import userInterface.UI_Panels.targetSelectionUI;
+import legacy.userInterface.UI_Panels.codeMetricsUI;
+import legacy.userInterface.UI_Panels.sourceCodeDisplayUI;
+import legacy.userInterface.UI_Panels.targetSelectionUI;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class programWindow extends JFrame {
     private final JTabbedPane tabbedPane;
-    private final userInterface.UI_Panels.targetSelectionUI targetSelectionUI;
-    private final userInterface.UI_Panels.sourceCodeDisplayUI sourceCodeDisplayUI;
-    private final userInterface.UI_Panels.codeMetricsUI codeMetricsUI;
+    private final legacy.userInterface.UI_Panels.targetSelectionUI targetSelectionUI;
+    private final legacy.userInterface.UI_Panels.sourceCodeDisplayUI sourceCodeDisplayUI;
+    private final legacy.userInterface.UI_Panels.codeMetricsUI codeMetricsUI;
     private final JPanel statusBar;
     private final JLabel statusLabelTab;
 
@@ -49,15 +49,15 @@ public class programWindow extends JFrame {
     }
 
 
-    public targetSelectionUI getTargetSelectionUI() {
+    public legacy.userInterface.UI_Panels.targetSelectionUI getTargetSelectionUI() {
         return targetSelectionUI;
     }
 
-    public sourceCodeDisplayUI getSourceCodeDisplayUI() {
+    public legacy.userInterface.UI_Panels.sourceCodeDisplayUI getSourceCodeDisplayUI() {
         return sourceCodeDisplayUI;
     }
 
-    public codeMetricsUI getCodeMetricsUI() {
+    public legacy.userInterface.UI_Panels.codeMetricsUI getCodeMetricsUI() {
         return codeMetricsUI;
     }
 

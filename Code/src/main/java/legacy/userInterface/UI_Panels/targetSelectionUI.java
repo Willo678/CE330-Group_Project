@@ -1,12 +1,10 @@
-package userInterface.UI_Panels;
+package legacy.userInterface.UI_Panels;
 
-import userInterface.MetricsTracker;
-import userInterface.UI_Widgets.FileSelector;
+import legacy.userInterface.MetricsTracker;
+import legacy.userInterface.UI_Widgets.FileSelector;
 
 import javax.swing.*;
 import java.awt.*;
-
-import static utils.getJavaSubdirectories.getJavaSubdirectories;
 
 public class targetSelectionUI extends JPanel {
     private final codeMetricsUI metricsUI;
@@ -28,7 +26,6 @@ public class targetSelectionUI extends JPanel {
             System.out.println(MetricsTracker.getOverallClassStructureScore());
             System.out.println(MetricsTracker.getOverallMethodStructureScore());
             System.out.println(MetricsTracker.getOverallScore());
-            metricsUI.updateMetrics();
         });
 
 
