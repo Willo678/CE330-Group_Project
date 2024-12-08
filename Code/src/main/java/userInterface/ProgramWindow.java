@@ -24,11 +24,12 @@ public class ProgramWindow extends JFrame {
         tabbedPane = new JTabbedPane();
 
 
+
         statusBar = new JPanel(new FlowLayout(FlowLayout.LEFT));
         statusLabelTab = new JLabel("Current tab"); statusBar.add(statusLabelTab);
-        statusBar.add(new JSeparator(SwingConstants.VERTICAL));
+        statusBar.add(verticalSeparator(statusBar));
         statusLabelProject = new JLabel("Selected Project"); statusBar.add(statusLabelProject);
-        statusBar.add(new JSeparator(SwingConstants.VERTICAL));
+        statusBar.add(verticalSeparator(statusBar));
         statusLabelFile = new JLabel("Selected File"); statusBar.add(statusLabelFile);
 
 
@@ -108,5 +109,12 @@ public class ProgramWindow extends JFrame {
             text+=" ";
         }
         return text;
+    }
+
+    private JSeparator verticalSeparator(JComponent parent) {
+        JSeparator separator = new JSeparator();
+        separator.setOrientation(SwingConstants.VERTICAL);
+        separator.setPreferredSize(new Dimension(1, (int) (parent.getPreferredSize().height*0.6)));
+        return separator;
     }
 }
