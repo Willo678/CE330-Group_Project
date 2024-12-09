@@ -23,7 +23,7 @@ public class codeMetricsUI extends JPanel {
 
         metricsPanel = createMetricsPanel();
         detailsArea = createDetailsArea();
-        totalScoreDial = new DialPanelWidget("Overall Score");
+        totalScoreDial = new DialPanelWidget("Averaged Score");
         adherenceLabel = new JLabel("Ready", SwingConstants.CENTER);
         layoutComponents();
     }
