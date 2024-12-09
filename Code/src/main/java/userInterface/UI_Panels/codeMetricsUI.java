@@ -105,8 +105,8 @@ public class codeMetricsUI extends JPanel {
 
         totalScoreDial.setScore(averageScore/100);
 
-        String adherenceLevel = averageScore >= 0.8 ? "High adherence" :
-                averageScore >= 0.5 ? "Moderate adherence" :
+        String adherenceLevel = averageScore >= 80 ? "High adherence" :
+                averageScore >= 50 ? "Moderate adherence" :
                         "Low adherence";
         adherenceLabel.setText(adherenceLevel + " - " + String.format("%.1f%%", averageScore));
     }

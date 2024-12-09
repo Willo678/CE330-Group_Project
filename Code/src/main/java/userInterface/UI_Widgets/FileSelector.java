@@ -23,9 +23,6 @@ public class FileSelector extends JComponent {
         this(0,0);
     }
 
-    public FileSelector(boolean selectFiles){
-        this(0,0);
-    }
 
     public FileSelector(int width, int height){
 
@@ -53,7 +50,7 @@ public class FileSelector extends JComponent {
 
         //Text field, displays selected file
         gbc.gridx = 1; gbc.gridy = 0; gbc.fill = GridBagConstraints.BOTH; gbc.weightx = 1;
-        filePath = new JTextField("Select a project file:"); selectionPanel.add(filePath, gbc);
+        filePath = new JTextField("Focusing: Whole Project"); selectionPanel.add(filePath, gbc);
         filePath.setBackground(new Color(0xD1D1D1)); filePath.setForeground(new Color(0x5C5C5C));
         filePath.setBorder(new LineBorder(new Color(0), 1));
         filePath.setFont(filePath.getFont().deriveFont(Font.ITALIC, 10));
