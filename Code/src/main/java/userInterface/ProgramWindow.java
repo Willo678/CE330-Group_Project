@@ -1,6 +1,6 @@
 package userInterface;
 
-import userInterface.UI_Panels.codeMetricsUI;
+//import userInterface.UI_Panels.codeMetricsUI;
 import userInterface.UI_Panels.sourceCodeDisplayUI;
 import userInterface.UI_Panels.targetSelectionUI;
 
@@ -13,7 +13,7 @@ public class ProgramWindow extends JFrame {
     private final JTabbedPane tabbedPane;
     protected final userInterface.UI_Panels.targetSelectionUI targetSelectionUI;
     protected final userInterface.UI_Panels.sourceCodeDisplayUI sourceCodeDisplayUI;
-    protected final userInterface.UI_Panels.codeMetricsUI codeMetricsUI;
+//    protected final userInterface.UI_Panels.codeMetricsUI codeMetricsUI;
 
 
     private final JPanel statusBar;
@@ -35,7 +35,7 @@ public class ProgramWindow extends JFrame {
         statusLabelFile = new JLabel("Selected File"); statusBar.add(statusLabelFile);
 
 
-        codeMetricsUI = new codeMetricsUI(this);
+//        codeMetricsUI = new codeMetricsUI(this);
         targetSelectionUI = new targetSelectionUI(this);
         sourceCodeDisplayUI = new sourceCodeDisplayUI(this);
 
@@ -44,7 +44,7 @@ public class ProgramWindow extends JFrame {
 
         tabbedPane.addTab("Select Project", targetSelectionUI);
         tabbedPane.addTab("View Code", sourceCodeDisplayUI);
-        tabbedPane.addTab("Metrics", codeMetricsUI);
+//        tabbedPane.addTab("Metrics", codeMetricsUI);
 
         tabbedPane.addChangeListener(e -> updateStatus());
 
@@ -72,9 +72,9 @@ public class ProgramWindow extends JFrame {
         return sourceCodeDisplayUI;
     }
 
-    public codeMetricsUI getCodeMetricsUI() {
-        return codeMetricsUI;
-    }
+//    public codeMetricsUI getCodeMetricsUI() {
+//        return codeMetricsUI;
+//    }
 
     public void setStatus(String message) {
         statusLabelTab.setText(message);
