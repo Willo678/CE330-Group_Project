@@ -1,7 +1,7 @@
-package legacy.userInterface.UI_Widgets;
+package userInterface.UI_Widgets;
 
 
-import legacy.userInterface.MetricsTracker;
+import userInterface.MetricsTracker;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -15,23 +15,24 @@ import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 
+
 import static utils.directoryContainsJava.directoryContainsJava;
 
 
-public class FileSelector extends JComponent {
+public class ProjectSelector extends JComponent {
 
-    private final JTextField filePath;
+    private final JTextField projectPath;
 
 
-    public FileSelector(){
+    public ProjectSelector(){
         this(0,0, false);
     }
 
-    public FileSelector(boolean selectFiles){
+    public ProjectSelector(boolean selectFiles){
         this(0,0, selectFiles);
     }
 
-    public FileSelector(int width, int height, boolean selectFiles){
+    public ProjectSelector(int width, int height, boolean selectFiles){
 
         this.setBackground(new Color(0));
 
@@ -56,14 +57,14 @@ public class FileSelector extends JComponent {
 
         //Text field, user can manually enter a path, or select one using the dialogue
         gbc.gridx = 0; gbc.gridy = 0; gbc.fill = GridBagConstraints.BOTH; gbc.weightx = 1;
-        filePath = new hintTextField("Select a project directory:"); selectionPanel.add(filePath, gbc);
-        filePath.setBackground(new Color(0xD1D1D1));
-        filePath.setForeground(new Color(0x5C5C5C));
-        filePath.setBorder(new LineBorder(new Color(0), 1));
-        filePath.setFont(filePath.getFont().deriveFont(Font.ITALIC, 10));
-        filePath.setMargin(new Insets(3, 10, 3, 0));
+        projectPath = new hintTextField("Select a project directory:"); selectionPanel.add(projectPath, gbc);
+        projectPath.setBackground(new Color(0xD1D1D1));
+        projectPath.setForeground(new Color(0x5C5C5C));
+        projectPath.setBorder(new LineBorder(new Color(0), 1));
+        projectPath.setFont(projectPath.getFont().deriveFont(Font.ITALIC, 10));
+        projectPath.setMargin(new Insets(3, 10, 3, 0));
 
-        filePath.addActionListener(e->confirm());
+        projectPath.addActionListener(e->confirm());
 
 
         //Button to trigger the file select dialogue
@@ -73,7 +74,7 @@ public class FileSelector extends JComponent {
         selectButton.addActionListener(e -> {
             int returnVal = folderSelect.showOpenDialog(selectionPanel);
             if (returnVal==JFileChooser.APPROVE_OPTION) {
-                filePath.setText(folderSelect.getSelectedFile().getAbsolutePath());
+                projectPath.setText(folderSelect.getSelectedFile().getAbsolutePath());
             } else {
                 //Either an error occurred, or user cancelled operation
             }
@@ -106,7 +107,7 @@ public class FileSelector extends JComponent {
     }
 
     private void confirm() {
-        String path = filePath.getText();
+        String path = projectPath.getText();
         System.out.println(path);
         if (!path.isEmpty()){
             try {

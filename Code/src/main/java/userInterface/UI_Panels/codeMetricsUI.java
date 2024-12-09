@@ -134,7 +134,7 @@ public class codeMetricsUI extends JPanel {
 
 
         StringBuilder details = new StringBuilder("Issue Details:\n\n");
-        if (MetricsTracker.getTrackedFile()!=null) {
+        if (MetricsTracker.getFocusedFile()!=null) {
             XPEvaluator evaluator = MetricsTracker.getTrackedEvaluator();
 
             ArrayList<Score> indentation = evaluator.scoreIndentation;

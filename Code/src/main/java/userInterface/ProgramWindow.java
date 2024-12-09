@@ -7,6 +7,8 @@ import userInterface.UI_Panels.targetSelectionUI;
 import javax.swing.*;
 import java.awt.*;
 
+import static utils.trimFrontText.trimFrontText;
+
 public class ProgramWindow extends JFrame {
     private final JTabbedPane tabbedPane;
     protected final userInterface.UI_Panels.targetSelectionUI targetSelectionUI;
@@ -86,30 +88,23 @@ public class ProgramWindow extends JFrame {
 
     public void updateStatus() {
         int index = tabbedPane.getSelectedIndex();
-        String text = trimText(tabbedPane.getTitleAt(index),20);
+        String text = trimFrontText(tabbedPane.getTitleAt(index),20);
         if (index != -1) {
             statusLabelTab.setText("Current tab: " + text);
         }
 
-        text = trimText(MetricsTracker.getProjectPath(), 50);
+        text = trimFrontText(MetricsTracker.getProjectPath(), 50);
         statusLabelProject.setText("Project: "+text);
 
-        text = MetricsTracker.getTrackedFile();
+        text = MetricsTracker.getFocusedFile();
+        System.out.println(text);
         if (text==null) {text = "Viewing whole project";}
-        text = trimText(text, 50);
+        text = trimFrontText(text, 50);
         statusLabelFile.setText("Current File: "+text);
     }
 
 
-    private String trimText(String text, int trimLength) {
-        if (text.length()>trimLength) {
-            text = ".."+text.substring(text.length()-(trimLength+2));
-        }
-        while (text.length()<trimLength) {
-            text+=" ";
-        }
-        return text;
-    }
+
 
     private JSeparator verticalSeparator(JComponent parent) {
         JSeparator separator = new JSeparator();
