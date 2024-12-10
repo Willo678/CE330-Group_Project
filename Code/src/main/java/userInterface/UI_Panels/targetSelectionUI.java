@@ -1,5 +1,7 @@
 package userInterface.UI_Panels;
 
+import XP_Metrics.Score;
+import XP_Metrics.XPEvaluator;
 import userInterface.MetricsTracker;
 import userInterface.ProgramWindow;
 import userInterface.UI_Widgets.DialPanelWidget;
@@ -46,10 +48,11 @@ public class targetSelectionUI extends JPanel {
         projectSelector.addActionListener(e -> {
             MetricsTracker.selectProject(MetricsTracker.getProjectPath());
             fileSelector.setVisible(MetricsTracker.trackerExists());
+            updateSelection();
         });
         panel.add(projectSelector, BorderLayout.CENTER);
         fileSelector.setVisible(false);
-        fileSelector.addActionListener(e -> updateMetrics());
+        fileSelector.addActionListener(e -> updateSelection());
         panel.add(fileSelector, BorderLayout.SOUTH);
         return panel;
     }
@@ -104,9 +107,25 @@ public class targetSelectionUI extends JPanel {
                     : averageScore >= 50 ? "Moderate adherence"
                     : "Low adherence");
             StringBuilder details = new StringBuilder("Issue Details:\n\n");
-            details.append("Indentation: ").append(indentationScore).append("%\n")
-                    .append("Class Structure: ").append(classStructureScore).append("%\n")
-                    .append("Method Structure Length: ").append(methodStructureScore).append("%\n");
+            XPEvaluator evaluator = MetricsTracker.getTrackedEvaluator();
+            if (evaluator!=null) {
+                details.append("    ").append("Indentation: ").append("\n");
+                for (Score score : evaluator.scoreIndentation) {
+                    details.append("        - ").append(score).append("\n");
+                }
+                details.append("\n").append("    ").append("Class Structure: ").append("\n");
+                for (Score score : evaluator.scoreClassStructure) {
+                    details.append("        - ").append(score).append("\n");
+                }
+                details.append("\n").append("    ").append("Method Structure Length: ").append("\n");
+                for (Score score : evaluator.scoreMethodStructure) {
+                    details.append("        - ").append(score).append("\n");
+                }
+
+
+            } else {
+                details.append("Select a project file to view a breakdown of individual issues");
+            }
             detailsArea.setText(details.toString());
             metricsPanel.revalidate();
             metricsPanel.repaint();
@@ -121,5 +140,10 @@ public class targetSelectionUI extends JPanel {
         scoreLabel.setForeground(color);
         panel.add(scoreLabel);
         return panel;
+    }
+
+    private void updateSelection() {
+        parent.updateStatus();
+        updateMetrics();
     }
 }
