@@ -9,16 +9,34 @@ This project is designed to analyze and evaluate Java source code by providing m
 - **Graphical Interface**: A user-friendly interface for selecting projects, viewing metrics, and examining source code using `ProgramWindow` and `targetSelectionUI`.
 
 ## Project Structure
-The following files constitute the main modules of this project:
 
-1. **fileViewerUI.java**: Handles the display and navigation of Java files within the project directory.
-2. **sourceCodeDisplayUI.java**: Displays the source code of selected Java files.
-3. **targetSelectionUI.java**: Manages project and file selection, as well as metric display.
-4. **MetricsTracker.java**: A singleton class that tracks project paths, files, and associated metrics.
-5. **ProgramWindow.java**: The main entry point for the graphical user interface.
-6. **getTokens.java**: Tokenizes Java source code for further analysis.
-7. **Score.java**: Represents the scoring model for different metrics.
-8. **XPEvaluator.java**: Computes various metrics such as indentation, class structure, and method structure.
+### **1. Main Classes**
+- **`Main`**: Entry point for the application.
+- **`ProgramWindow`**: The central GUI container for the application.
+
+### **2. User Interface (`userInterface`)**
+#### Panels (`UI_Panels`):
+- **`codeMetricsUI`**: Displays overall code metrics.
+- **`fileViewerUI`**: Provides a file browser for navigating Java files.
+- **`sourceCodeDisplayUI`**: Displays the content of selected Java files.
+- **`targetSelectionUI`**: Allows users to select projects and files, and displays metrics.
+
+#### Widgets (`UI_Widgets`):
+- **`DialPanelWidget`**: Displays metrics in a visual, dial-based format.
+- **`FileSelector`**: Enables file selection within the UI.
+- **`hintTextField`**: Provides hints for user input fields.
+- **`ProjectSelector`**: Allows users to select a project directory.
+
+### **3. Evaluation System (`XP_Metrics`)**
+- **`XPEvaluator`**: Core evaluator for computing metrics like indentation, class structure, and method structure.
+- **`Score`**: Represents the scoring model for metrics.
+- **`getTokens`**: Parses and tokenizes Java source code for analysis.
+
+### **4. Utilities (`utils`)**
+- **`directoryContainsJava`**: Checks if a directory contains Java files.
+- **`getFileSubtree`**: Retrieves a subtree of files from a directory.
+- **`getJavaSubdirectories`**: Filters Java subdirectories.
+- **`trimFrontText`**: Utility for cleaning up text formatting.
 
 ## Usage
 1. **Setup**: Place the Java project to be analyzed in a directory accessible by the application.
@@ -27,14 +45,24 @@ The following files constitute the main modules of this project:
 4. **View Metrics**: Examine the evaluated metrics for each file or for the entire project.
 
 ## Dependencies
-- Java 11 or higher.
-- Ensure all required libraries for UI components and token parsing are included in the project classpath.
+- **Java**: Requires Java 11 or higher.
+- **Libraries**: Ensure all necessary libraries for Swing and token parsing are included in the classpath.
 
-## How It Works
-1. The user selects a project directory using `targetSelectionUI`.
-2. `MetricsTracker` initializes and evaluates all Java files in the project.
-3. `XPEvaluator` computes metrics for each file using tokenized data.
-4. Scores are displayed in a graphical format, highlighting key insights about the project's code structure.
+## Modules and Responsibilities
+
+### 1. **MetricsTracker**
+- Singleton class that manages project data and provides metrics.
+- Computes project-wide and file-specific metrics.
+
+### 2. **XPEvaluator**
+- Core evaluation class responsible for:
+  - Indentation analysis.
+  - Class structure compliance.
+  - Method structure analysis.
+
+### 3. **User Interface**
+- Built using Swing for a smooth and intuitive graphical interface.
+- Designed for extensibility with modular panel and widget components.
 
 ## Contributors
 This project was collaboratively developed with a focus on Java code evaluation and user interface design.
