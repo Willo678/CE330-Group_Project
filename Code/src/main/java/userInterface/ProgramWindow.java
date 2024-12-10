@@ -111,5 +111,6 @@ public class ProgramWindow extends JFrame {
         separator.setOrientation(SwingConstants.VERTICAL);
         separator.setPreferredSize(new Dimension(1, (int) (parent.getPreferredSize().height*0.6)));
         return separator;
+
     }
 }
