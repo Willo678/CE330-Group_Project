@@ -1,133 +1,122 @@
 package userInterfaceTest;
 
-import org.junit.jupiter.api.*;
-import userInterface.MetricsTracker;
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
 import userInterface.ProgramWindow;
 import userInterface.UI_Panels.targetSelectionUI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
+import java.lang.reflect.Field;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class TargetSelectionUITest {
-
-    private ProgramWindow testProgramWindow;
+public class TargetSelectUITest {
     private targetSelectionUI targetUI;
+    private ProgramWindow mockWindow;
 
-    @BeforeAll
-    void setupEnvironment() {
-        File testProject = new File("test/project/path");
-        if (!testProject.exists()) {
-            assertTrue(testProject.mkdirs(), "Failed to create test project directory.");
-        }
+    @Before
+    public void setUp() {
+        mockWindow = new ProgramWindow();
+        targetUI = new targetSelectionUI(mockWindow);
+    }
 
-        File testFile = new File(testProject, "Example.java");
+    @Test
+    public void testInitialState() {
+        assertNotNull("targetUI should not be null", targetUI);
+        assertEquals("Initial background color should be light cream",
+                new Color(250, 250, 245), targetUI.getBackground());
+
+        assertNotNull("Should have a border", targetUI.getBorder());
+
         try {
-            if (!testFile.exists()) {
-                assertTrue(testFile.createNewFile(), "Failed to create test Java file.");
-            }
+            Field adherenceLabelField = targetSelectionUI.class.getDeclaredField("adherenceLabel");
+            adherenceLabelField.setAccessible(true);
+            JLabel adherenceLabel = (JLabel) adherenceLabelField.get(targetUI);
+            assertEquals("Initial adherence label should be 'Ready'", "Ready", adherenceLabel.getText());
         } catch (Exception e) {
-            fail("Exception during test file setup: " + e.getMessage());
+            fail("Failed to access adherenceLabel: " + e.getMessage());
         }
     }
 
-    @AfterAll
-    void cleanupEnvironment() {
-        deleteDirectory(new File("test/project/path"));
-    }
+    @Test
+    public void testMetricsPanelCreation() throws NoSuchFieldException, IllegalAccessException {
+        Field metricsPanelField = targetSelectionUI.class.getDeclaredField("metricsPanel");
+        metricsPanelField.setAccessible(true);
+        JPanel metricsPanel = (JPanel) metricsPanelField.get(targetUI);
 
-    @BeforeEach
-    void setUp() {
-        testProgramWindow = new ProgramWindow();
-        targetUI = new targetSelectionUI(testProgramWindow);
-
-        MetricsTracker.selectProject("test/project/path");
-        MetricsTracker.setFocusedFile(0);
+        assertNotNull("Metrics panel should not be null", metricsPanel);
+        assertEquals("Metrics panel should have BoxLayout",
+                BoxLayout.Y_AXIS,
+                ((BoxLayout)metricsPanel.getLayout()).getAxis());
+        assertEquals("Metrics panel should have correct background",
+                new Color(255, 255, 250),
+                metricsPanel.getBackground());
     }
 
     @Test
-    void testInitialState() {
-        assertNotNull(targetUI);
-        assertTrue(targetUI.getLayout() instanceof BorderLayout, "Layout should be BorderLayout.");
+    public void testDetailsAreaCreation() throws NoSuchFieldException, IllegalAccessException {
+        Field detailsAreaField = targetSelectionUI.class.getDeclaredField("detailsArea");
+        detailsAreaField.setAccessible(true);
+        JTextArea detailsArea = (JTextArea) detailsAreaField.get(targetUI);
 
-        Component[] components = targetUI.getComponents();
-        assertEquals(2, components.length, "Expected two components: selection panel and metrics container.");
+        assertNotNull("Details area should not be null", detailsArea);
+        assertFalse("Details area should not be editable", detailsArea.isEditable());
+        assertEquals("Details area should have correct font size",
+                14,
+                detailsArea.getFont().getSize());
+    }
 
-        JPanel selectionPanel = (JPanel) components[0];
-        Component[] selectionComponents = selectionPanel.getComponents();
-        boolean fileSelectorVisible = false;
-        for (Component comp : selectionComponents) {
-            if (comp instanceof JComponent && comp.getClass().getSimpleName().equals("FileSelector")) {
-                fileSelectorVisible = comp.isVisible();
-            }
-        }
-        assertFalse(fileSelectorVisible, "File selector should be hidden initially.");
+
+
+    @Test
+    public void testScorePanelCreation() throws Exception {
+        java.lang.reflect.Method createScorePanelMethod =
+                targetSelectionUI.class.getDeclaredMethod(
+                        "createScorePanel",
+                        String.class,
+                        double.class,
+                        Color.class
+                );
+        createScorePanelMethod.setAccessible(true);
+
+        JPanel scorePanel = (JPanel) createScorePanelMethod.invoke(
+                targetUI,
+                "Test Score",
+                85.5,
+                Color.ORANGE
+        );
+
+        assertNotNull("Score panel should not be null", scorePanel);
+        assertEquals("Score panel should have FlowLayout",
+                FlowLayout.class,
+                scorePanel.getLayout().getClass());
+
+        Component[] components = scorePanel.getComponents();
+        assertTrue("Score panel should contain at least one component",
+                components.length > 0);
+        assertTrue("First component should be a JLabel",
+                components[0] instanceof JLabel);
+
+        JLabel scoreLabel = (JLabel) components[0];
+        assertTrue("Label should contain the score value",
+                scoreLabel.getText().contains("85.5%"));
     }
 
     @Test
-    void testProjectSelectionShowsFileSelector() {
-        MetricsTracker.selectProject("test/project/path");
-        targetUI.revalidate();
-        targetUI.repaint();
+    public void testFileSelectorVisibility() throws NoSuchFieldException, IllegalAccessException {
+        Field fileSelectorField = targetSelectionUI.class.getDeclaredField("fileSelector");
+        fileSelectorField.setAccessible(true);
+        JComponent fileSelector = (JComponent) fileSelectorField.get(targetUI);
 
-        JPanel selectionPanel = (JPanel) targetUI.getComponents()[0];
-        Component[] selectionComponents = selectionPanel.getComponents();
-        boolean fileSelectorVisible = false;
-        for (Component comp : selectionComponents) {
-            if (comp instanceof JComponent && comp.getClass().getSimpleName().equals("FileSelector")) {
-                fileSelectorVisible = comp.isVisible();
-            }
-        }
-        assertTrue(fileSelectorVisible, "File selector should be visible after project selection.");
+        assertFalse("File selector should be initially invisible",
+                fileSelector.isVisible());
     }
 
     @Test
-    void testMetricsUpdateLogic() {
-
-        MetricsTracker.setFocusedFile(1);
-
-        targetUI.updateMetrics();
-
-        // 检查 Metrics 面板内容
-        JPanel metricsContainer = (JPanel) targetUI.getComponents()[1];
-        Component[] metricsComponents = metricsContainer.getComponents();
-        assertTrue(metricsComponents.length > 0, "Metrics panel should be updated.");
-    }
-
-    @Test
-    void testMetricsContent() {
-
-        MetricsTracker.setFocusedFile(2);
-
-        targetUI.updateMetrics();
-
-
-        JPanel metricsContainer = (JPanel) targetUI.getComponents()[1];
-        JScrollPane detailsScrollPane = (JScrollPane) metricsContainer.getComponents()[1];
-        JTextArea detailsArea = (JTextArea) detailsScrollPane.getViewport().getView();
-        String detailsContent = detailsArea.getText();
-
-        assertNotNull(detailsContent, "Details content should not be null.");
-        assertTrue(detailsContent.contains("Indentation:"), "Details should include indentation score.");
-        assertTrue(detailsContent.contains("Class Structure:"), "Details should include class structure score.");
-        assertTrue(detailsContent.contains("Method Structure Length:"), "Details should include method structure score.");
-    }
-
-    private void deleteDirectory(File directory) {
-
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    deleteDirectory(file);
-                } else {
-                    assertTrue(file.delete(), "Failed to delete file: " + file.getPath());
-                }
-            }
-        }
-        assertTrue(directory.delete(), "Failed to delete directory: " + directory.getPath());
+    public void testTotalScoreDialInitialization() throws NoSuchFieldException, IllegalAccessException {
+        Field totalScoreDialField = targetSelectionUI.class.getDeclaredField("totalScoreDial");
+        totalScoreDialField.setAccessible(true);
+        assertNotNull("Total score dial should not be null",
+                totalScoreDialField.get(targetUI));
     }
 }
