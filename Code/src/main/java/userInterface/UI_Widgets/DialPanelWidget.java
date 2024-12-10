@@ -15,7 +15,9 @@ public class DialPanelWidget extends JPanel {
                 BorderFactory.createLineBorder(new Color(0, 191, 255), 2),
                 BorderFactory.createEmptyBorder(10, 10, 10, 10)
         ));
-        setBackground(new Color(30, 30, 30)); // 深色背景
+        setBackground(new Color(30, 30, 30));
+
+        this.getAccessibleContext().setAccessibleName(label);
     }
 
     public void setScore(double score) {
@@ -25,6 +27,10 @@ public class DialPanelWidget extends JPanel {
 
     public double getScore() {
         return score;
+    }
+
+    public String getLabel() {
+        return label;
     }
 
     @Override
