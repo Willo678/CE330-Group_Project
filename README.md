@@ -16,9 +16,6 @@ This project is designed to analyze and evaluate Java source code by providing m
 
 ### **2. User Interface (`userInterface`)**
 #### Panels (`UI_Panels`):
-- **`codeMetricsUI`**: Displays overall code metrics.
-- **`fileViewerUI`**: Provides a file browser for navigating Java files.
-- **`sourceCodeDisplayUI`**: Displays the content of selected Java files.
 - **`targetSelectionUI`**: Allows users to select projects and files, and displays metrics.
 
 #### Widgets (`UI_Widgets`):
