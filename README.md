@@ -75,3 +75,5 @@ To install locally, go to File -> Settings -> Plugins -> Install plugin from dis
 If JAR file is not local, clone repository above and run './gradlew clean build' followed by ./gradlew pluginJar
 
 This will generate a new JAR file in the build/libs folder.
+
+Additionally, sometimes to have the plugin actually join in on code inspections, you will have to go to the problems tab -> project errors -> Inspect Code -> Configure inspection profile -> Scroll down and tick 'My Group'. After this the plugin should automatically join in on code inspection when a new file is opened.
