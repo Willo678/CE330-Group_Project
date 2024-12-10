@@ -16,7 +16,6 @@ public class UploadFormatTest {
         if (!fileName.endsWith(".java")) {
             return false;
         }
-
         return true;
     }
 
