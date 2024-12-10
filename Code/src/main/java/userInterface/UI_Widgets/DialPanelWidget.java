@@ -47,7 +47,7 @@ public class DialPanelWidget extends JPanel {
         int centerY = height / 2;
 
         g2d.setColor(new Color(50, 50, 50));
-        g2d.fillArc(centerX - radius, centerY - radius, radius * 2, radius * 2, 0, 180);
+        g2d.fillArc((centerX-5) - radius, (centerY+5) - radius, (radius * 2)+10, (radius * 2)+10, 0, 180);
 
         g2d.setColor(new Color(0, 191, 255));
         g2d.setStroke(new BasicStroke(10));
@@ -72,15 +72,18 @@ public class DialPanelWidget extends JPanel {
             g2d.drawLine(tickX1, tickY1, tickX2, tickY2);
         }
 
+        g2d.setColor(new Color(50, 50, 50));
+        g2d.fillArc((int) (centerX - (radius*0.4)), (int) (centerY - (radius*0.4))+5, (int) (radius * 0.8), (int) (radius * 0.8), 0, 180);
+
         g2d.setColor(Color.WHITE);
         g2d.setFont(new Font("Arial", Font.BOLD, 16));
         FontMetrics metrics = g2d.getFontMetrics();
         int labelWidth = metrics.stringWidth(label);
-        g2d.drawString(label, centerX - labelWidth / 2, centerY + radius + 20);
+        g2d.drawString(label, centerX - labelWidth / 2, centerY + 50);
 
         g2d.setFont(new Font("Arial", Font.BOLD, 36));
         String scoreText = String.format("%.1f%%", score * 100);
         int scoreWidth = metrics.stringWidth(scoreText);
-        g2d.drawString(scoreText, centerX - scoreWidth / 2, centerY);
+        g2d.drawString(scoreText, centerX - scoreWidth, centerY);
     }
 }
