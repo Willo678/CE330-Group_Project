@@ -1,6 +1,5 @@
 package userInterface;
 
-//import userInterface.UI_Panels.codeMetricsUI;
 import userInterface.UI_Panels.sourceCodeDisplayUI;
 import userInterface.UI_Panels.targetSelectionUI;
 
@@ -11,10 +10,8 @@ import static utils.trimFrontText.trimFrontText;
 
 public class ProgramWindow extends JFrame {
     private final JTabbedPane tabbedPane;
-    protected final userInterface.UI_Panels.targetSelectionUI targetSelectionUI;
-    protected final userInterface.UI_Panels.sourceCodeDisplayUI sourceCodeDisplayUI;
-//    protected final userInterface.UI_Panels.codeMetricsUI codeMetricsUI;
-
+    protected final targetSelectionUI targetSelectionUI;
+    protected final sourceCodeDisplayUI sourceCodeDisplayUI;
 
     private final JPanel statusBar;
     private final JLabel statusLabelTab;
@@ -25,27 +22,23 @@ public class ProgramWindow extends JFrame {
         setLayout(new BorderLayout());
         tabbedPane = new JTabbedPane();
 
-
-
         statusBar = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        statusLabelTab = new JLabel("Current tab"); statusBar.add(statusLabelTab);
-        statusBar.add(verticalSeparator(statusBar));
-        statusLabelProject = new JLabel("Selected Project"); statusBar.add(statusLabelProject);
-        statusBar.add(verticalSeparator(statusBar));
-        statusLabelFile = new JLabel("Selected File"); statusBar.add(statusLabelFile);
+        statusLabelTab = createStatusLabel("Current tab");
+        statusLabelProject = createStatusLabel("Selected Project");
+        statusLabelFile = createStatusLabel("Selected File");
 
+        statusBar.add(statusLabelTab);
+        statusBar.add(createVerticalSeparator(statusBar));
+        statusBar.add(statusLabelProject);
+        statusBar.add(createVerticalSeparator(statusBar));
+        statusBar.add(statusLabelFile);
+        statusBar.setBorder(BorderFactory.createEtchedBorder());
 
-//        codeMetricsUI = new codeMetricsUI(this);
         targetSelectionUI = new targetSelectionUI(this);
         sourceCodeDisplayUI = new sourceCodeDisplayUI(this);
 
-        statusBar.setBorder(BorderFactory.createEtchedBorder());
-
-
         tabbedPane.addTab("Select Project", targetSelectionUI);
         tabbedPane.addTab("View Code", sourceCodeDisplayUI);
-//        tabbedPane.addTab("Metrics", codeMetricsUI);
-
         tabbedPane.addChangeListener(e -> updateStatus());
 
         add(tabbedPane, BorderLayout.CENTER);
@@ -53,6 +46,10 @@ public class ProgramWindow extends JFrame {
 
         setupWindow();
         updateStatus();
+    }
+
+    private JLabel createStatusLabel(String text) {
+        return new JLabel(text);
     }
 
     private void setupWindow() {
@@ -63,7 +60,6 @@ public class ProgramWindow extends JFrame {
         setResizable(false);
     }
 
-
     public targetSelectionUI getTargetSelectionUI() {
         return targetSelectionUI;
     }
@@ -71,10 +67,6 @@ public class ProgramWindow extends JFrame {
     public sourceCodeDisplayUI getSourceCodeDisplayUI() {
         return sourceCodeDisplayUI;
     }
-
-//    public codeMetricsUI getCodeMetricsUI() {
-//        return codeMetricsUI;
-//    }
 
     public void setStatus(String message) {
         statusLabelTab.setText(message);
@@ -87,29 +79,20 @@ public class ProgramWindow extends JFrame {
     }
 
     public void updateStatus() {
-        int index = tabbedPane.getSelectedIndex();
-        String text = trimFrontText(tabbedPane.getTitleAt(index),20);
-        if (index != -1) {
-            statusLabelTab.setText("Current tab: " + text);
-        }
+        updateStatusLabel(statusLabelTab, "Current tab: " + trimFrontText(tabbedPane.getTitleAt(tabbedPane.getSelectedIndex()), 20));
+        updateStatusLabel(statusLabelProject, "Project: " + trimFrontText(MetricsTracker.getProjectPath(), 50));
 
-        text = trimFrontText(MetricsTracker.getProjectPath(), 50);
-        statusLabelProject.setText("Project: "+text);
-
-        text = MetricsTracker.getFocusedFile();
-        System.out.println(text);
-        if (text==null) {text = "Viewing whole project";}
-        text = trimFrontText(text, 50);
-        statusLabelFile.setText("Current File: "+text);
+        String focusedFile = MetricsTracker.getFocusedFile();
+        updateStatusLabel(statusLabelFile, "Current File: " + (focusedFile == null ? "Viewing whole project" : trimFrontText(focusedFile, 50)));
     }
 
+    private void updateStatusLabel(JLabel label, String text) {
+        label.setText(text);
+    }
 
-
-
-    private JSeparator verticalSeparator(JComponent parent) {
-        JSeparator separator = new JSeparator();
-        separator.setOrientation(SwingConstants.VERTICAL);
-        separator.setPreferredSize(new Dimension(1, (int) (parent.getPreferredSize().height*0.6)));
+    private JSeparator createVerticalSeparator(JComponent parent) {
+        JSeparator separator = new JSeparator(SwingConstants.VERTICAL);
+        separator.setPreferredSize(new Dimension(1, (int) (parent.getPreferredSize().height * 0.6)));
         return separator;
     }
 }
