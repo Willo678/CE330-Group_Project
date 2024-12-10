@@ -1,83 +1,100 @@
 package userInterfaceTest;
 
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import userInterface.MetricsTracker;
 import userInterface.ProgramWindow;
 import userInterface.UI_Panels.targetSelectionUI;
-import userInterface.UI_Panels.codeMetricsUI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 
+import static org.junit.jupiter.api.Assertions.*;
 
+class TargetSelectionUITest {
 
-public class TargetSelectUITest {
-
+    private ProgramWindow testProgramWindow;
     private targetSelectionUI targetUI;
 
     @BeforeEach
     void setUp() {
-        ProgramWindow programWindow = new ProgramWindow();
-        targetUI = new targetSelectionUI(programWindow);
+        testProgramWindow = new ProgramWindow();
+        targetUI = new targetSelectionUI(testProgramWindow);
+
+        MetricsTracker.selectProject(null);
+        MetricsTracker.setFocusedFile(0);
     }
 
     @Test
-    void testPathFieldInitialization() {
-        JTextField pathField = getPathField();
-        assertNotNull(pathField, "Path field should be initialized");
-        assertEquals("Select a project directory:", pathField.getText(), "Default hint text should match");
+    void testInitialState() {
+        assertNotNull(targetUI);
+        assertTrue(targetUI.getLayout() instanceof BorderLayout);
+
+        Component[] components = targetUI.getComponents();
+        assertEquals(2, components.length);
+        assertTrue(components[0] instanceof JPanel);
+        assertTrue(components[1] instanceof JPanel);
     }
 
     @Test
-    void testSelectButtonUpdatesPathField() {
-        JTextField pathField = getPathField();
-        JButton selectButton = getButtonByText(targetUI, "SELECT");
-
-        assertNotNull(selectButton, "Select button should be initialized");
-
-        File testDir = new File(System.getProperty("java.io.tmpdir"));
-        pathField.setText(testDir.getAbsolutePath());
-        assertEquals(testDir.getAbsolutePath(), pathField.getText(), "Path field should update with selected directory");
-    }
-
-    @Test
-    void testConfirmButtonWithInvalidPath() {
-        JTextField pathField = getPathField();
-        JButton confirmButton = getButtonByText(targetUI, "CONFIRM");
-
-        assertNotNull(confirmButton, "Confirm button should be initialized");
-
-        pathField.setText("invalid/path");
-        //Exception exception = assertThrows(Exception.class, () -> targetUI.processPath("invalid/path"));
-        //assertTrue(exception.getMessage().contains("No Java files found"), "Should show error for invalid path");
-    }
-
-    private JTextField getPathField() {
-        return getField(targetUI, "pathField", JTextField.class);
-    }
-
-    private JButton getButtonByText(JPanel panel, String buttonText) {
-        for (Component component : panel.getComponents()) {
-            if (component instanceof JButton && ((JButton) component).getText().equals(buttonText)) {
-                return (JButton) component;
-            } else if (component instanceof JPanel) {
-                JButton button = getButtonByText((JPanel) component, buttonText);
-                if (button != null) return button;
+    void testFileSelectorVisibilityAfterProjectSelection() {
+        MetricsTracker.selectProject("test/project/path");
+        targetUI.revalidate();
+        targetUI.repaint();
+        JPanel selectionPanel = (JPanel) targetUI.getComponents()[0];
+        Component[] selectionComponents = selectionPanel.getComponents();
+        boolean fileSelectorVisible = false;
+        for (Component comp : selectionComponents) {
+            if (comp instanceof JPanel) {
+                for (Component innerComp : ((JPanel) comp).getComponents()) {
+                    if (innerComp instanceof JComponent && innerComp.getClass().getSimpleName().equals("FileSelector")) {
+                        fileSelectorVisible = innerComp.isVisible();
+                    }
+                }
             }
         }
-        return null;
+        assertTrue(fileSelectorVisible, "File selector should be visible after project selection.");
     }
 
-    private <T> T getField(Object target, String fieldName, Class<T> fieldType) {
-        try {
-            var field = target.getClass().getDeclaredField(fieldName);
-            field.setAccessible(true);
-            return fieldType.cast(field.get(target));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    @Test
+    void testMetricsUpdateLogic() {
+        MetricsTracker.selectProject("test/project/path");
+        MetricsTracker.setFocusedFile(1);
+        targetUI.updateMetrics();
+        Component[] components = targetUI.getComponents();
+        JPanel metricsContainer = (JPanel) components[1];
+        Component[] metricsComponents = metricsContainer.getComponents();
+        assertNotNull(metricsComponents[0], "Metrics panel should not be null.");
+        assertTrue(metricsComponents.length > 0, "Metrics panel should contain components.");
+    }
+
+    @Test
+    void testMetricsContentAccuracy() {
+        MetricsTracker.selectProject("test/project/path");
+        MetricsTracker.setFocusedFile(2);
+        targetUI.updateMetrics();
+        JPanel metricsContainer = (JPanel) targetUI.getComponents()[1];
+        JScrollPane detailsScrollPane = (JScrollPane) metricsContainer.getComponents()[1];
+        JTextArea detailsArea = (JTextArea) detailsScrollPane.getViewport().getView();
+        String detailsContent = detailsArea.getText();
+        assertNotNull(detailsContent, "Details content should not be null.");
+        assertTrue(detailsContent.contains("Indentation:"));
+        assertTrue(detailsContent.contains("Class Structure:"));
+        assertTrue(detailsContent.contains("Method Structure Length:"));
+    }
+
+    @Test
+    void testAdherenceLabelContent() {
+        MetricsTracker.selectProject("test/project/path");
+        MetricsTracker.setFocusedFile(3);
+
+        targetUI.updateMetrics();
+
+        JPanel metricsContainer = (JPanel) targetUI.getComponents()[1];
+        JLabel adherenceLabel = (JLabel) metricsContainer.getComponents()[2];
+
+        assertNotNull(adherenceLabel);
+        assertFalse(adherenceLabel.getText().isEmpty(), "Adherence label should not be empty.");
+        assertTrue(adherenceLabel.getText().contains("adherence"));
     }
 }
