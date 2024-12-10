@@ -22,7 +22,7 @@ The following files constitute the main modules of this project:
 
 ## Usage
 1. **Setup**: Place the Java project to be analyzed in a directory accessible by the application.
-2. **Launch**: Run `ProgramWindow.java` to start the graphical user interface.
+2. **Launch**: Run `Main.java` to start the graphical user interface.
 3. **Select Project**: Use the interface to navigate and select the project directory.
 4. **View Metrics**: Examine the evaluated metrics for each file or for the entire project.
 
