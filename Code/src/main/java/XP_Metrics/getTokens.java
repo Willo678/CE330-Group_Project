@@ -221,7 +221,8 @@ public class getTokens {
                 || s.toLowerCase().contains("hashset") || s.toLowerCase().contains("treeset") || s.toLowerCase().contains("map")
                 || s.toLowerCase().contains("hashmap") || s.toLowerCase().contains("treemap") || s.toLowerCase().contains("concurrenthashmap")
                 || s.toLowerCase().contains("queue") || s.toLowerCase().contains("deque") || s.toLowerCase().contains("arraydeque")
-                || SourceVersion.isName(s); }
+                || SourceVersion.isName(s);
+    }
 
 //    public static void main(String[] args) {
 //        getTokens tokens = new getTokens();
