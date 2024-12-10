@@ -110,7 +110,7 @@ public class CodeChecker {
                 }
 
                 if (!commentFound) {
-                    scores.add(new Score(5, "Method should have at least one comment"));
+                    //scores.add(new Score(5, "Method should have at least one comment"));
                 }
             }
         }
