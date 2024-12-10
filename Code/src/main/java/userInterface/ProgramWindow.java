@@ -1,7 +1,7 @@
 package userInterface;
 
 //import userInterface.UI_Panels.codeMetricsUI;
-import userInterface.UI_Panels.sourceCodeDisplayUI;
+//import userInterface.UI_Panels.sourceCodeDisplayUI;
 import userInterface.UI_Panels.targetSelectionUI;
 
 import javax.swing.*;
@@ -12,9 +12,8 @@ import static utils.trimFrontText.trimFrontText;
 public class ProgramWindow extends JFrame {
     private final JTabbedPane tabbedPane;
     protected final userInterface.UI_Panels.targetSelectionUI targetSelectionUI;
-    protected final userInterface.UI_Panels.sourceCodeDisplayUI sourceCodeDisplayUI;
+//    protected final userInterface.UI_Panels.sourceCodeDisplayUI sourceCodeDisplayUI;
 //    protected final userInterface.UI_Panels.codeMetricsUI codeMetricsUI;
-
 
     private final JPanel statusBar;
     private final JLabel statusLabelTab;
@@ -25,25 +24,21 @@ public class ProgramWindow extends JFrame {
         setLayout(new BorderLayout());
         tabbedPane = new JTabbedPane();
 
-
-
         statusBar = new JPanel(new FlowLayout(FlowLayout.LEFT));
         statusLabelTab = new JLabel("Current tab"); statusBar.add(statusLabelTab);
         statusBar.add(verticalSeparator(statusBar));
         statusLabelProject = new JLabel("Selected Project"); statusBar.add(statusLabelProject);
         statusBar.add(verticalSeparator(statusBar));
         statusLabelFile = new JLabel("Selected File"); statusBar.add(statusLabelFile);
-
-
 //        codeMetricsUI = new codeMetricsUI(this);
         targetSelectionUI = new targetSelectionUI(this);
-        sourceCodeDisplayUI = new sourceCodeDisplayUI(this);
+//        sourceCodeDisplayUI = new sourceCodeDisplayUI(this);
 
         statusBar.setBorder(BorderFactory.createEtchedBorder());
 
 
         tabbedPane.addTab("Select Project", targetSelectionUI);
-        tabbedPane.addTab("View Code", sourceCodeDisplayUI);
+//        tabbedPane.addTab("View Code", sourceCodeDisplayUI);
 //        tabbedPane.addTab("Metrics", codeMetricsUI);
 
         tabbedPane.addChangeListener(e -> updateStatus());
@@ -68,9 +63,9 @@ public class ProgramWindow extends JFrame {
         return targetSelectionUI;
     }
 
-    public sourceCodeDisplayUI getSourceCodeDisplayUI() {
-        return sourceCodeDisplayUI;
-    }
+//    public sourceCodeDisplayUI getSourceCodeDisplayUI() {
+//        return sourceCodeDisplayUI;
+//    }
 
 //    public codeMetricsUI getCodeMetricsUI() {
 //        return codeMetricsUI;
